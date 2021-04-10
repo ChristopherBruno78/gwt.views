@@ -1,14 +1,11 @@
-package com.edusoftwerks.gwt.views.client.ui;
+package com.edusoftwerks.gwt.views.client.dom;
 
-import com.google.gwt.dev.util.collect.HashMap;
+import com.edusoftwerks.gwt.views.client.UIObject;
 import elemental2.dom.DomGlobal;
 import elemental2.dom.EventListener;
 import elemental2.dom.HTMLElement;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class DOMElement extends UIObject<DOMProps, UIObject<?, ?>> {
 
@@ -18,10 +15,14 @@ public class DOMElement extends UIObject<DOMProps, UIObject<?, ?>> {
     private UIObject<?, ?> parent;
     private Map<String, List<EventListener>> eventListeners = null;
 
-    DOMElement (String tagName, DOMProps props) {
+    DOMElement(HTMLElement $el, DOMProps props) {
         this.props = props;
-        this.$el = (HTMLElement) DomGlobal.document.createElement(tagName);
+        this.$el = $el;
         parseProps(this.props);
+    }
+
+    DOMElement (String tagName, DOMProps props) {
+        this((HTMLElement) DomGlobal.document.createElement(tagName), props);
     }
 
     @Override
@@ -36,7 +37,7 @@ public class DOMElement extends UIObject<DOMProps, UIObject<?, ?>> {
     }
 
     @Override
-    public void setParent (UIObject<?, ?> parent) {
+    protected void setParent (UIObject<?, ?> parent) {
         this.parent = parent;
     }
 

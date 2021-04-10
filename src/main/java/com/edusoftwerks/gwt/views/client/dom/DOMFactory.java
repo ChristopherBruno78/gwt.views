@@ -1,9 +1,17 @@
-package com.edusoftwerks.gwt.views.client.ui;
+package com.edusoftwerks.gwt.views.client.dom;
+
+import com.edusoftwerks.gwt.views.client.UIObject;
+import elemental2.dom.HTMLElement;
 
 public class DOMFactory {
     /**
      * STATIC METHODS
      */
+
+    static DOMElement create(HTMLElement el, DOMProps props) {
+        return new DOMElement(el, props);
+    }
+
     public static DOMElement create (String tagName, DOMProps props, String innerHtml) {
         DOMElement domElement = create(tagName, props);
         domElement.setInnerHtml(innerHtml);
@@ -13,6 +21,7 @@ public class DOMFactory {
     public static DOMElement create (String tagName, UIObject<?, ?>... children) {
         return create(tagName, new DOMProps(), children);
     }
+
 
     public static DOMElement create (String tagName, DOMProps props, UIObject<?, ?>... children) {
 

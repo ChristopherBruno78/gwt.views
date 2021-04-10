@@ -1,0 +1,12 @@
+<module rename-to="tests">
+
+    <inherits name="com.google.gwt.user.User"/>
+    <inherits name="elemental2.dom.Dom"/>
+    <inherits name="com.edusoftwerks.gwt.views.Views"/>
+    <inherits name="com.google.gwt.logging.Logging"/>
+
+    <source path='client'/>
+
+    <entry-point class="com.edusoftwerks.gwt.views.client.Tests" />
+
+</module>

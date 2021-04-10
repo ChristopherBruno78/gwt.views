@@ -1,4 +1,4 @@
-package com.edusoftwerks.gwt.views.client.ui;
+package com.edusoftwerks.gwt.views.client;
 
 import com.edusoftwerks.gwt.views.shared.AbstractProps;
 
@@ -10,6 +10,10 @@ public class UIProps<T extends AbstractProps<T>> extends AbstractProps<T> {
 
     final Map<String, Object> attributes = new HashMap<>();
     final Map<String, Object> styles = new HashMap<>();
+
+    public UIProps() {
+        hidden(false);
+    }
 
     public String className () {
         return (String) values.get("className");
@@ -55,8 +59,8 @@ public class UIProps<T extends AbstractProps<T>> extends AbstractProps<T> {
                 .iterator();
     }
 
-    public boolean hidden () {
-        return (boolean) values.get("hidden");
+    public Boolean hidden () {
+        return (Boolean) get("hidden");
     }
 
     public T hidden (boolean flag) {

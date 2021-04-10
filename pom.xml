@@ -106,6 +106,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- gwt test utils -->
+        <dependency>
+            <groupId>com.googlecode.gwt-test-utils</groupId>
+            <artifactId>gwt-test-utils</artifactId>
+            <version>0.63</version>
+        </dependency>
+
     </dependencies>
 
 </project>

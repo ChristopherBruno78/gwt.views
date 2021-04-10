@@ -1,4 +1,4 @@
-package com.edusoftwerks.gwt.views.client.ui;
+package com.edusoftwerks.gwt.views.client.dom;
 
 import java.util.ArrayList;
 import java.util.List;

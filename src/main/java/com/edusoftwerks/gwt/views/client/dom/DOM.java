@@ -1,7 +1,6 @@
-package com.edusoftwerks.gwt.views.client.ui;
+package com.edusoftwerks.gwt.views.client.dom;
 
 import com.edusoftwerks.gwt.views.shared.geometry.Rectangle;
-import elemental2.core.JsObject;
 import elemental2.dom.*;
 
 /**
@@ -16,7 +15,7 @@ public class DOM {
      * @return true if the element has focus, false otherwise
      */
     public static native boolean hasFocus (HTMLElement element) /*-{
-        return element.ownerDocument.activeElement == element;
+        return element.ownerDocument.activeElement === element;
     }-*/;
 
     /**
@@ -25,14 +24,9 @@ public class DOM {
      * @param element any element inside the document
      * @return an Element object that is the activeElement in the document
      */
-    private static native HTMLElement getFocus (HTMLElement element) /*-{
-        return element.ownerDocument.activeElement;
-
+    public static native HTMLElement getFocus () /*-{
+        return document.activeElement;
     }-*/;
-
-//    public static Element getFocus() {
-//        return getFocus(RootView.get().getElement());
-//    }
 
     /**
      * Creates a comment in the DOM
@@ -40,21 +34,25 @@ public class DOM {
      * @param comment
      * @return returns the comment DOM element
      */
-    public static native HTMLElement createComment (String comment)/*-{
-        return document.createComment(comment);
-    }-*/;
+    public static Comment createComment (String comment) {
+        return DomGlobal.document.createComment(comment);
+    }
 
     public static native boolean isDisplayed (HTMLElement element) /*-{
         return element.offsetParent !== null;
     }-*/;
 
-    private static native DomRect rectClient (HTMLElement element) /*-{
+    private static native DOMRect rectClient (HTMLElement element) /*-{
         return element.getBoundingClientRect();
     }-*/;
 
+    private static int ROUND(double x) {
+        return (int) Math.round(x);
+    }
+
     public static Rectangle getBoundingRectClient (HTMLElement element) {
-        DomRect obj = rectClient(element);
-        return new Rectangle(obj.getX(), obj.getY(), obj.getWidth(), obj.getHeight());
+        DOMRect obj = rectClient(element);
+        return new Rectangle(ROUND(obj.x),ROUND(obj.y),ROUND(obj.width), ROUND(obj.height));
     }
 
     public static boolean isVisible (HTMLElement element) {
@@ -177,28 +175,6 @@ public class DOM {
         }
 
         $wnd.document.body.removeChild(outer);
-
         return (w1 - w2) + 1;
     }-*/;
-
-    private static class DomRect extends JsObject {
-        protected DomRect () {
-        }
-
-        public final native int getX () /*-{
-            return this.left;
-        }-*/;
-
-        public final native int getY () /*-{
-            return this.top;
-        }-*/;
-
-        public final native int getWidth () /*-{
-            return this.width;
-        }-*/;
-
-        public final native int getHeight () /*-{
-            return this.height;
-        }-*/;
-    }
 }

@@ -7,6 +7,10 @@ public abstract class AbstractProps<T extends AbstractProps<T>> {
 
     protected Map<String, Object> values = new HashMap<>();
 
+    public Object get(String key) {
+        return values.get(key);
+    }
+
     /**
      * Set a property with name key a given value
      *

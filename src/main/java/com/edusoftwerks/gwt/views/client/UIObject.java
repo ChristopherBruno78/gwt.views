@@ -1,5 +1,9 @@
-package com.edusoftwerks.gwt.views.client.ui;
+package com.edusoftwerks.gwt.views.client;
 
+import com.edusoftwerks.gwt.views.client.dom.ClassNames;
+import com.edusoftwerks.gwt.views.client.dom.DOM;
+import com.edusoftwerks.gwt.views.shared.geometry.Rectangle;
+import elemental2.dom.Element;
 import elemental2.dom.HTMLElement;
 
 import java.util.Iterator;
@@ -44,7 +48,7 @@ public abstract class UIObject<T extends UIProps<T>, U extends UIObject<?, ?>> {
      *
      * @param parent
      */
-    public abstract void setParent (UIObject<?, ?> parent);
+    protected abstract void setParent (UIObject<?, ?> parent);
 
     /**
      * Returns a list of all the View's children
@@ -131,6 +135,14 @@ public abstract class UIObject<T extends UIProps<T>, U extends UIObject<?, ?>> {
         }
     }
 
+    public String getInnerHtml () {
+        if( getElement() != null ) {
+            return getElement().innerHTML;
+        }
+
+        return null;
+    }
+
     /**
      * Sets the inner HTML of the UI Object
      *
@@ -175,11 +187,12 @@ public abstract class UIObject<T extends UIProps<T>, U extends UIObject<?, ?>> {
         if( props != null ) {
             props.style(key, value);
         }
-        if( getElement() != null ) {
+        HTMLElement el = getElement();
+        if( el != null ) {
             if( value != null ) {
-                getElement().style.set(key, value.toString());
+                el.style.set(key, value.toString());
             } else {
-                getElement().style.removeAttribute(key);
+                el.style.removeAttribute(key);
             }
         }
     }
@@ -209,8 +222,9 @@ public abstract class UIObject<T extends UIProps<T>, U extends UIObject<?, ?>> {
         if( props != null ) {
             props.styles.remove(key);
         }
-        if( getElement() != null ) {
-            getElement().style.removeAttribute(key);
+        HTMLElement el = getElement();
+        if( el != null ) {
+            el.style.removeAttribute(key);
         }
     }
 
@@ -270,6 +284,9 @@ public abstract class UIObject<T extends UIProps<T>, U extends UIObject<?, ?>> {
         }
     }
 
+    /**
+     * Removes the UIObject from the parent and the DOM.
+     */
     public void removeFromParent () {
         if( getParent() != null ) {
             int index = getParent().getChildren().indexOf(this);
@@ -277,7 +294,15 @@ public abstract class UIObject<T extends UIProps<T>, U extends UIObject<?, ?>> {
         }
     }
 
-    void parseProps (T props) {
+    /**
+     * Gets the bounding box of the UIObject
+     * @return Rectangle with origin and size set
+     */
+    public Rectangle getGeometry() {
+        return DOM.getBoundingRectClient(getElement());
+    }
+
+    protected void parseProps (T props) {
 
         if( props != null ) {
             String className = props.className();
@@ -299,8 +324,10 @@ public abstract class UIObject<T extends UIProps<T>, U extends UIObject<?, ?>> {
             while (styleIt.hasNext()) {
                 String attr = styleIt.next();
                 String val = props.getStyle(attr);
-                if( val != null ) {
-                    getElement().style.set(attr, val);
+                Element el = getElement();
+                if( val != null && el instanceof HTMLElement ) {
+                    HTMLElement htmlEl = (HTMLElement) el;
+                    htmlEl.style.set(attr, val);
                 }
             }
         }
