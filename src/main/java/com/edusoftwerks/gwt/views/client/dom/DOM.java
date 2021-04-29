@@ -4,9 +4,11 @@ import com.edusoftwerks.gwt.views.shared.geometry.Rectangle;
 import elemental2.dom.*;
 
 /**
- * Extends the capabilities of the standard GWT DOM object
+ * DOM Utilities
  */
 public class DOM {
+
+    private static HTMLElement captureElement;
 
     /**
      * Checks if an element has focus
@@ -14,19 +16,59 @@ public class DOM {
      * @param element the element to check
      * @return true if the element has focus, false otherwise
      */
-    public static native boolean hasFocus (HTMLElement element) /*-{
+    public static native boolean hasFocus(HTMLElement element) /*-{
         return element.ownerDocument.activeElement === element;
     }-*/;
 
     /**
      * Gets the document's activeElement
      *
-     * @param element any element inside the document
      * @return an Element object that is the activeElement in the document
      */
-    public static native HTMLElement getFocus () /*-{
+    public static native HTMLElement getFocus() /*-{
         return document.activeElement;
     }-*/;
+
+    private static class DispatchHandler implements EventListener {
+
+        static DispatchHandler INSTANCE = new DispatchHandler();
+
+        @Override
+        public void handleEvent(Event evt) {
+            evt.stopImmediatePropagation();
+            evt.preventDefault();
+            Event e = new Event(evt.type);
+            e.target = captureElement;
+            e.currentTarget = captureElement;
+            captureElement.dispatchEvent(e);
+        }
+    }
+
+    public static void setCapture(HTMLElement element) {
+        releaseCapture(captureElement);
+        captureElement = element;
+        if (captureElement != null) {
+            DomGlobal.window.addEventListener(Events.ONMOUSEDOWN, DispatchHandler.INSTANCE);
+            DomGlobal.window.addEventListener(Events.ONMOUSEUP, DispatchHandler.INSTANCE);
+            DomGlobal.window.addEventListener(Events.ONMOUSEMOVE, DispatchHandler.INSTANCE);
+            DomGlobal.window.addEventListener(Events.ONKEYDOWN, DispatchHandler.INSTANCE);
+            DomGlobal.window.addEventListener(Events.ONKEYUP, DispatchHandler.INSTANCE);
+            DomGlobal.window.addEventListener(Events.ONKEYPRESS, DispatchHandler.INSTANCE);
+        }
+    }
+
+    public static void releaseCapture(HTMLElement element) {
+        if (captureElement == element) {
+            if (captureElement != null) {
+                DomGlobal.window.removeEventListener(Events.ONMOUSEDOWN, DispatchHandler.INSTANCE);
+                DomGlobal.window.removeEventListener(Events.ONMOUSEUP, DispatchHandler.INSTANCE);
+                DomGlobal.window.removeEventListener(Events.ONMOUSEMOVE, DispatchHandler.INSTANCE);
+                DomGlobal.window.removeEventListener(Events.ONKEYDOWN, DispatchHandler.INSTANCE);
+                DomGlobal.window.removeEventListener(Events.ONKEYUP, DispatchHandler.INSTANCE);
+                DomGlobal.window.removeEventListener(Events.ONKEYPRESS, DispatchHandler.INSTANCE);
+            }
+        }
+    }
 
     /**
      * Creates a comment in the DOM
@@ -34,15 +76,15 @@ public class DOM {
      * @param comment
      * @return returns the comment DOM element
      */
-    public static Comment createComment (String comment) {
+    public static Comment createComment(String comment) {
         return DomGlobal.document.createComment(comment);
     }
 
-    public static native boolean isDisplayed (HTMLElement element) /*-{
+    public static native boolean isDisplayed(HTMLElement element) /*-{
         return element.offsetParent !== null;
     }-*/;
 
-    private static native DOMRect rectClient (HTMLElement element) /*-{
+    private static native DOMRect rectClient(HTMLElement element) /*-{
         return element.getBoundingClientRect();
     }-*/;
 
@@ -50,25 +92,24 @@ public class DOM {
         return (int) Math.round(x);
     }
 
-    public static Rectangle getBoundingRectClient (HTMLElement element) {
+    public static Rectangle getBoundingRectClient(HTMLElement element) {
         DOMRect obj = rectClient(element);
-        return new Rectangle(ROUND(obj.x),ROUND(obj.y),ROUND(obj.width), ROUND(obj.height));
+        return new Rectangle(ROUND(obj.x), ROUND(obj.y), ROUND(obj.width), ROUND(obj.height));
     }
 
-    public static boolean isVisible (HTMLElement element) {
-        if( element != null ) {
+    public static boolean isVisible(HTMLElement element) {
+        if (element != null) {
             return !(element.style.getPropertyValue("visibility")
-                    .equalsIgnoreCase("hidden") ||
+                    .equals("hidden") ||
                     !isDisplayed(element));
         }
         return false;
     }
 
-    public static boolean isTabbable (HTMLElement element) {
-
-        if( DOM.isVisible(element) ) {
-            if( element.hasAttribute("tabIndex") ) {
-                if( Integer.parseInt(element.getAttribute("tabIndex")) > -1 ) {
+    public static boolean isTabbable(HTMLElement element) {
+        if (DOM.isVisible(element)) {
+            if (element.hasAttribute("tabIndex")) {
+                if (Integer.parseInt(element.getAttribute("tabIndex")) > -1) {
                     return true;
                 }
             }
@@ -79,41 +120,39 @@ public class DOM {
         return false;
     }
 
-    public static HTMLElement getLastTabbableElement (HTMLElement element) {
-
+    public static HTMLElement getLastTabbableElement(HTMLElement element) {
         int count = element.childElementCount,
                 i = count - 1;
         for (; i >= 0; i--) {
             HTMLElement child = (HTMLElement) element.childNodes.getAt(i);
-            if( DOM.isTabbable(child) ) {
+            if (DOM.isTabbable(child)) {
                 return child;
             }
             HTMLElement t = DOM.getLastTabbableElement(child);
-            if( t != null ) {
+            if (t != null) {
                 return t;
             }
         }
         return null;
     }
 
-    public static HTMLElement getFirstTabbableElement (HTMLElement element) {
-
+    public static HTMLElement getFirstTabbableElement(HTMLElement element) {
         int count = element.childElementCount,
                 i = 0;
         for (; i < count; i++) {
             HTMLElement child = (HTMLElement) element.childNodes.getAt(i);
-            if( DOM.isTabbable(child) ) {
+            if (DOM.isTabbable(child)) {
                 return child;
             }
             HTMLElement t = DOM.getFirstTabbableElement(child);
-            if( t != null ) {
+            if (t != null) {
                 return t;
             }
         }
         return null;
     }
 
-    public static native int getOuterHeight (HTMLElement $el)/*-{
+    public static native int getOuterHeight(HTMLElement $el)/*-{
         var style = $wnd.getComputedStyle($el),
             tm = parseInt(style.marginTop, 10),
             bm = parseInt(style.marginBottom, 10);
@@ -122,35 +161,34 @@ public class DOM {
 
     }-*/;
 
-    public static native int getOuterWidth (HTMLElement $el)/*-{
+    public static native int getOuterWidth(HTMLElement $el)/*-{
         var style = $wnd.getComputedStyle($el),
             lm = parseInt(style.marginLeft, 10),
             rm = parseInt(style.marginRight, 10);
         return lm + $el.offsetWidth + rm;
     }-*/;
 
-    public static native String getValue (HTMLElement el) /*-{
+    public static native String getValue(HTMLElement el) /*-{
         return el.value;
     }-*/;
 
-    public static native String setValue (HTMLElement el, String value) /*-{
+    public static native String setValue(HTMLElement el, String value) /*-{
         el.value = value;
     }-*/;
 
-    public static HTMLMetaElement getMetaTagWithName (String name) {
-
+    public static HTMLMetaElement getMetaTagWithName(String name) {
         NodeList<Element> metaElementList = DomGlobal.document.getElementsByTagName("meta");
         for (int i = 0; i < metaElementList.getLength(); i++) {
             HTMLMetaElement metaElement = (HTMLMetaElement) metaElementList.getAt(i);
-            if( metaElement.name
-                    .equals(name) ) {
+            if (metaElement.name
+                    .equals(name)) {
                 return metaElement;
             }
         }
         return null;
     }
 
-    public native static int getBrowserScrollbarWidth () /*-{
+    public native static int getBrowserScrollbarWidth() /*-{
         var inner = $wnd.document.createElement('p');
         inner.style.width = "100%";
         inner.style.height = "200px";

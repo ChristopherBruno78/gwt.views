@@ -1,0 +1,161 @@
+@external *.;
+
+.v-PopOver {
+    z-index: 10000;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(140, 140, 140, .4);
+    position: absolute;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: auto;
+    height: auto;
+    overflow: visible !important;
+    background: #fff;
+    border: 1px solid #bbb;
+    display: block;
+
+}
+
+.v-PopOver.v-hidden {
+    pointer-events: none;
+}
+
+.v-PopOver > div {
+    position: relative;
+    margin: 0;
+}
+
+.v-PopOver-triangle-none,
+.v-PopOver-callout-none {
+    display: none;
+}
+
+.v-PopOver.closed {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.v-PopOver.fadeOut {
+    opacity: 0;
+}
+
+.v-PopOver-callout {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    display: block;
+}
+
+.v-PopOver-callout--t {
+    top: 100%;
+    margin-top: -4px
+}
+
+.v-PopOver-callout--r {
+    right: 100%;
+    margin-right: -5px
+}
+
+.v-PopOver-callout--b {
+    bottom: 100%;
+    margin-bottom: -5px
+}
+
+.v-PopOver-callout--l {
+    left: 100%;
+    margin-left: -5px
+}
+
+.v-PopOver-callout--left {
+    left: 10px
+}
+
+.v-PopOver-callout--center {
+    left: 50%;
+    margin-left: -6px
+}
+
+.v-PopOver-callout--right {
+    right: 10px
+}
+
+.v-PopOver-callout--top {
+    top: 10px
+}
+
+.v-PopOver-callout--middle {
+    top: 50%;
+    margin-top: -6px
+}
+
+.v-PopOver-callout--bottom {
+    bottom: 10px
+}
+
+.v-PopOver-triangle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    background: none;
+    z-index: 10000;
+    border-style: solid;
+    border-color: #9a9a9a;
+    border-width: 1px 1px 0 0;
+    background: #fff;
+}
+
+.v-PopOver-triangle--t {
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    -o-transform: rotate(135deg);
+    transform: rotate(135deg)
+}
+
+.v-PopOver-triangle--r {
+    -webkit-transform: rotate(-135deg);
+    -moz-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    transform: rotate(-135deg)
+}
+
+.v-PopOver-triangle--b {
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg)
+}
+
+.v-PopOver-triangle--l {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg)
+}
+
+.v-Tooltip {
+
+    background: #232e3c !important;
+    box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 2px 4px rgba(16, 22, 26, 0.2), 0 8px 24px rgba(16, 22, 26, 0.2);
+    border-color: #232e3c;
+    color: #fff;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 7px;
+    text-align: center;
+    white-space: nowrap;
+    min-width: 80px;
+    border-radius: 3px;
+    opacity: 0.94;
+}
+
+.v-Tooltip .v-PopOver-triangle {
+    border-color: #232e3c;
+    background: #232e3c !important;
+}

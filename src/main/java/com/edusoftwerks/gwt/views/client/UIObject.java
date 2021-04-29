@@ -3,11 +3,10 @@ package com.edusoftwerks.gwt.views.client;
 import com.edusoftwerks.gwt.views.client.dom.ClassNames;
 import com.edusoftwerks.gwt.views.client.dom.DOM;
 import com.edusoftwerks.gwt.views.shared.geometry.Rectangle;
-import elemental2.dom.Element;
+import elemental2.dom.EventListener;
 import elemental2.dom.HTMLElement;
 
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Base class of anything visible in a user interface. Every UIObject is backed
@@ -26,74 +25,125 @@ import java.util.List;
  * }
  * </pre>
  */
+public abstract class UIObject {
 
-public abstract class UIObject<T extends UIProps<T>, U extends UIObject<?, ?>> {
+    private final Map<String, ArrayList<EventListener>> eventListenerMap = new HashMap<>();
 
     /**
      * Returns the low-level Element that represents this View in the DOM
      *
      * @return the DOM Element
      */
-    public abstract HTMLElement getElement ();
+    public abstract HTMLElement getElement();
 
     /**
      * Returns the UIObject's parent, if it exists
      *
      * @return UIObject parent
      */
-    public abstract UIObject<?, ?> getParent ();
+    public abstract UIObject getParent();
 
     /**
      * Sets the View parent
      *
      * @param parent
      */
-    protected abstract void setParent (UIObject<?, ?> parent);
+    protected abstract void setParent(UIObject parent);
 
     /**
      * Returns a list of all the View's children
      * this View is the parent of the children
      *
-     * @return List of Views
+     * @return List of U type UIObjects
      */
-    public abstract List<UIObject<?, ?>> getChildren ();
-
-    /**
-     * Gets the Props of the View
-     *
-     * @return
-     */
-    public abstract T getProps ();
+    public abstract List<UIObject> getChildren();
 
     /**
      * Called once when the View enters the DOM
      */
-    public abstract void didEnterDocument ();
+    public void didEnterDocument() {
+    }
+
+    public void setInnerHtml(String text) {
+        getElement().innerHTML = text;
+    }
+
+    public String getInnerHtml() {
+        return getElement().innerHTML;
+    }
 
     /**
      * Called once when the View leaves the DOM
      */
-    public abstract void didLeaveDocument ();
-
-    void performRender () {
+    public void didLeaveDocument() {
     }
+
+    protected abstract void performRender();
+
+    void fireDidEnterDocument() {
+        didEnterDocument();
+        List<UIObject> children = getChildren();
+        for (UIObject uiObject : children) {
+            uiObject.fireDidEnterDocument();
+        }
+    }
+
+    void fireDidLeaveDocument() {
+        didLeaveDocument();
+        List<UIObject> children = getChildren();
+        for (UIObject uiObject : children) {
+            uiObject.fireDidLeaveDocument();
+        }
+        removeEventListeners();
+    }
+
+    public void addEventListener(String event, EventListener listener) {
+        if (!eventListenerMap.containsKey(event)) {
+            eventListenerMap.put(event, new ArrayList<>());
+        }
+        eventListenerMap.get(event).add(listener);
+        getElement().addEventListener(event, listener);
+    }
+
+    public void removeEventListener(String event) {
+        if (eventListenerMap.containsKey(event)) {
+            List<EventListener> listeners = eventListenerMap.get(event);
+            for (EventListener listener : listeners) {
+                getElement().removeEventListener(event, listener);
+            }
+            eventListenerMap.remove(event);
+        }
+    }
+
+    public void removeEventListeners() {
+        for (String s : eventListenerMap.keySet()) {
+            removeEventListener(s);
+        }
+    }
+
+    /**
+     * Gets the Props of the UIObject
+     *
+     * @return
+     */
+    public abstract UIProps<?> getProps();
 
     /**
      * Adds className to the UIObject
      *
      * @param name
      */
-    public void addClassName (String name) {
-        if( name != null ) {
-            T props = getProps();
-            if( props != null ) {
+    public void addClassName(String name) {
+        String[] klasses = name.split(" ");
+        for (String klass : klasses) {
+            UIProps<?> props = getProps();
+            if (props != null) {
                 props.className(ClassNames.start(props.className())
-                        .add(name)
+                        .add(klass.trim())
                         .build());
             }
-
-            if( getElement() != null ) {
-                getElement().classList.add(name);
+            if (getElement() != null) {
+                getElement().classList.add(klass.trim());
             }
         }
     }
@@ -103,15 +153,14 @@ public abstract class UIObject<T extends UIProps<T>, U extends UIObject<?, ?>> {
      *
      * @param name
      */
-
-    public void setClassName (String name) {
-        T props = getProps();
-        if( props != null ) {
-            if( name != null ) {
+    public void setClassName(String name) {
+        UIProps<?> props = getProps();
+        if (props != null) {
+            if (name != null) {
                 props.className(name);
             }
         }
-        if( getElement() != null ) {
+        if (getElement() != null) {
             getElement().className = name;
         }
     }
@@ -121,36 +170,17 @@ public abstract class UIObject<T extends UIProps<T>, U extends UIObject<?, ?>> {
      *
      * @param name
      */
-    public void removeClassName (String name) {
-        T props = getProps();
-        if( props != null ) {
+    public void removeClassName(String name) {
+        UIProps<?> props = getProps();
+        if (props != null) {
             String className = props.className();
-            if( className != null ) {
+            if (className != null) {
                 className = className.replace(name, "");
                 props.className(className);
             }
         }
-        if( getElement() != null ) {
+        if (getElement() != null) {
             getElement().classList.remove(name);
-        }
-    }
-
-    public String getInnerHtml () {
-        if( getElement() != null ) {
-            return getElement().innerHTML;
-        }
-
-        return null;
-    }
-
-    /**
-     * Sets the inner HTML of the UI Object
-     *
-     * @param innerHtml
-     */
-    public void setInnerHtml (String innerHtml) {
-        if( getElement() != null ) {
-            getElement().innerHTML = innerHtml;
         }
     }
 
@@ -161,13 +191,13 @@ public abstract class UIObject<T extends UIProps<T>, U extends UIObject<?, ?>> {
      * @param key
      * @param value
      */
-    public void setAttribute (String key, Object value) {
-        T props = getProps();
-        if( props != null ) {
+    public void setAttribute(String key, Object value) {
+        UIProps<?> props = getProps();
+        if (props != null) {
             props.attr(key, value);
         }
-        if( getElement() != null ) {
-            if( value != null ) {
+        if (getElement() != null) {
+            if (value != null) {
                 getElement().setAttribute(key, value.toString());
             } else {
                 removeAttribute(key);
@@ -182,14 +212,14 @@ public abstract class UIObject<T extends UIProps<T>, U extends UIObject<?, ?>> {
      * @param key
      * @param value
      */
-    public void setStyleAttribute (String key, Object value) {
-        T props = getProps();
-        if( props != null ) {
+    public void setStyleAttribute(String key, Object value) {
+        UIProps<?> props = getProps();
+        if (props != null) {
             props.style(key, value);
         }
         HTMLElement el = getElement();
-        if( el != null ) {
-            if( value != null ) {
+        if (el != null) {
+            if (value != null) {
                 el.style.set(key, value.toString());
             } else {
                 el.style.removeAttribute(key);
@@ -202,12 +232,12 @@ public abstract class UIObject<T extends UIProps<T>, U extends UIObject<?, ?>> {
      *
      * @param key
      */
-    public void removeAttribute (String key) {
-        T props = getProps();
-        if( props != null ) {
+    public void removeAttribute(String key) {
+        UIProps<?> props = getProps();
+        if (props != null) {
             props.attributes.remove(key);
         }
-        if( getElement() != null ) {
+        if (getElement() != null) {
             getElement().removeAttribute(key);
         }
     }
@@ -217,67 +247,50 @@ public abstract class UIObject<T extends UIProps<T>, U extends UIObject<?, ?>> {
      *
      * @param key
      */
-    public void removeStyleAttribute (String key) {
-        T props = getProps();
-        if( props != null ) {
+    public void removeStyleAttribute(String key) {
+        UIProps<?> props = getProps();
+        if (props != null) {
             props.styles.remove(key);
         }
         HTMLElement el = getElement();
-        if( el != null ) {
+        if (el != null) {
             el.style.removeAttribute(key);
         }
     }
 
-    void fireDidEnterDocument () {
-        didEnterDocument();
-        List<UIObject<?, ?>> children = getChildren();
-        for (UIObject<?, ?> uiObject : children) {
-            uiObject.fireDidEnterDocument();
-        }
-    }
-
-    void fireDidLeaveDocument () {
-        didLeaveDocument();
-        List<UIObject<?, ?>> children = getChildren();
-        for (UIObject<?, ?> uiObject : children) {
-            uiObject.fireDidLeaveDocument();
-        }
-    }
-
-    public void insert (int index, U view) {
+    public void insert(int index, UIObject view) {
         view.setParent(this);
         view.performRender();
         getChildren().add(index, view);
-        if( getElement() != null && view.getElement() != null ) {
-            if( index > -1 && index < getElement().childElementCount ) {
+        if (getElement() != null && view.getElement() != null) {
+            if (index > -1 && index < getElement().childElementCount) {
                 getElement().insertBefore(view.getElement(), getElement().childNodes.getAt(index));
             } else {
                 getElement().appendChild(view.getElement());
             }
-
             view.fireDidEnterDocument();
         }
     }
 
-    public void append (U... views) {
-        if( views != null ) {
-            for (U view : views) {
+    public void append(UIObject... views) {
+        if (views != null) {
+            for (UIObject view : views) {
                 insert(getChildren().size(), view);
             }
         }
     }
 
-    public void remove (U view) {
+    public void remove(UIObject view) {
         int index = getChildren().indexOf(view);
         remove(index);
     }
 
-    public void remove (int index) {
-        if( index > -1 && index < getChildren().size() ) {
-            UIObject<?, ?> uiObject = getChildren().get(index);
+    public void remove(int index) {
+        if (index > -1 && index < getChildren().size()) {
+            UIObject uiObject = getChildren().get(index);
             uiObject.setParent(null);
             getChildren().remove(index);
-            if( getElement() != null && uiObject.getElement() != null ) {
+            if (getElement() != null && uiObject.getElement() != null) {
                 getElement().removeChild(uiObject.getElement());
                 uiObject.fireDidLeaveDocument();
             }
@@ -287,8 +300,8 @@ public abstract class UIObject<T extends UIProps<T>, U extends UIObject<?, ?>> {
     /**
      * Removes the UIObject from the parent and the DOM.
      */
-    public void removeFromParent () {
-        if( getParent() != null ) {
+    public void removeFromParent() {
+        if (getParent() != null) {
             int index = getParent().getChildren().indexOf(this);
             getParent().remove(index);
         }
@@ -296,39 +309,34 @@ public abstract class UIObject<T extends UIProps<T>, U extends UIObject<?, ?>> {
 
     /**
      * Gets the bounding box of the UIObject
+     *
      * @return Rectangle with origin and size set
      */
     public Rectangle getGeometry() {
         return DOM.getBoundingRectClient(getElement());
     }
 
-    protected void parseProps (T props) {
-
-        if( props != null ) {
+    protected void parseProps(UIProps<?> props) {
+        if (props != null) {
             String className = props.className();
-            if( className != null && className.length() > 0 ) {
-                getElement().classList.add(className);
+            if (className != null && className.length() > 0) {
+                addClassName(className);
             }
-            if( props.hidden() ) {
+            if (props.hidden()) {
                 getElement().classList.add("v-hidden");
             }
             Iterator<String> attrIt = props.attributesIterator();
             while (attrIt.hasNext()) {
                 String attr = attrIt.next();
-                String val = props.getAttribute(attr);
-                if( val != null ) {
-                    getElement().setAttribute(attr, val);
-                }
+                String val = props.attr(attr).toString();
+                getElement().setAttribute(attr, val);
             }
             Iterator<String> styleIt = props.stylesIterator();
             while (styleIt.hasNext()) {
                 String attr = styleIt.next();
-                String val = props.getStyle(attr);
-                Element el = getElement();
-                if( val != null && el instanceof HTMLElement ) {
-                    HTMLElement htmlEl = (HTMLElement) el;
-                    htmlEl.style.set(attr, val);
-                }
+                String val = props.style(attr).toString();
+                HTMLElement $el = getElement();
+                $el.style.set(attr, val);
             }
         }
     }

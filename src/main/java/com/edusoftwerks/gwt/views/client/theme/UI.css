@@ -1,0 +1,82 @@
+@external *.;
+
+
+.v-hidden {
+    visibility: hidden;
+}
+
+.v-draggable {
+    cursor: move;
+}
+
+.v-no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+.v-scrollview {
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.v-table-layout {
+    display: table;
+}
+
+.v-tr {
+    display: table-row;
+}
+
+.v-td {
+    display: table-cell;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.v-loading,
+.v-loading:after {
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+}
+
+.v-loading {
+    border: 4px solid #d0d0d0; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: v-spin 1s linear infinite;
+}
+
+@keyframes v-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.v-Box {
+    position: relative;
+    padding: 20px 10px;
+    border: 1px solid;
+}
+
+.v-Box .text {
+    position: absolute;
+    top: -9px;
+    left: 10px;
+    font-size: 13px;
+    padding: 1px 3px 1px 3px;
+}

@@ -1,4 +1,4 @@
-package com.edusoftwerks.gwt.views.shared;
+package com.edusoftwerks.gwt.views.client;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ public abstract class AbstractProps<T extends AbstractProps<T>> {
      * @param value property value
      * @return the Props object for chain calls
      */
-    public T set (String key, Object value) {
+    public T set(String key, Object value) {
         values.put(key, value);
         return (T) this;
     }

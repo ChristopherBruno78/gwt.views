@@ -7,65 +7,73 @@ import elemental2.dom.HTMLElement;
 
 import java.util.*;
 
-public class DOMElement extends UIObject<DOMProps, UIObject<?, ?>> {
+public class DOMElement extends UIObject {
 
     private final HTMLElement $el;
     private final DOMProps props;
-    private final List<UIObject<?, ?>> children = new ArrayList<>();
-    private UIObject<?, ?> parent;
+    private final List<UIObject> children = new ArrayList<>();
+    private UIObject parent;
     private Map<String, List<EventListener>> eventListeners = null;
 
-    DOMElement(HTMLElement $el, DOMProps props) {
-        this.props = props;
-        this.$el = $el;
-        parseProps(this.props);
+    public DOMElement(HTMLElement $el) {
+        this($el, new DOMProps());
     }
 
-    DOMElement (String tagName, DOMProps props) {
+    public DOMElement(HTMLElement $el, DOMProps props) {
+        this.props = props;
+        this.$el = $el;
+        performRender();
+    }
+
+    public DOMElement(String tagName, DOMProps props) {
         this((HTMLElement) DomGlobal.document.createElement(tagName), props);
     }
 
     @Override
-    public HTMLElement getElement () {
+    public HTMLElement getElement() {
         assert ($el != null) : "This DOMElement's element is not set;";
         return $el;
     }
 
     @Override
-    public UIObject<?, ?> getParent () {
+    public UIObject getParent() {
         return parent;
     }
 
     @Override
-    protected void setParent (UIObject<?, ?> parent) {
+    protected void setParent(UIObject parent) {
         this.parent = parent;
     }
 
     @Override
-    public List<UIObject<?, ?>> getChildren () {
+    public List<UIObject> getChildren() {
         return children;
     }
 
     @Override
-    public DOMProps getProps () {
+    public DOMProps getProps() {
         return props;
     }
 
     @Override
-    public void didEnterDocument () {
+    public void didEnterDocument() {
     }
 
     @Override
-    public void didLeaveDocument () {
+    public void didLeaveDocument() {
     }
 
-    public void addEventListener (String eventType, EventListener listener) {
+    @Override
+    protected void performRender() {
+        parseProps(this.props);
+    }
 
-        if( eventListeners == null ) {
+    public void addEventListener(String eventType, EventListener listener) {
+        if (eventListeners == null) {
             eventListeners = new HashMap<>();
         }
         List<EventListener> listeners;
-        if( eventListeners.containsKey(eventType) ) {
+        if (eventListeners.containsKey(eventType)) {
             listeners = eventListeners.get(eventType);
         } else {
             listeners = new ArrayList<>();
@@ -75,18 +83,16 @@ public class DOMElement extends UIObject<DOMProps, UIObject<?, ?>> {
         $el.addEventListener(eventType, listener);
     }
 
-    public void removeEventListener (String eventType, EventListener listener) {
-
-        if( eventListeners.containsKey(eventType) ) {
+    public void removeEventListener(String eventType, EventListener listener) {
+        if (eventListeners.containsKey(eventType)) {
             List<EventListener> listeners = eventListeners.get(eventType);
             listeners.remove(listener);
             $el.removeEventListener(eventType, listener);
         }
     }
 
-    public void removeEventListeners (String eventType) {
-
-        if( eventListeners.containsKey(eventType) ) {
+    public void removeEventListeners(String eventType) {
+        if (eventListeners.containsKey(eventType)) {
             List<EventListener> listeners = eventListeners.get(eventType);
             for (EventListener listener : listeners) {
                 removeEventListener(eventType, listener);
@@ -95,7 +101,7 @@ public class DOMElement extends UIObject<DOMProps, UIObject<?, ?>> {
     }
 
     @Override
-    public void remove (int index) {
+    public void remove(int index) {
         super.remove(index);
         Set<String> eventSet = eventListeners.keySet();
         for (String eventType : eventSet) {

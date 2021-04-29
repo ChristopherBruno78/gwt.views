@@ -5,7 +5,7 @@ import com.google.gwt.core.client.EntryPoint;
 public class Tests implements EntryPoint {
 
     @Override
-    public void onModuleLoad () {
-        new DOMElementTest().run();
+    public void onModuleLoad() {
+        new ButtonTest().run();
     }
 }

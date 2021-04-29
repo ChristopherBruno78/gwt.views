@@ -10,37 +10,37 @@ public class ClassNames {
 
     private final List<String> classNames = new ArrayList<>();
 
-    private ClassNames () {
+    private ClassNames() {
     }
 
     /**
      * The initial classname
      *
-     * @param className
+     * @param className the class name
      * @return ClassNames instance
      */
-    public static ClassNames start (String className) {
+    public static ClassNames start(String className) {
         return start(className, true);
     }
 
     /**
      * Adds the className only if flag is true
      *
-     * @param className
+     * @param className the class name
      * @param flag
      * @return ClassNames instance
      */
-    public static ClassNames start (String className, boolean flag) {
+    public static ClassNames start(String className, boolean flag) {
         return new ClassNames().add(className, flag);
     }
 
     /**
      * Adds a className
      *
-     * @param className
+     * @param className the class name
      * @return ClassNames instance
      */
-    public ClassNames add (String className) {
+    public ClassNames add(String className) {
         return add(className, true);
     }
 
@@ -51,8 +51,8 @@ public class ClassNames {
      * @param flag
      * @return ClassNames instance
      */
-    public ClassNames add (String className, boolean flag) {
-        if( flag && className != null ) {
+    public ClassNames add(String className, boolean flag) {
+        if (flag && className != null) {
             classNames.add(className);
         }
         return this;
@@ -63,11 +63,11 @@ public class ClassNames {
      *
      * @return className string
      */
-    public String build () {
+    public String build() {
         StringBuilder sb = new StringBuilder();
         int index = 0;
         for (String v : classNames) {
-            if( index > 0 ) {
+            if (index > 0) {
                 sb.append(" ");
             }
             sb.append(v);

@@ -7,6 +7,6 @@
 
     <source path='client'/>
 
-    <entry-point class="com.edusoftwerks.gwt.views.client.Tests" />
+    <entry-point class="com.edusoftwerks.gwt.views.client.Tests"/>
 
 </module>
