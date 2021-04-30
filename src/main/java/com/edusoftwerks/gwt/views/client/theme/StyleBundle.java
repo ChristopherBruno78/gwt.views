@@ -19,4 +19,8 @@ public interface StyleBundle extends ClientBundle {
 
     @Source({"PopOver.css"})
     CssResource PopOverCss();
+
+    @Source({"SplitView.css"})
+    CssResource SplitViewCss();
+
 }

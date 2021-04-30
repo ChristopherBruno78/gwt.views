@@ -103,4 +103,5 @@ public abstract class View<T extends UIProps<T>> extends UIObject
     public int getHeight() {
         return getElement().offsetHeight;
     }
+
 }

@@ -268,8 +268,8 @@ public abstract class UIObject {
             } else {
                 getElement().appendChild(view.getElement());
             }
-            view.fireDidEnterDocument();
         }
+        view.fireDidEnterDocument();
     }
 
     public void append(UIObject... views) {
@@ -340,4 +340,5 @@ public abstract class UIObject {
             }
         }
     }
+
 }

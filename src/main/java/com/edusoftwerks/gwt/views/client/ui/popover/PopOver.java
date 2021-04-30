@@ -1,6 +1,5 @@
 package com.edusoftwerks.gwt.views.client.ui.popover;
 
-import com.edusoftwerks.gwt.views.client.UIObject;
 import com.edusoftwerks.gwt.views.client.dom.*;
 import com.edusoftwerks.gwt.views.client.ui.RootView;
 import com.edusoftwerks.gwt.views.client.ui.View;
@@ -83,11 +82,11 @@ public abstract class PopOver extends View<PopOverProps> {
         setHidden(false);
     }
 
-    public void show(UIObject alignWithView) {
+    public void show(View<?> alignWithView) {
         show(alignWithView, 0, 0);
     }
 
-    public void show(UIObject alignWithView, int offsetLeft, int offsetTop) {
+    public void show(View<?> alignWithView, int offsetLeft, int offsetTop) {
         PopOverPosition position = this.props.position();
         PopOverEdge edge = this.props.edge();
         HTMLElement atNode = alignWithView.getElement();
@@ -274,4 +273,5 @@ public abstract class PopOver extends View<PopOverProps> {
             callout.setClassName(getCalloutClassName());
         }
     }
+
 }

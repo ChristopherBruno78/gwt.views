@@ -27,7 +27,7 @@ public class DOMFactory {
                 i = 0;
         DOMElement domElement = new DOMElement(tagName, props);
         for (; i < len; i++) {
-            UIObject child = children[i];
+            UIObject child = children[ i ];
             //add UIObject to the root dom element
             if (child != null) {
                 domElement.append(child);
@@ -73,4 +73,5 @@ public class DOMFactory {
         e.append(uiObjects);
         return e;
     }
+
 }

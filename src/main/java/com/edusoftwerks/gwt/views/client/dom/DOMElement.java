@@ -108,4 +108,5 @@ public class DOMElement extends UIObject {
             removeEventListeners(eventType);
         }
     }
+
 }

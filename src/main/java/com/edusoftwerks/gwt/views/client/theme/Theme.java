@@ -11,5 +11,7 @@ public class Theme {
         StyleBundle.INSTANCE.RootViewCss().ensureInjected();
         StyleBundle.INSTANCE.ButtonCss().ensureInjected();
         StyleBundle.INSTANCE.PopOverCss().ensureInjected();
+        StyleBundle.INSTANCE.SplitViewCss().ensureInjected();
     }
+
 }
