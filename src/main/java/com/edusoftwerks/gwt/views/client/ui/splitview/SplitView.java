@@ -64,9 +64,9 @@ public abstract class SplitView extends View<SplitViewProps> {
         }
     }
 
-    protected abstract View<?> renderTopLeftView();
+    protected abstract View<?> renderTopLeft();
 
-    protected abstract View<?> renderBottomRightView();
+    protected abstract View<?> renderBottomRight();
 
     public int getStaticPaneLength() {
         return staticPaneLength;
@@ -77,7 +77,7 @@ public abstract class SplitView extends View<SplitViewProps> {
     }
 
     void layoutViews() {
-        append(renderTopLeftView(), renderBottomRightView());
+        append(renderTopLeft(), renderBottomRight());
         SplitViewOrientation orientation = this.props.orientation();
         SplitViewFlex flex = this.props.flex();
         if (leftTopView != null) {
@@ -123,7 +123,7 @@ public abstract class SplitView extends View<SplitViewProps> {
 
     @Override
     public void didEnterDocument() {
-        DOM.createComment("SplitView-" + ++splitViewID);
+        DOM.insertComment("SplitView-" + ++splitViewID, parent.getElement());
         layout();
         addEventListeners();
     }

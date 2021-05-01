@@ -1,10 +1,12 @@
 package com.edusoftwerks.gwt.views.client;
 
+import com.edusoftwerks.gwt.views.client.dom.DOMElement;
 import com.edusoftwerks.gwt.views.client.dom.DOMProps;
-import com.edusoftwerks.gwt.views.client.ui.DivView;
 import com.edusoftwerks.gwt.views.client.ui.View;
 import com.edusoftwerks.gwt.views.client.ui.splitview.SplitView;
 import com.edusoftwerks.gwt.views.client.ui.splitview.SplitViewProps;
+
+import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.div;
 
 public class SplitViewTest extends GwtViewsTest {
 
@@ -12,22 +14,25 @@ public class SplitViewTest extends GwtViewsTest {
     UIObject render() {
         return new SplitView(new SplitViewProps()) {
             @Override
-            protected View<?> renderTopLeftView() {
-                return new DivView(new DOMProps()
-                        .style("background", "#ddd")
-                        .style("border-right", "1px solid #bbb")
-                ) {
+            protected View<?> renderTopLeft() {
+                return new View<DOMProps>() {
                     @Override
-                    protected void addEventListeners() {
+                    protected DOMElement render() {
+                        return div(new DOMProps()
+                                .style("background", "#eee")
+                                .style("border-right", "1px solid #bbb")
+                        );
                     }
                 };
             }
 
             @Override
-            protected View<?> renderBottomRightView() {
-                return new DivView(new DOMProps().style("background", "#fff")) {
+            protected View<?> renderBottomRight() {
+                return new View<DOMProps>() {
                     @Override
-                    protected void addEventListeners() {
+                    protected DOMElement render() {
+                        return div(new DOMProps()
+                                .style("background", "#fff"));
                     }
                 };
             }

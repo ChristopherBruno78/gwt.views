@@ -4,7 +4,6 @@ import com.edusoftwerks.gwt.views.client.dom.*;
 import com.edusoftwerks.gwt.views.client.ui.RootView;
 import com.edusoftwerks.gwt.views.client.ui.View;
 import com.edusoftwerks.gwt.views.shared.geometry.Point;
-import com.google.gwt.core.client.GWT;
 import elemental2.dom.Event;
 import elemental2.dom.EventListener;
 import elemental2.dom.HTMLElement;
@@ -44,12 +43,10 @@ class SplitViewDivider extends View<SplitViewProps> {
             public void handleEvent(Event evt) {
                 evt.stopPropagation();
                 evt.preventDefault();
-                GWT.log("mouse down 1");
                 MouseEvent mouseEvent = Js.cast(evt);
                 mouseDown = true;
                 offset = getDividerOffset();
                 start = new Point((int) mouseEvent.clientX, (int) mouseEvent.clientY);
-                GWT.log(start.toString());
                 RootView.get().setStyleAttribute("cursor", (SplitViewDivider.this.props.orientation() == SplitViewOrientation.VERTICAL) ? "ew-resize" : "ns-resize");
                 DOM.setCapture(getElement());
 //
@@ -58,7 +55,6 @@ class SplitViewDivider extends View<SplitViewProps> {
         addEventListener(Events.ONMOUSEUP, new EventListener() {
             @Override
             public void handleEvent(Event evt) {
-                GWT.log("mouse up");
                 mouseDown = false;
                 DOM.releaseCapture(getElement());
                 RootView.get().setStyleAttribute("cursor", "default");
@@ -68,7 +64,7 @@ class SplitViewDivider extends View<SplitViewProps> {
             @Override
             public void handleEvent(Event evt) {
                 if (mouseDown) {
-                    HTMLElement sEl = splitView.getElement();
+                    HTMLElement $parent = getParent().getElement();
                     int sign = props.flex() == SplitViewFlex.TOP_LEFT ? -1 : 1;
                     SplitViewOrientation orientation = props.orientation();
                     MouseEvent mouseEvent = Js.cast(evt);
@@ -77,8 +73,8 @@ class SplitViewDivider extends View<SplitViewProps> {
                             Math.min(props.maxStaticPaneLength(), offset + sign * delta));
                     newOffset = Math.min(Math.max(newOffset, 0),
                             (orientation == SplitViewOrientation.VERTICAL) ?
-                                    sEl.parentElement.clientWidth :
-                                    sEl.parentElement.clientHeight
+                                    $parent.clientWidth :
+                                    $parent.clientHeight
                     );
                     setDividerOffset(newOffset);
                     splitView.setStaticPaneLength(newOffset);

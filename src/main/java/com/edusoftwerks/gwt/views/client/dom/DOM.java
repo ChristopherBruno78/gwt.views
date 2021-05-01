@@ -1,7 +1,6 @@
 package com.edusoftwerks.gwt.views.client.dom;
 
 import com.edusoftwerks.gwt.views.shared.geometry.Rectangle;
-import com.google.gwt.core.client.GWT;
 import elemental2.dom.*;
 import jsinterop.base.Js;
 
@@ -39,7 +38,6 @@ public class DOM {
         public void handleEvent(Event evt) {
             evt.stopImmediatePropagation();
             evt.preventDefault();
-            GWT.log(Events.isMouseEvent(evt) + "");
             if (Events.isMouseEvent(evt)) {
                 MouseEvent oldEvent = Js.cast(evt);
                 captureElement.dispatchEvent(Events.cloneMouseEvent(oldEvent));
@@ -84,9 +82,11 @@ public class DOM {
      * Creates a comment in the DOM
      *
      * @param comment
+     * @param parent
      */
-    public static Comment createComment(String comment) {
-        return DomGlobal.document.createComment(comment);
+    public static void insertComment(String comment, HTMLElement parent) {
+        Comment $comment = DomGlobal.document.createComment(comment);
+        parent.appendChild($comment);
     }
 
     public static native boolean isDisplayed(HTMLElement element) /*-{

@@ -18,6 +18,9 @@ public abstract class View<T extends UIProps<T>> extends UIObject
     private final List<UIObject> subViews = new ArrayList<>();
     private boolean isRendered = false;
 
+    public View() {
+    }
+
     public View(T props) {
         this.props = props;
     }
@@ -50,9 +53,10 @@ public abstract class View<T extends UIProps<T>> extends UIObject
         return props;
     }
 
-    protected abstract void addEventListeners();
-
     protected abstract DOMElement render();
+
+    protected void addEventListeners() {
+    }
 
     @Override
     public void performRender() {
