@@ -9,8 +9,13 @@ public abstract class GwtViewsTest {
     protected void addEventListeners() {
     }
 
+    protected void didRun() {
+    }
+
     public void run() {
         RootView.get().append(render());
         addEventListeners();
+        didRun();
     }
+
 }

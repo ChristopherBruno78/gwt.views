@@ -21,6 +21,11 @@ public class Events {
     public static final String ONBLUR = "blur";
     public static final String ONACTION = "action";
     public static final String ONCLOSE = "close";
+    public static final String ONCHANGE = "change";
+    public static final String ONINPUT = "input";
+    public static final String ONCUT = "cut";
+    public static final String ONPASTE = "paste";
+    public static final String ONCANCEL = "cancel";
 
     public static void fireEvent(String eventName, HTMLElement target) {
         if (target != null) {
@@ -48,6 +53,12 @@ public class Events {
         KeyboardEventInit init = KeyboardEventInit.create();
         init.setChar(oldEvent.char_);
         init.setCode(oldEvent.code);
+        init.setAltKey(oldEvent.altKey);
+        init.setCtrlKey(oldEvent.ctrlKey);
+        init.setMetaKey(oldEvent.metaKey);
+        init.setKey(oldEvent.key);
+        init.setShiftKey(oldEvent.shiftKey);
+        init.setLocation(oldEvent.location);
         return new KeyboardEvent(oldEvent.type, init);
     }
 

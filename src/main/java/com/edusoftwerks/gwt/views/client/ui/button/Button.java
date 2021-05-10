@@ -1,6 +1,7 @@
 package com.edusoftwerks.gwt.views.client.ui.button;
 
 import com.edusoftwerks.gwt.views.client.dom.*;
+import com.edusoftwerks.gwt.views.client.theme.Theme;
 import com.edusoftwerks.gwt.views.client.ui.Control;
 import com.edusoftwerks.gwt.views.client.ui.popover.PopOver;
 import com.edusoftwerks.gwt.views.client.ui.popover.PopOverEdge;
@@ -22,6 +23,10 @@ public class Button extends Control<ButtonProps> {
     private PopOver toolTip;
     private Timer clearToolTipTimer;
     private Timer showToolTipTimer;
+
+    static {
+        Theme.get().ButtonCss().ensureInjected();
+    }
 
     public Button(ButtonProps props) {
         super(props);
@@ -70,7 +75,7 @@ public class Button extends Control<ButtonProps> {
                                 $iconEl = create(
                                         "i",
                                         new DOMProps()
-                                                .className(this.props.icon())))
+                                                .className("font-icon " + this.props.icon())))
                         : null,
                 !this.props.iconOnly() ? $labelEl = label(new DOMProps().className("label"), this.props.text()) : null);
     }
@@ -184,4 +189,5 @@ public class Button extends Control<ButtonProps> {
             showToolTipTimer.schedule(this.props.tooltipTimeout());
         }
     }
+
 }

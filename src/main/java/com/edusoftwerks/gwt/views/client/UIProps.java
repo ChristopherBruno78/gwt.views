@@ -33,7 +33,10 @@ public class UIProps<T extends AbstractProps<T>> extends AbstractProps<T> {
 
     public String attr(String attribute) {
         if (attributes.containsKey(attribute)) {
-            return attributes.get(attribute).toString();
+            Object value = attributes.get(attribute);
+            if (value != null) {
+                return value.toString();
+            }
         }
         return "";
     }
@@ -45,7 +48,10 @@ public class UIProps<T extends AbstractProps<T>> extends AbstractProps<T> {
 
     public String style(String attribute) {
         if (styles.containsKey(attribute)) {
-            return styles.get(attribute).toString();
+            Object value = styles.get(attribute);
+            if (value != null) {
+                return value.toString();
+            }
         }
         return "";
     }
@@ -83,4 +89,5 @@ public class UIProps<T extends AbstractProps<T>> extends AbstractProps<T> {
     public T width(Integer width) {
         return style("width", width + "px");
     }
+
 }

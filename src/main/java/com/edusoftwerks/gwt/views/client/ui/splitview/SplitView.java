@@ -3,6 +3,7 @@ package com.edusoftwerks.gwt.views.client.ui.splitview;
 import com.edusoftwerks.gwt.views.client.UIObject;
 import com.edusoftwerks.gwt.views.client.dom.DOM;
 import com.edusoftwerks.gwt.views.client.dom.DOMElement;
+import com.edusoftwerks.gwt.views.client.theme.Theme;
 import com.edusoftwerks.gwt.views.client.ui.View;
 import elemental2.dom.HTMLElement;
 
@@ -13,6 +14,10 @@ public abstract class SplitView extends View<SplitViewProps> {
     private final SplitViewDivider divider;
     private int staticPaneLength;
     static int splitViewID = 0;
+
+    static {
+        Theme.get().SplitViewCss().ensureInjected();
+    }
 
     public SplitView(SplitViewProps props) {
         super(props);

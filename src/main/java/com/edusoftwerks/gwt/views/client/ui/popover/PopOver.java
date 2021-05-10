@@ -1,6 +1,7 @@
 package com.edusoftwerks.gwt.views.client.ui.popover;
 
 import com.edusoftwerks.gwt.views.client.dom.*;
+import com.edusoftwerks.gwt.views.client.theme.Theme;
 import com.edusoftwerks.gwt.views.client.ui.RootView;
 import com.edusoftwerks.gwt.views.client.ui.View;
 import com.edusoftwerks.gwt.views.shared.geometry.Rectangle;
@@ -15,6 +16,10 @@ public abstract class PopOver extends View<PopOverProps> {
 
     private DOMElement callout;
     private DOMElement triangle;
+
+    static {
+        Theme.get().PopOverCss().ensureInjected();
+    }
 
     public PopOver() {
         this(new PopOverProps());

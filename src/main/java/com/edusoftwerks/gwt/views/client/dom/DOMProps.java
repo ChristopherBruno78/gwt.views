@@ -15,7 +15,24 @@ public class DOMProps extends UIProps<DOMProps> {
         );
     }
 
+    public String padding() {
+        return style("padding");
+    }
+
+    public DOMProps padding(Integer padding) {
+        return style("padding", padding + "px");
+    }
+
+    public String margin() {
+        return style("margin");
+    }
+
+    public DOMProps margin(Integer margin) {
+        return style("margin", margin + "px");
+    }
+
     public String backgroundImage() {
         return style("background-image");
     }
+
 }
