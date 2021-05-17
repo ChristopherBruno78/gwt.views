@@ -2,6 +2,7 @@ package com.edusoftwerks.gwt.views.client;
 
 import com.edusoftwerks.gwt.views.client.dom.DOMProps;
 import com.edusoftwerks.gwt.views.client.dom.Events;
+import com.edusoftwerks.gwt.views.client.ui.text.MaskedText;
 import com.edusoftwerks.gwt.views.client.ui.text.SearchText;
 import com.edusoftwerks.gwt.views.client.ui.text.Text;
 import com.edusoftwerks.gwt.views.client.ui.text.TextProps;
@@ -15,6 +16,7 @@ public class TextTest extends GwtViewsTest {
 
     Text text;
     SearchText searchText;
+    MaskedText maskedText;
 
     @Override
     UIObject render() {
@@ -22,18 +24,21 @@ public class TextTest extends GwtViewsTest {
                         .margin(15),
                 text = new Text(new TextProps()
                         .height(32)
-                        .secure(true)
+                        .secure(false)
+                        .readOnly(false)
+                        .text("Test")
                         .multiline(false)),
-                searchText = new SearchText(new TextProps())
+                searchText = new SearchText(new TextProps()),
+                maskedText = new MaskedText(new TextProps().mask("999-99-9999"))
         );
     }
 
     @Override
     public void addEventListeners() {
-        text.addEventListener(Events.ONINPUT, new EventListener() {
+        maskedText.addEventListener(Events.ONINPUT, new EventListener() {
             @Override
             public void handleEvent(Event evt) {
-                GWT.log(text.getText());
+                GWT.log(maskedText.getText());
             }
         });
         text.addActionListener(new EventListener() {

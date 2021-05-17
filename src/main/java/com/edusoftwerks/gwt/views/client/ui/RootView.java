@@ -2,8 +2,7 @@ package com.edusoftwerks.gwt.views.client.ui;
 
 import com.edusoftwerks.gwt.views.client.dom.DOMElement;
 import com.edusoftwerks.gwt.views.client.dom.DOMProps;
-import com.google.gwt.event.logical.shared.ResizeEvent;
-import com.google.gwt.event.logical.shared.ResizeHandler;
+import com.edusoftwerks.gwt.views.client.theme.Theme;
 import com.google.gwt.user.client.Window;
 import elemental2.dom.DomGlobal;
 
@@ -11,6 +10,10 @@ public final class RootView extends View<DOMProps> {
 
     private static final RootView INSTANCE = new RootView();
     //private static Timer resizeTimer = null;
+
+    static {
+        Theme.get().RootViewCss().ensureInjected();
+    }
 
     private RootView() {
         super(new DOMProps());
@@ -23,12 +26,7 @@ public final class RootView extends View<DOMProps> {
 
     @Override
     protected void addEventListeners() {
-        Window.addResizeHandler(new ResizeHandler() {
-            @Override
-            public void onResize(ResizeEvent resizeEvent) {
-                RootView.this.onResize();
-            }
-        });
+        Window.addResizeHandler(resizeEvent -> RootView.this.onResize());
     }
 
     @Override

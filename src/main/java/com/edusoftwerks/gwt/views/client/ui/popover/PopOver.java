@@ -100,6 +100,7 @@ public abstract class PopOver extends View<PopOverProps> {
         Rectangle rect = DOM.getBoundingRectClient(atNode);
         int left = rect.origin.x;
         int top = rect.origin.y;
+        GWT.log("TOP=" + top);
         switch (position) {
             case RIGHT: {
                 left += atNodeWidth;
@@ -157,11 +158,11 @@ public abstract class PopOver extends View<PopOverProps> {
             }
             break;
             case TOP: {
-                deltaTop -= $layer.offsetHeight;
+                deltaTop -= ($layer.offsetHeight);
                 deltaTop -= 18;
             }
             case BOTTOM: {
-                deltaTop += 10;
+                deltaTop -= 3;
                 switch (edge) {
                     case CENTER: {
                         deltaLeft -= $layer.offsetWidth >> 1;
@@ -174,8 +175,7 @@ public abstract class PopOver extends View<PopOverProps> {
                 }
             }
         }
-        adjustPosition(deltaLeft, deltaTop);
-        GWT.log(this.props.borderColor().toString());
+        adjustPosition(left, top, deltaLeft, deltaTop);
         HTMLElement $triangle = triangle.getElement();
         $triangle.style.backgroundColor = this.props.backgroundColor().toHexString();
         $triangle.style.borderColor = this.props.borderColor().toHexString();
@@ -183,13 +183,11 @@ public abstract class PopOver extends View<PopOverProps> {
         open();
     }
 
-    private void adjustPosition(int deltaLeft, int deltaTop) {
-        HTMLElement el = getElement();
+    private void adjustPosition(int left, int top, int deltaLeft, int deltaTop) {
+        HTMLElement $el = getElement();
         int calloutDelta = 0;
         PopOverPosition position = this.props.position();
         boolean calloutIsAtTopOrBottom = position == PopOverPosition.TOP || position == PopOverPosition.BOTTOM;
-        Rectangle rect = DOM.getBoundingRectClient(el);
-        int left = rect.origin.x, top = rect.origin.y;
         int gap = RootView.get().getWidth() - left - deltaLeft - getWidth();
         //check right edge
         if (gap < 0) {
@@ -231,8 +229,8 @@ public abstract class PopOver extends View<PopOverProps> {
         }
         top += deltaTop;
         left += deltaLeft;
-        el.style.top = top + "px";
-        el.style.left = left + "px";
+        $el.style.top = top + "px";
+        $el.style.left = left + "px";
         HTMLElement $callout = callout.getElement();
         $callout.removeAttribute("style");
         if (this.props.isCallout() && calloutDelta != 0) {

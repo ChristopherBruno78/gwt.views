@@ -3,6 +3,8 @@ package com.edusoftwerks.gwt.views.client.ui.text;
 import com.edusoftwerks.gwt.views.client.dom.*;
 import com.edusoftwerks.gwt.views.client.theme.Theme;
 import com.edusoftwerks.gwt.views.client.ui.Control;
+import com.edusoftwerks.gwt.views.shared.geometry.Range;
+import com.google.gwt.event.dom.client.KeyCodes;
 import elemental2.dom.*;
 import jsinterop.base.Js;
 
@@ -14,7 +16,6 @@ public class Text extends Control<TextProps> {
     protected DOMElement input = null;
     private String lastValue = null;
     private boolean isError = false;
-    private EventListener onTextChangeListener;
 
     static {
         Theme.get().TextCss().ensureInjected();
@@ -54,6 +55,23 @@ public class Text extends Control<TextProps> {
 
     public boolean isSecure() {
         return this.props.secure();
+    }
+
+    public boolean isReadOnly() {
+        return this.props.readOnly();
+    }
+
+    public void setReadOnly(boolean flag) {
+        this.props.readOnly(flag);
+        if (isRendered()) {
+            if (flag) {
+                setAttribute("aria-readonly", "true");
+                input.setAttribute("readonly", "true");
+            } else {
+                setAttribute("aria-readonly", "false");
+                input.removeAttribute("readonly");
+            }
+        }
     }
 
     public void setPlaceholder(String placeholder) {
@@ -128,33 +146,25 @@ public class Text extends Control<TextProps> {
     @Override
     protected void addEventListeners() {
         HTMLElement $input = input.getElement();
-        $input.addEventListener(Events.ONFOCUS, onFocusListener = new EventListener() {
-            @Override
-            public void handleEvent(Event evt) {
-                addClassName("is-focused");
-                //forward event to main component
-                Events.fireEvent(Events.ONFOCUS, getElement());
-            }
+        $input.addEventListener(Events.ONFOCUS, onFocusListener = evt -> {
+            addClassName("is-focused");
+            //forward event to main component
+            Events.fireEvent(Events.ONFOCUS, getElement());
         });
-        $input.addEventListener(Events.ONBLUR, onBlurListener = new EventListener() {
-            @Override
-            public void handleEvent(Event evt) {
-                removeClassName("is-focused");
-                //forward event to main component
-                Events.fireEvent(Events.ONBLUR, getElement());
-            }
+        $input.addEventListener(Events.ONBLUR, onBlurListener = evt -> {
+            removeClassName("is-focused");
+            //forward event to main component
+            Events.fireEvent(Events.ONBLUR, getElement());
         });
-        $input.addEventListener(Events.ONKEYPRESS, onKeyPressListener = new EventListener() {
+        $input.addEventListener(Events.ONKEYPRESS, onKeyPressListener = new KeyboardEventListener() {
             @Override
-            public void handleEvent(Event evt) {
+            public void handleKeyboardEvent(KeyboardEvent keyboardEvent, int keyCode) {
                 if (!props.multiline()) {
-                    KeyboardEvent keyboardEvent = Js.cast(evt);
-                    if (keyboardEvent.code.equals(KeyCodes.Enter)) {
-                        evt.preventDefault();
+                    if (keyCode == KeyCodes.KEY_ENTER) {
+                        keyboardEvent.preventDefault();
                         fireActions();
                     }
                 }
-
             }
         });
         $input.addEventListener(Events.ONINPUT, onInputListener = this::handleChange);
@@ -178,9 +188,7 @@ public class Text extends Control<TextProps> {
     @Override
     public void didEnterDocument() {
         setText(this.props.text());
-        if (this.props.readOnly()) {
-            input.setAttribute("readOnly", "true");
-        }
+        setReadOnly(this.props.readOnly());
     }
 
     String getRawValue() {
@@ -203,6 +211,16 @@ public class Text extends Control<TextProps> {
                 input.getElement().blur();
             }
         }
+    }
+
+    public void setSelectionRange(int begin, int end) {
+        HTMLInputElement $input = Js.cast(input.getElement());
+        $input.setSelectionRange(begin, end);
+    }
+
+    public Range getSelectionRange() {
+        HTMLInputElement $input = Js.cast(input.getElement());
+        return new Range($input.selectionStart, $input.selectionEnd);
     }
 
 }

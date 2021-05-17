@@ -25,6 +25,14 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-times-solid:before {
+    content: "\e902";
+}
+
+.icon-search-solid:before {
+    content: "\e903";
+}
+
 .icon-angle-down-solid:before {
     content: "\e900";
 }

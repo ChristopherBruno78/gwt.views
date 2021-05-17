@@ -8,7 +8,6 @@ import elemental2.dom.Event;
 import elemental2.dom.EventListener;
 import elemental2.dom.HTMLElement;
 import elemental2.dom.MouseEvent;
-import jsinterop.base.Js;
 
 import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.div;
 
@@ -38,18 +37,16 @@ class SplitViewDivider extends View<SplitViewProps> {
 
     @Override
     protected void addEventListeners() {
-        addEventListener(Events.ONMOUSEDOWN, new EventListener() {
+        addEventListener(Events.ONMOUSEDOWN, new MouseEventListener() {
             @Override
-            public void handleEvent(Event evt) {
-                evt.stopPropagation();
-                evt.preventDefault();
-                MouseEvent mouseEvent = Js.cast(evt);
+            public void handleMouseEvent(MouseEvent event) {
+                event.stopPropagation();
+                event.preventDefault();
                 mouseDown = true;
                 offset = getDividerOffset();
-                start = new Point((int) mouseEvent.clientX, (int) mouseEvent.clientY);
+                start = new Point((int) event.clientX, (int) event.clientY);
                 RootView.get().setStyleAttribute("cursor", (SplitViewDivider.this.props.orientation() == SplitViewOrientation.VERTICAL) ? "ew-resize" : "ns-resize");
                 DOM.setCapture(getElement());
-//
             }
         });
         addEventListener(Events.ONMOUSEUP, new EventListener() {
@@ -60,15 +57,14 @@ class SplitViewDivider extends View<SplitViewProps> {
                 RootView.get().setStyleAttribute("cursor", "default");
             }
         });
-        addEventListener(Events.ONMOUSEMOVE, new EventListener() {
+        addEventListener(Events.ONMOUSEMOVE, new MouseEventListener() {
             @Override
-            public void handleEvent(Event evt) {
+            public void handleMouseEvent(MouseEvent event) {
                 if (mouseDown) {
                     HTMLElement $parent = getParent().getElement();
                     int sign = props.flex() == SplitViewFlex.TOP_LEFT ? -1 : 1;
                     SplitViewOrientation orientation = props.orientation();
-                    MouseEvent mouseEvent = Js.cast(evt);
-                    int delta = (orientation == SplitViewOrientation.VERTICAL) ? (int) (mouseEvent.clientX - start.x) : (int) (mouseEvent.clientY - start.y);
+                    int delta = (orientation == SplitViewOrientation.VERTICAL) ? (int) (event.clientX - start.x) : (int) (event.clientY - start.y);
                     int newOffset = Math.max(props.minStaticPaneLength(),
                             Math.min(props.maxStaticPaneLength(), offset + sign * delta));
                     newOffset = Math.min(Math.max(newOffset, 0),
@@ -82,10 +78,8 @@ class SplitViewDivider extends View<SplitViewProps> {
                     splitView.leftTopView.onResize();
                     splitView.bottomRightView.onResize();
                 }
-
             }
         });
-
     }
 
     void layout() {

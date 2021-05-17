@@ -25,7 +25,7 @@ public class ButtonTest extends GwtViewsTest {
                 new Button(new ButtonProps()
                         .text("Primary")
                         .type(ButtonType.PRIMARY)
-                        .icon("las la-check")
+                        .icon("icon-check-solid")
                 ),
                 new Button("Success", ButtonType.SUCCESS),
                 new Button("Danger", ButtonType.DANGER),
@@ -39,7 +39,7 @@ public class ButtonTest extends GwtViewsTest {
                         .height(32)
                         .iconOnly(true)
                         .tooltip("CheckMark")
-                        .icon("las la-check")
+                        .icon("icon-check-solid")
                 )
         );
     }
@@ -53,4 +53,5 @@ public class ButtonTest extends GwtViewsTest {
             }
         });
     }
+
 }

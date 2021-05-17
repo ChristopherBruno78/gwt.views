@@ -3,10 +3,10 @@ package com.edusoftwerks.gwt.views.client.ui.checkbox;
 import com.edusoftwerks.gwt.views.client.dom.*;
 import com.edusoftwerks.gwt.views.client.theme.Theme;
 import com.edusoftwerks.gwt.views.client.ui.Control;
+import com.google.gwt.event.dom.client.KeyCodes;
 import elemental2.dom.Event;
 import elemental2.dom.EventListener;
 import elemental2.dom.KeyboardEvent;
-import jsinterop.base.Js;
 
 import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.div;
 import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.label;
@@ -72,15 +72,14 @@ public class Switch extends Control<CheckBoxProps> {
                 fireActions();
             }
         });
-        addEventListener(Events.ONKEYDOWN, new EventListener() {
+        addEventListener(Events.ONKEYDOWN, new KeyboardEventListener() {
             @Override
-            public void handleEvent(Event evt) {
+            public void handleKeyboardEvent(KeyboardEvent keyboardEvent, int keyCode) {
                 if (isDisabled()) {
                     return;
                 }
-                KeyboardEvent keyboardEvent = Js.cast(evt);
-                if (keyboardEvent.code.equals(KeyCodes.Space) ||
-                        keyboardEvent.code.equals(KeyCodes.Enter)) {
+                if (keyCode == KeyCodes.KEY_SPACE ||
+                        keyCode == KeyCodes.KEY_ENTER) {
                     setValue(!getValue());
                     fireActions();
                 }

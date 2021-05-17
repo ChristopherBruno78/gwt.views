@@ -2,10 +2,10 @@ package com.edusoftwerks.gwt.views.client.dom;
 
 import com.edusoftwerks.gwt.views.client.UIObject;
 import elemental2.dom.DomGlobal;
-import elemental2.dom.EventListener;
 import elemental2.dom.HTMLElement;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DOMElement extends UIObject {
 
@@ -13,7 +13,6 @@ public class DOMElement extends UIObject {
     private final DOMProps props;
     private final List<UIObject> children = new ArrayList<>();
     private UIObject parent;
-    private Map<String, List<EventListener>> eventListeners = null;
 
     public DOMElement(HTMLElement $el) {
         this($el, new DOMProps());
@@ -66,47 +65,6 @@ public class DOMElement extends UIObject {
     @Override
     protected void performRender() {
         parseProps(this.props);
-    }
-
-    public void addEventListener(String eventType, EventListener listener) {
-        if (eventListeners == null) {
-            eventListeners = new HashMap<>();
-        }
-        List<EventListener> listeners;
-        if (eventListeners.containsKey(eventType)) {
-            listeners = eventListeners.get(eventType);
-        } else {
-            listeners = new ArrayList<>();
-            eventListeners.put(eventType, listeners);
-        }
-        listeners.add(listener);
-        $el.addEventListener(eventType, listener);
-    }
-
-    public void removeEventListener(String eventType, EventListener listener) {
-        if (eventListeners.containsKey(eventType)) {
-            List<EventListener> listeners = eventListeners.get(eventType);
-            listeners.remove(listener);
-            $el.removeEventListener(eventType, listener);
-        }
-    }
-
-    public void removeEventListeners(String eventType) {
-        if (eventListeners.containsKey(eventType)) {
-            List<EventListener> listeners = eventListeners.get(eventType);
-            for (EventListener listener : listeners) {
-                removeEventListener(eventType, listener);
-            }
-        }
-    }
-
-    @Override
-    public void remove(int index) {
-        super.remove(index);
-        Set<String> eventSet = eventListeners.keySet();
-        for (String eventType : eventSet) {
-            removeEventListeners(eventType);
-        }
     }
 
 }

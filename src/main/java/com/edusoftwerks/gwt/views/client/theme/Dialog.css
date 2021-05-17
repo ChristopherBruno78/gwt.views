@@ -1,0 +1,151 @@
+@external *.;
+
+.v-Dialog {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    z-index: 1001;
+    color: #182026;
+    background-color: #ebf1f5;
+    border-radius: 6px 6px 0 0;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    outline: 0;
+    overflow: visible;
+    box-sizing: border-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    pointer-events: all;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+    box-shadow: 0 0 0 1px rgba(16, 22, 26, .1), 0 4px 8px rgba(16, 22, 26, .2), 0 18px 46px 6px rgba(16, 22, 26, .2);
+
+}
+
+.v-Dialog.v-top-window {
+    z-index: 2001;
+}
+
+.v-Dialog.safari {
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3D(0, 0, 0);
+}
+
+.v-Dialog > .v-Dialog-content {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+}
+
+.v-Dialog-titlebar {
+    padding: 12px;
+    position: relative;
+    height: 40px;
+    max-height: 40px;
+    border-bottom: 1px solid #c8d0d5;
+    box-sizing: border-box;
+    text-align: left;
+    color: #293137;
+    font-weight: 500;
+    font-size: 16px;
+    font-family: "Helvetica", sans-serif;
+    overflow: visible !important;
+    background-color: #fff;
+    border-radius: 7px 7px 0 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.v-Dialog-titlebar.v-draggable {
+    cursor: move;
+}
+
+.v-Dialog .v-Resize-handle {
+    position: absolute;
+    z-index: 100;
+    width: 16px;
+    height: 16px;
+    right: 0;
+    bottom: 0;
+    background-color: transparent;
+    cursor: nwse-resize;
+}
+
+
+.v-Dialog-title {
+    margin: 0;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+}
+
+.v-Dialog-tools {
+    float: right;
+    margin-right: 0;
+    margin-top: -5px;
+}
+
+.v-Dialog .v-Button--iconOnly.v-Dialog-toolBtn.default {
+    float: right;
+    display: inline-block;
+    text-align: center;
+    margin-top: -1px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    width: 28px;
+    height: 28px;
+    font-size: 22px;
+    font-weight: normal;
+    transition: none;
+    background-color: transparent;
+    color: #5c7080;
+}
+
+.v-Dialog .v-Dialog-toolBtn.default.is-hover {
+    background-color: rgba(167, 182, 194, 0.3);
+}
+
+.v-Dialog .v-Dialog-toolBtn.default.is-disabled.is-hover {
+    background: none;
+}
+
+.v-Dialog .v-Dialog-toolBtn.default.is-active {
+    box-shadow: none;
+    background-color: rgba(114, 131, 145, 0.4);
+}
+
+.v-Dialog .v-Dialog-toolBtn .fa-window-minimize,
+.v-Dialog .v-Dialog-toolBtn .fa-window-maximize {
+    font-size: 14px;
+}
+
+.v-Dialog .v-Dialog-toolBtn .fa-window-restore {
+    font-size: 15px;
+}
+
+.v-Dialog-modalMask {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 1;
+    background-color: rgba(16, 22, 26, 0.65);
+    z-index: 1000;
+
+}
+
+.v-Dialog.v-Dialog-minimized {
+    display: none;
+}
+
+.v-Dialog.dropIn {
+    transition: top 0.25s ease;
+}

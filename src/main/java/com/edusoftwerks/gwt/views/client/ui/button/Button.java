@@ -9,7 +9,6 @@ import com.edusoftwerks.gwt.views.client.ui.popover.PopOverPosition;
 import com.edusoftwerks.gwt.views.client.ui.popover.PopOverProps;
 import com.edusoftwerks.gwt.views.shared.Color;
 import com.edusoftwerks.gwt.views.shared.geometry.Rectangle;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Timer;
 
 import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.*;
@@ -35,6 +34,8 @@ public class Button extends Control<ButtonProps> {
                     .className("v-Tooltip")
                     .backgroundColor(Color.colorFromHex("#fafafa"))
                     .borderColor(Color.colorFromHex("#bbbbbb"))
+                    .position(PopOverPosition.TOP)
+                    .isCallout(true)
                     .edge(PopOverEdge.CENTER)
             ) {
                 @Override
@@ -182,7 +183,6 @@ public class Button extends Control<ButtonProps> {
                         position = PopOverPosition.BOTTOM;
                     }
                     toolTip.setPosition(position);
-                    GWT.log("showing");
                     toolTip.show(Button.this);
                 }
             };

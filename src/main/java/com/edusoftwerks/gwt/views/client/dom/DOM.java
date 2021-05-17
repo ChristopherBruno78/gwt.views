@@ -30,23 +30,32 @@ public class DOM {
         return document.activeElement;
     }-*/;
 
-    private static class DispatchHandler implements EventListener {
+    private static MouseEvent cloneMouseEvent(MouseEvent oldEvent) {
+        MouseEventInit init = MouseEventInit.create();
+        init.setButton(oldEvent.button);
+        init.setClientX(oldEvent.clientX);
+        init.setClientY(oldEvent.clientY);
+        init.setButtons(oldEvent.buttons);
+        init.setAltKey(oldEvent.altKey);
+        init.setCtrlKey(oldEvent.ctrlKey);
+        init.setScreenX(oldEvent.screenX);
+        init.setScreenY(oldEvent.screenY);
+        init.setMetaKey(oldEvent.metaKey);
+        init.setShiftKey(oldEvent.shiftKey);
+        init.setRelatedTarget(oldEvent.relatedTarget);
+        return new MouseEvent(oldEvent.type, init);
+    }
 
-        static DispatchHandler INSTANCE = new DispatchHandler();
+    private static class MouseDispatchHandler implements EventListener {
+
+        static MouseDispatchHandler INSTANCE = new MouseDispatchHandler();
 
         @Override
         public void handleEvent(Event evt) {
             evt.stopImmediatePropagation();
             evt.preventDefault();
-            if (Events.isMouseEvent(evt)) {
-                MouseEvent oldEvent = Js.cast(evt);
-                captureElement.dispatchEvent(Events.cloneMouseEvent(oldEvent));
-            } else if (Events.isKeyboardEvent(evt)) {
-                KeyboardEvent oldEvent = Js.cast(evt);
-                captureElement.dispatchEvent(Events.cloneKeyboardEvent(oldEvent));
-            } else {
-                captureElement.dispatchEvent(new Event(evt.type));
-            }
+            MouseEvent oldEvent = Js.cast(evt);
+            captureElement.dispatchEvent(cloneMouseEvent(oldEvent));
 
         }
 
@@ -56,24 +65,18 @@ public class DOM {
         releaseCapture(captureElement);
         captureElement = element;
         if (captureElement != null) {
-            DomGlobal.window.addEventListener(Events.ONMOUSEDOWN, DispatchHandler.INSTANCE);
-            DomGlobal.window.addEventListener(Events.ONMOUSEUP, DispatchHandler.INSTANCE);
-            DomGlobal.window.addEventListener(Events.ONMOUSEMOVE, DispatchHandler.INSTANCE);
-            DomGlobal.window.addEventListener(Events.ONKEYDOWN, DispatchHandler.INSTANCE);
-            DomGlobal.window.addEventListener(Events.ONKEYUP, DispatchHandler.INSTANCE);
-            DomGlobal.window.addEventListener(Events.ONKEYPRESS, DispatchHandler.INSTANCE);
+            DomGlobal.window.addEventListener(Events.ONMOUSEDOWN, MouseDispatchHandler.INSTANCE);
+            DomGlobal.window.addEventListener(Events.ONMOUSEUP, MouseDispatchHandler.INSTANCE);
+            DomGlobal.window.addEventListener(Events.ONMOUSEMOVE, MouseDispatchHandler.INSTANCE);
         }
     }
 
     public static void releaseCapture(HTMLElement element) {
         if (captureElement == element) {
             if (captureElement != null) {
-                DomGlobal.window.removeEventListener(Events.ONMOUSEDOWN, DispatchHandler.INSTANCE);
-                DomGlobal.window.removeEventListener(Events.ONMOUSEUP, DispatchHandler.INSTANCE);
-                DomGlobal.window.removeEventListener(Events.ONMOUSEMOVE, DispatchHandler.INSTANCE);
-                DomGlobal.window.removeEventListener(Events.ONKEYDOWN, DispatchHandler.INSTANCE);
-                DomGlobal.window.removeEventListener(Events.ONKEYUP, DispatchHandler.INSTANCE);
-                DomGlobal.window.removeEventListener(Events.ONKEYPRESS, DispatchHandler.INSTANCE);
+                DomGlobal.window.removeEventListener(Events.ONMOUSEDOWN, MouseDispatchHandler.INSTANCE);
+                DomGlobal.window.removeEventListener(Events.ONMOUSEUP, MouseDispatchHandler.INSTANCE);
+                DomGlobal.window.removeEventListener(Events.ONMOUSEMOVE, MouseDispatchHandler.INSTANCE);
             }
         }
     }

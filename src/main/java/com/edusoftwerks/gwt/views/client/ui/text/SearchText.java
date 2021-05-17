@@ -3,6 +3,7 @@ package com.edusoftwerks.gwt.views.client.ui.text;
 import com.edusoftwerks.gwt.views.client.dom.DOMElement;
 import com.edusoftwerks.gwt.views.client.dom.DOMProps;
 import com.edusoftwerks.gwt.views.client.dom.Events;
+import com.edusoftwerks.gwt.views.client.theme.Theme;
 import com.edusoftwerks.gwt.views.client.ui.button.Button;
 import com.edusoftwerks.gwt.views.client.ui.button.ButtonProps;
 import elemental2.dom.Event;
@@ -11,9 +12,13 @@ import elemental2.dom.EventListener;
 import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.create;
 import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.div;
 
-public class SearchText extends Text {
+public final class SearchText extends Text {
 
     private Button cancelBtn;
+
+    static {
+        Theme.get().TextCss().ensureInjected();
+    }
 
     public SearchText(TextProps props) {
         super(props);

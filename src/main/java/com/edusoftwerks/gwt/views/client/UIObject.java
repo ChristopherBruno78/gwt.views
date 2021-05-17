@@ -89,12 +89,13 @@ public abstract class UIObject {
     }
 
     void fireDidLeaveDocument() {
+        removeEventListeners();
         didLeaveDocument();
         List<UIObject> children = getChildren();
         for (UIObject uiObject : children) {
             uiObject.fireDidLeaveDocument();
         }
-        removeEventListeners();
+
     }
 
     public void addEventListener(String event, EventListener listener) {
@@ -116,8 +117,9 @@ public abstract class UIObject {
     }
 
     public void removeEventListeners() {
-        for (String s : eventListenerMap.keySet()) {
-            removeEventListener(s);
+        String[] eventListeners = eventListenerMap.keySet().toArray(new String[ 0 ]);
+        for (int i = 0; i < eventListeners.length; i++) {
+            removeEventListener(eventListeners[ i ]);
         }
     }
 
@@ -217,12 +219,12 @@ public abstract class UIObject {
         if (props != null) {
             props.style(key, value);
         }
-        HTMLElement el = getElement();
-        if (el != null) {
+        HTMLElement $el = getElement();
+        if ($el != null) {
             if (value != null) {
-                el.style.set(key, value.toString());
+                $el.style.set(key, value.toString());
             } else {
-                el.style.removeAttribute(key);
+                $el.style.removeAttribute(key);
             }
         }
     }
@@ -291,9 +293,10 @@ public abstract class UIObject {
             uiObject.setParent(null);
             getChildren().remove(index);
             if (getElement() != null && uiObject.getElement() != null) {
-                getElement().removeChild(uiObject.getElement());
                 uiObject.fireDidLeaveDocument();
+                getElement().removeChild(uiObject.getElement());
             }
+
         }
     }
 

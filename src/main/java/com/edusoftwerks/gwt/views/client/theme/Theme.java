@@ -5,7 +5,7 @@ public class Theme {
     static {
         get().IconsCss().ensureInjected();
         get().UiCss().ensureInjected();
-        get().RootViewCss().ensureInjected();
+
     }
 
     public static StyleBundle get() {

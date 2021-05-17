@@ -10,7 +10,7 @@ public class TextProps extends ControlProps<TextProps> {
         multiline(false);
         secure(false);
         text("");
-        mask("");
+        mask(null);
         maskPlaceholder("_");
     }
 

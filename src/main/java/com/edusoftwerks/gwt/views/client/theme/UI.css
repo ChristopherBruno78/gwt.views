@@ -1,5 +1,8 @@
 @external *.;
 
+div {
+    position: relative;
+}
 
 .v-hidden {
     visibility: hidden;
@@ -7,6 +10,22 @@
 
 .v-draggable {
     cursor: move;
+}
+
+.v-Resize-handle {
+    position: absolute;
+    z-index: 100;
+    width: 16px;
+    height: 16px;
+    right: 0;
+    bottom: 0;
+    background-color: transparent;
+    cursor: nwse-resize;
+}
+
+
+@sprite .v-Resize-handle {
+    gwt-image: "resizeIndicatorImage";
 }
 
 .v-no-select {
