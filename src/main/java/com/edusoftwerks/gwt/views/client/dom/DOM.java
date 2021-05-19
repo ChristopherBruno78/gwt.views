@@ -56,7 +56,6 @@ public class DOM {
             evt.preventDefault();
             MouseEvent oldEvent = Js.cast(evt);
             captureElement.dispatchEvent(cloneMouseEvent(oldEvent));
-
         }
 
     }
@@ -168,7 +167,6 @@ public class DOM {
         var style = $wnd.getComputedStyle($el),
             tm = parseInt(style.marginTop, 10),
             bm = parseInt(style.marginBottom, 10);
-
         return tm + $el.offsetHeight + bm;
 
     }-*/;
@@ -204,7 +202,6 @@ public class DOM {
         var inner = $wnd.document.createElement('p');
         inner.style.width = "100%";
         inner.style.height = "200px";
-
         var outer = $wnd.document.createElement('div');
         outer.style.position = "absolute";
         outer.style.top = "0px";
@@ -214,18 +211,19 @@ public class DOM {
         outer.style.height = "150px";
         outer.style.overflow = "hidden";
         outer.appendChild(inner);
-
         $wnd.document.body.appendChild(outer);
         var w1 = inner.offsetWidth;
         outer.style.overflow = 'scroll';
         var w2 = inner.offsetWidth;
-
         if (w1 === w2) {
             w2 = outer.clientWidth;
         }
-
         $wnd.document.body.removeChild(outer);
         return (w1 - w2) + 1;
+    }-*/;
+
+    public static native String stringFromCharCode(int keyCode) /*-{
+        return String.fromCharCode(keyCode);
     }-*/;
 
 }

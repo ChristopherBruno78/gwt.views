@@ -160,7 +160,6 @@ public final class MaskedText extends Text {
             };
             caretTimer.schedule(10);
         }
-
     }
 
     private void handleBlur(Event event) {
@@ -247,7 +246,6 @@ public final class MaskedText extends Text {
                 }
                 j = seekNext(j);
             }
-
         }
         writeBuffer();
         caret(Math.max(firstNonMaskPos, begin), -1);
@@ -280,7 +278,6 @@ public final class MaskedText extends Text {
                     buffer.set(i, getPlaceholder(i));
                 }
             }
-
         }
     }
 
@@ -331,7 +328,6 @@ public final class MaskedText extends Text {
             setText(getText().substring(0, lastMatch + 1));
         }
         return (partialPosition > 0 ? i : firstNonMaskPos);
-
     }
 
     private String bufferAsString() {
