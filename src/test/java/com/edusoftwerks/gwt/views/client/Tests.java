@@ -6,7 +6,7 @@ public class Tests implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
-        new ButtonTest().run();
+        new DialogTest().run();
     }
 
 }

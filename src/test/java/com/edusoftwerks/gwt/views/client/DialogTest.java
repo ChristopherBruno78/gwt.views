@@ -15,7 +15,7 @@ public class DialogTest extends GwtViewsTest {
 
     public void run() {
         super.run();
-        Dialog d = new Dialog(new DialogProps()) {
+        Dialog d = new Dialog(new DialogProps().title("My Dialog Window")) {
             @Override
             public DOMElement renderContent() {
                 return null;
