@@ -51,9 +51,11 @@ public class Draggable {
                 mouseDown = false;
                 if (dragHandle != null) {
                     DOM.releaseCapture(dragHandle.getElement());
+                    if(dragCount >= DRAG_START_THRESHOLD) {
+                        Events.fireEvent(Events.ONDRAGFINISH, dragView.getElement());
+                    }
                     dragCount = 0;
                     dragStarted = false;
-                    Events.fireEvent(Events.ONDRAGFINISH, dragView.getElement());
                 }
             }
         });

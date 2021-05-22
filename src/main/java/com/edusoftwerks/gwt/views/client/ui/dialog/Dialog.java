@@ -10,6 +10,7 @@ import com.edusoftwerks.gwt.views.client.ui.button.Button;
 import com.edusoftwerks.gwt.views.client.ui.button.ButtonProps;
 import com.edusoftwerks.gwt.views.shared.geometry.Size;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Timer;
 import elemental2.dom.Event;
 import elemental2.dom.EventListener;
 import elemental2.dom.HTMLElement;
@@ -77,6 +78,19 @@ public abstract class Dialog extends View<DialogProps> {
             });
         }
 
+        addEventListener(Events.ONMOUSEDOWN, new EventListener() {
+            @Override
+            public void handleEvent(Event evt) {
+                moveToFront();
+            }
+        });
+
+    }
+
+    public void center() {
+        int x = (RootView.get().getWidth() - getWidth()) / 2;
+        int y = Math.min(200, (RootView.get().getHeight() - getHeight()) / 2);
+        setPosition(x, y);
     }
 
     public void open() {
@@ -84,13 +98,64 @@ public abstract class Dialog extends View<DialogProps> {
         initModal();
         initDraggable();
         initResizable();
-        TOP_DIALOG = this;
+        setPosition(this.props.x(), this.props.y());
+        moveToFront();
         setHidden(false);
+    }
+
+    public void drop() {
+        this.props.y(0);
+        setStyleAttribute("top", "0px");
+        addClassName("drop");
+
+        setHidden(true);
+        initModal();
+        initDraggable();
+        initResizable();
+        center();
+        setHidden(false);
+        moveToFront();
+
+        int y = (int) Math.min(100,
+                Math.max(0, (RootView.get().getHeight() - getHeight()) / 3.0));
+
+        this.props.y(y);
+        setStyleAttribute("top", y + "px");
+
+        Timer t = new Timer() {
+            @Override
+            public void run() {
+                removeClassName("drop");
+            }
+        };
+
+        t.schedule(250);
+
+        if (closeBtn != null) {
+            closeBtn.setIsFocused(true);
+        }
     }
 
     public void close() {
         removeModal();
         Events.fireEvent(Events.ONCLOSE, getElement());
+    }
+
+    public void moveToFront() {
+        if(TOP_DIALOG != null) {
+            TOP_DIALOG.setStyleAttribute("z-index", "1000");
+        }
+        TOP_DIALOG = this;
+        setStyleAttribute("z-index", "1001");
+    }
+
+    public void setPosition(int x, int y) {
+        this.props.x(x);
+        this.props.y(y);
+        if(isRendered()) {
+            setStyleAttribute("left", x + "px");
+            setStyleAttribute("top", y + "px");
+         }
     }
 
     private void initModal() {
@@ -110,7 +175,6 @@ public abstract class Dialog extends View<DialogProps> {
 
     private void removeModal() {
         if (this.props.modal()) {
-            GWT.log("removing modal");
             modalMask.remove(this);
             RootView.get().remove(modalMask);
             modalMask = null;

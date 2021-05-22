@@ -14,7 +14,7 @@ public class DialogProps extends UIProps<DialogProps> {
         height(300);
         x(0);
         y(0);
-        modal(true);
+        modal(false);
     }
 
     public String title() {

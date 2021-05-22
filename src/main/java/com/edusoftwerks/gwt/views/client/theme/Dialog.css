@@ -150,6 +150,6 @@
     display: none;
 }
 
-.v-Dialog.dropIn {
+.v-Dialog.drop {
     transition: top 0.25s ease;
 }

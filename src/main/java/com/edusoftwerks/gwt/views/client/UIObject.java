@@ -3,7 +3,9 @@ package com.edusoftwerks.gwt.views.client;
 import com.edusoftwerks.gwt.views.client.dom.ClassNames;
 import com.edusoftwerks.gwt.views.client.dom.DOM;
 import com.edusoftwerks.gwt.views.shared.geometry.Rectangle;
+import com.google.gwt.core.client.GWT;
 import elemental2.dom.EventListener;
+import elemental2.dom.EventTarget;
 import elemental2.dom.HTMLElement;
 
 import java.util.*;
@@ -80,7 +82,7 @@ public abstract class UIObject {
 
     protected abstract void performRender();
 
-    void fireDidEnterDocument() {
+    protected void fireDidEnterDocument() {
         didEnterDocument();
         List<UIObject> children = getChildren();
         for (UIObject uiObject : children) {
@@ -88,7 +90,7 @@ public abstract class UIObject {
         }
     }
 
-    void fireDidLeaveDocument() {
+    protected void fireDidLeaveDocument() {
         removeEventListeners();
         didLeaveDocument();
         List<UIObject> children = getChildren();
@@ -144,7 +146,7 @@ public abstract class UIObject {
                         .add(klass.trim())
                         .build());
             }
-            if (getElement() != null) {
+            if (getElement() != null && !klass.trim().isEmpty()) {
                 getElement().classList.add(klass.trim());
             }
         }
@@ -290,12 +292,12 @@ public abstract class UIObject {
     public void remove(int index) {
         if (index > -1 && index < getChildren().size()) {
             UIObject uiObject = getChildren().get(index);
-            uiObject.setParent(null);
-            getChildren().remove(index);
             if (getElement() != null && uiObject.getElement() != null) {
                 uiObject.fireDidLeaveDocument();
                 getElement().removeChild(uiObject.getElement());
             }
+            uiObject.setParent(null);
+            getChildren().remove(index);
 
         }
     }
