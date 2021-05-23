@@ -64,18 +64,18 @@ public class DOM {
         releaseCapture(captureElement);
         captureElement = element;
         if (captureElement != null) {
-            DomGlobal.window.addEventListener(Events.ONMOUSEDOWN, MouseDispatchHandler.INSTANCE);
-            DomGlobal.window.addEventListener(Events.ONMOUSEUP, MouseDispatchHandler.INSTANCE);
-            DomGlobal.window.addEventListener(Events.ONMOUSEMOVE, MouseDispatchHandler.INSTANCE);
+            DomGlobal.window.addEventListener(Events.MOUSEDOWN, MouseDispatchHandler.INSTANCE);
+            DomGlobal.window.addEventListener(Events.MOUSEUP, MouseDispatchHandler.INSTANCE);
+            DomGlobal.window.addEventListener(Events.MOUSEMOVE, MouseDispatchHandler.INSTANCE);
         }
     }
 
     public static void releaseCapture(HTMLElement element) {
         if (captureElement == element) {
             if (captureElement != null) {
-                DomGlobal.window.removeEventListener(Events.ONMOUSEDOWN, MouseDispatchHandler.INSTANCE);
-                DomGlobal.window.removeEventListener(Events.ONMOUSEUP, MouseDispatchHandler.INSTANCE);
-                DomGlobal.window.removeEventListener(Events.ONMOUSEMOVE, MouseDispatchHandler.INSTANCE);
+                DomGlobal.window.removeEventListener(Events.MOUSEDOWN, MouseDispatchHandler.INSTANCE);
+                DomGlobal.window.removeEventListener(Events.MOUSEUP, MouseDispatchHandler.INSTANCE);
+                DomGlobal.window.removeEventListener(Events.MOUSEMOVE, MouseDispatchHandler.INSTANCE);
             }
         }
     }

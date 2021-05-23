@@ -9,7 +9,6 @@ import com.edusoftwerks.gwt.views.client.ui.View;
 import com.edusoftwerks.gwt.views.client.ui.button.Button;
 import com.edusoftwerks.gwt.views.client.ui.button.ButtonProps;
 import com.edusoftwerks.gwt.views.shared.geometry.Size;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Timer;
 import elemental2.dom.Event;
 import elemental2.dom.EventListener;
@@ -70,15 +69,10 @@ public abstract class Dialog extends View<DialogProps> {
     @Override
     protected void addEventListeners() {
         if (closeBtn != null) {
-            closeBtn.addActionListener(new EventListener() {
-                @Override
-                public void handleEvent(Event evt) {
-                    close();
-                }
-            });
+            closeBtn.addEventListener(Events.ACTION, evt -> close());
         }
 
-        addEventListener(Events.ONMOUSEDOWN, new EventListener() {
+        addEventListener(Events.MOUSEDOWN, new EventListener() {
             @Override
             public void handleEvent(Event evt) {
                 moveToFront();
@@ -138,7 +132,7 @@ public abstract class Dialog extends View<DialogProps> {
 
     public void close() {
         removeModal();
-        Events.fireEvent(Events.ONCLOSE, getElement());
+        Events.fireEvent(Events.CLOSE, this);
     }
 
     public void moveToFront() {
@@ -189,7 +183,7 @@ public abstract class Dialog extends View<DialogProps> {
     private void initDraggable() {
         if (this.props.draggable()) {
             Draggable.makeDraggable(this, titleBar, true);
-            addEventListener(Events.ONDRAGFINISH, evt -> {
+            addEventListener(Events.DRAG_FINISH, evt -> {
                 HTMLElement $el = getElement();
                 props.x($el.offsetLeft);
                 props.y($el.offsetTop);
@@ -200,7 +194,7 @@ public abstract class Dialog extends View<DialogProps> {
     private void initResizable() {
         if (this.props.resizable()) {
             Resizable.makeResizable(this, new Size(50, 50), new Size(2000, 2000));
-            addEventListener(Events.ONRESIZEFINISH, new EventListener() {
+            addEventListener(Events.RESIZE_FINISH, new EventListener() {
                 @Override
                 public void handleEvent(Event evt) {
                     HTMLElement $el = getElement();

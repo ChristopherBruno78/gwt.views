@@ -40,6 +40,9 @@ public interface StyleBundle extends ClientBundle {
     @Source({"Dialog.css"})
     CssResource DialogCss();
 
+    @Source({"Toast.css"})
+    CssResource ToastCss();
+
     @Source({"icons.css"})
     @CssResource.NotStrict
     CssResource IconsCss();

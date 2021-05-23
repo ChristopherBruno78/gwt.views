@@ -37,7 +37,7 @@ class SplitViewDivider extends View<SplitViewProps> {
 
     @Override
     protected void addEventListeners() {
-        addEventListener(Events.ONMOUSEDOWN, new MouseEventListener() {
+        addEventListener(Events.MOUSEDOWN, new MouseEventListener() {
             @Override
             public void handleMouseEvent(MouseEvent event) {
                 event.stopPropagation();
@@ -49,7 +49,7 @@ class SplitViewDivider extends View<SplitViewProps> {
                 DOM.setCapture(getElement());
             }
         });
-        addEventListener(Events.ONMOUSEUP, new EventListener() {
+        addEventListener(Events.MOUSEUP, new EventListener() {
             @Override
             public void handleEvent(Event evt) {
                 mouseDown = false;
@@ -57,7 +57,7 @@ class SplitViewDivider extends View<SplitViewProps> {
                 RootView.get().setStyleAttribute("cursor", "default");
             }
         });
-        addEventListener(Events.ONMOUSEMOVE, new MouseEventListener() {
+        addEventListener(Events.MOUSEMOVE, new MouseEventListener() {
             @Override
             public void handleMouseEvent(MouseEvent event) {
                 if (mouseDown) {

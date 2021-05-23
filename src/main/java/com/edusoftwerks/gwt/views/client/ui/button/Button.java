@@ -83,24 +83,22 @@ public class Button extends Control<ButtonProps> {
 
     @Override
     protected void addEventListeners() {
-        addEventListener(Events.ONMOUSEDOWN, evt -> {
+        addEventListener(Events.MOUSEDOWN, evt -> {
             evt.preventDefault();
             addClassName("is-active");
             DOM.setCapture(getElement());
         });
-        addEventListener(Events.ONMOUSEUP, evt -> {
+        addEventListener(Events.MOUSEUP, evt -> {
             removeClassName("is-active");
             DOM.releaseCapture(getElement());
         });
-        addEventListener(Events.ONMOUSEOVER, evt -> {
-            addClassName("is-hover");
+        addEventListener(Events.MOUSEOVER, evt -> {
             showTooltip();
         });
-        addEventListener(Events.ONMOUSEOUT, evt -> {
-            removeClassName("is-hover");
+        addEventListener(Events.MOUSEOUT, evt -> {
             hideTooltip();
         });
-        addEventListener(Events.ONCLICK, evt -> fireActions());
+        addEventListener(Events.CLICK, evt -> fireActions());
         super.addEventListeners();
     }
 

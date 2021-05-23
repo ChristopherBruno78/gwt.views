@@ -51,12 +51,12 @@ public final class SearchText extends Text {
 
     @Override
     public void addEventListeners() {
-        cancelBtn.addActionListener(evt -> {
+        cancelBtn.addEventListener(Events.ACTION, evt -> {
             clear();
             cancelBtn.setHidden(true);
-            Events.fireEvent(Events.ONCANCEL, getElement());
+            Events.fireEvent(Events.CANCEL, this);
         });
-        addEventListener(Events.ONINPUT, new EventListener() {
+        addEventListener(Events.INPUT, new EventListener() {
             @Override
             public void handleEvent(Event evt) {
                 cancelBtn.setHidden(getText().length() == 0);

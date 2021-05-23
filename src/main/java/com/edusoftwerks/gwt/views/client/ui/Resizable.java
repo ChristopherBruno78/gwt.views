@@ -36,7 +36,7 @@ public class Resizable {
     private void setup() {
         resizeHandle = div(new DOMProps().className("v-Resize-handle"));
         resizeView.append(resizeHandle);
-        resizeHandle.addEventListener(Events.ONMOUSEDOWN, new MouseEventListener() {
+        resizeHandle.addEventListener(Events.MOUSEDOWN, new MouseEventListener() {
             @Override
             public void handleMouseEvent(MouseEvent event) {
                 if (resizeHandle != null) {
@@ -51,7 +51,7 @@ public class Resizable {
                 }
             }
         });
-        resizeHandle.addEventListener(Events.ONMOUSEUP, new MouseEventListener() {
+        resizeHandle.addEventListener(Events.MOUSEUP, new MouseEventListener() {
             @Override
             public void handleMouseEvent(MouseEvent event) {
                 mouseDown = false;
@@ -64,7 +64,7 @@ public class Resizable {
 
             }
         });
-        resizeHandle.addEventListener(Events.ONMOUSEMOVE, new MouseEventListener() {
+        resizeHandle.addEventListener(Events.MOUSEMOVE, new MouseEventListener() {
             @Override
             public void handleMouseEvent(MouseEvent event) {
                 if (mouseDown && resizeView != null) {
@@ -79,9 +79,9 @@ public class Resizable {
                     dragCount++;
                     if (dragCount > DRAG_START_THRESHOLD && !dragStarted) {
                         dragStarted = true;
-                        Events.fireEvent(Events.ONRESIZESTART, $el);
+                        Events.fireEvent(Events.RESIZE_START, resizeView);
                     } else if (dragStarted) {
-                        Events.fireEvent(Events.ONRESIZE, $el);
+                        Events.fireEvent(Events.RESIZE, resizeView);
                     }
                 }
             }

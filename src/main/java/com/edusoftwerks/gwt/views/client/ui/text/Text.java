@@ -146,17 +146,17 @@ public class Text extends Control<TextProps> {
     @Override
     protected void addEventListeners() {
         HTMLElement $input = input.getElement();
-        $input.addEventListener(Events.ONFOCUS, onFocusListener = evt -> {
+        $input.addEventListener(Events.FOCUS, onFocusListener = evt -> {
             addClassName("is-focused");
             //forward event to main component
-            Events.fireEvent(Events.ONFOCUS, getElement());
+            Events.fireEvent(Events.FOCUS, this);
         });
-        $input.addEventListener(Events.ONBLUR, onBlurListener = evt -> {
+        $input.addEventListener(Events.BLUR, onBlurListener = evt -> {
             removeClassName("is-focused");
             //forward event to main component
-            Events.fireEvent(Events.ONBLUR, getElement());
+            Events.fireEvent(Events.BLUR, this);
         });
-        $input.addEventListener(Events.ONKEYPRESS, onKeyPressListener = new KeyboardEventListener() {
+        $input.addEventListener(Events.KEYPRESS, onKeyPressListener = new KeyboardEventListener() {
             @Override
             public void handleKeyboardEvent(KeyboardEvent keyboardEvent, int keyCode) {
                 if (!props.multiline()) {
@@ -167,7 +167,7 @@ public class Text extends Control<TextProps> {
                 }
             }
         });
-        $input.addEventListener(Events.ONINPUT, onInputListener = this::handleChange);
+        $input.addEventListener(Events.INPUT, onInputListener = this::handleChange);
         super.addEventListeners();
     }
 
@@ -178,10 +178,10 @@ public class Text extends Control<TextProps> {
     @Override
     public void removeEventListeners() {
         HTMLInputElement $input = Js.cast(input.getElement());
-        $input.removeEventListener(Events.ONKEYPRESS, onKeyPressListener);
-        $input.removeEventListener(Events.ONFOCUS, onFocusListener);
-        $input.removeEventListener(Events.ONBLUR, onBlurListener);
-        $input.removeEventListener(Events.ONINPUT, onInputListener);
+        $input.removeEventListener(Events.KEYPRESS, onKeyPressListener);
+        $input.removeEventListener(Events.FOCUS, onFocusListener);
+        $input.removeEventListener(Events.BLUR, onBlurListener);
+        $input.removeEventListener(Events.INPUT, onInputListener);
         super.removeEventListeners();
     }
 

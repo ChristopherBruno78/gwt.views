@@ -7,8 +7,6 @@ import com.edusoftwerks.gwt.views.client.ui.text.SearchText;
 import com.edusoftwerks.gwt.views.client.ui.text.Text;
 import com.edusoftwerks.gwt.views.client.ui.text.TextProps;
 import com.google.gwt.core.client.GWT;
-import elemental2.dom.Event;
-import elemental2.dom.EventListener;
 
 import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.div;
 
@@ -35,24 +33,8 @@ public class TextTest extends GwtViewsTest {
 
     @Override
     public void addEventListeners() {
-        maskedText.addEventListener(Events.ONINPUT, new EventListener() {
-            @Override
-            public void handleEvent(Event evt) {
-                GWT.log(maskedText.getText());
-            }
-        });
-        text.addActionListener(new EventListener() {
-            @Override
-            public void handleEvent(Event evt) {
-                GWT.log("submit");
-            }
-        });
-        searchText.addEventListener(Events.ONCANCEL, new EventListener() {
-            @Override
-            public void handleEvent(Event evt) {
-                searchText.setSecure(true);
-            }
-        });
+        text.addEventListener(Events.ACTION, evt -> GWT.log("submit"));
+        searchText.addEventListener(Events.CANCEL, evt -> searchText.setSecure(true));
 
     }
 

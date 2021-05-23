@@ -58,20 +58,20 @@ public final class MaskedText extends Text {
 
     @Override
     protected void addEventListeners() {
-        addEventListener(Events.ONKEYDOWN, new KeyboardEventListener() {
+        addEventListener(Events.KEYDOWN, new KeyboardEventListener() {
             @Override
             public void handleKeyboardEvent(KeyboardEvent keyboardEvent, int keyCode) {
                 handleKeyDown(keyboardEvent, keyCode);
             }
         });
-        addEventListener(Events.ONKEYPRESS, new KeyboardEventListener() {
+        addEventListener(Events.KEYPRESS, new KeyboardEventListener() {
             @Override
             public void handleKeyboardEvent(KeyboardEvent keyboardEvent, int keyCode) {
                 handleKeyPress(keyboardEvent, keyCode);
             }
         });
-        addEventListener(Events.ONFOCUS, this::handleFocus);
-        addEventListener(Events.ONBLUR, this::handleBlur);
+        addEventListener(Events.FOCUS, this::handleFocus);
+        addEventListener(Events.BLUR, this::handleBlur);
         super.addEventListeners();
 
     }
@@ -132,7 +132,7 @@ public final class MaskedText extends Text {
                 caret(next, -1);
             }
             event.preventDefault();
-            Events.fireEvent(Events.ONINPUT, getElement());
+            Events.fireEvent(Events.INPUT, this);
         }
     }
 

@@ -56,13 +56,13 @@ public class Switch extends Control<CheckBoxProps> {
 
     @Override
     protected void addEventListeners() {
-        addEventListener(Events.ONMOUSEDOWN, new EventListener() {
+        addEventListener(Events.MOUSEDOWN, new EventListener() {
             @Override
             public void handleEvent(Event evt) {
                 evt.preventDefault();
             }
         });
-        addEventListener(Events.ONCLICK, new EventListener() {
+        addEventListener(Events.CLICK, new EventListener() {
             @Override
             public void handleEvent(Event evt) {
                 if (isDisabled()) {
@@ -72,7 +72,7 @@ public class Switch extends Control<CheckBoxProps> {
                 fireActions();
             }
         });
-        addEventListener(Events.ONKEYDOWN, new KeyboardEventListener() {
+        addEventListener(Events.KEYDOWN, new KeyboardEventListener() {
             @Override
             public void handleKeyboardEvent(KeyboardEvent keyboardEvent, int keyCode) {
                 if (isDisabled()) {

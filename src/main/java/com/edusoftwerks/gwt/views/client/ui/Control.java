@@ -1,8 +1,16 @@
 package com.edusoftwerks.gwt.views.client.ui;
 
 import com.edusoftwerks.gwt.views.client.dom.Events;
-import elemental2.dom.EventListener;
 
+/**
+ * Control is a base class for UI Components dealing
+ * with data input that can be enabled/disabled, focused and blurred,
+ * contain text and are in the browser tab order.
+ * <p>
+ * Custom Events: ACTION
+ *
+ * @param <T> ControlProps type
+ */
 public abstract class Control<T extends ControlProps<T>>
         extends View<T> {
 
@@ -14,8 +22,10 @@ public abstract class Control<T extends ControlProps<T>>
 
     @Override
     protected void addEventListeners() {
-        addEventListener(Events.ONFOCUS, evt -> addClassName("is-focused"));
-        addEventListener(Events.ONBLUR, evt -> removeClassName("is-focused"));
+        addEventListener(Events.MOUSEENTER, evt -> addClassName("is-hover"));
+        addEventListener(Events.MOUSELEAVE, evt -> removeClassName("is-hover"));
+        addEventListener(Events.FOCUS, evt -> addClassName("is-focused"));
+        addEventListener(Events.BLUR, evt -> removeClassName("is-focused"));
     }
 
     public boolean isDisabled() {
@@ -67,11 +77,7 @@ public abstract class Control<T extends ControlProps<T>>
         this.props.text(text);
     }
 
-    public void addActionListener(EventListener actionListener) {
-        addEventListener(Events.ONACTION, actionListener);
-    }
-
     protected void fireActions() {
-        Events.fireEvent(Events.ONACTION, getElement());
+        Events.fireEvent(Events.ACTION, this);
     }
 }

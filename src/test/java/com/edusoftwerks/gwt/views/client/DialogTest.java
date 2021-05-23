@@ -44,7 +44,7 @@ public class DialogTest extends GwtViewsTest {
 
             @Override
             protected void addEventListeners() {
-                cancelBtn.addEventListener(Events.ONCLICK, new EventListener() {
+                cancelBtn.addEventListener(Events.CLICK, new EventListener() {
                     @Override
                     public void handleEvent(Event evt) {
                         d2.drop();

@@ -80,7 +80,7 @@ public abstract class PopOver extends View<PopOverProps> {
 
     public void close() {
         setHidden(true);
-        Events.fireEvent(Events.ONCLOSE, getElement());
+        Events.fireEvent(Events.CLOSE, this);
     }
 
     public void open() {
@@ -244,10 +244,10 @@ public abstract class PopOver extends View<PopOverProps> {
 
     @Override
     protected void addEventListeners() {
-        addEventListener(Events.ONMOUSEDOWN, Event::stopPropagation);
+        addEventListener(Events.MOUSEDOWN, Event::stopPropagation);
         if (this.props.isTransient()) {
             RootView.get().addEventListener(
-                    Events.ONMOUSEDOWN, evt -> close()
+                    Events.MOUSEDOWN, evt -> close()
             );
         }
     }

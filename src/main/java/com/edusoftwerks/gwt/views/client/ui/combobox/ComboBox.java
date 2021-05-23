@@ -47,7 +47,7 @@ public class ComboBox extends Control<ComboBoxProps> {
 
     @Override
     protected void addEventListeners() {
-        addEventListener(Events.ONCHANGE, new EventListener() {
+        addEventListener(Events.CHANGE, new EventListener() {
             @Override
             public void handleEvent(Event evt) {
                 if (isDisabled()) {
@@ -58,6 +58,8 @@ public class ComboBox extends Control<ComboBoxProps> {
                 fireActions();
             }
         });
+
+        super.addEventListeners();
     }
 
     @Override

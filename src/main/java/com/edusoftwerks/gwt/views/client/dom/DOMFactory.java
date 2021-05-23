@@ -74,4 +74,10 @@ public class DOMFactory {
         return e;
     }
 
+    public static DOMElement span(String innerHtml) {
+        DOMElement e = new DOMElement("span", new DOMProps());
+        e.setInnerHtml(innerHtml);
+        return e;
+    }
+
 }

@@ -30,13 +30,13 @@ public class ResizableTest extends GwtViewsTest {
     protected void addEventListeners() {
         Draggable.makeDraggable(resizeElement, true);
         Resizable.makeResizable(resizeElement);
-        resizeElement.addEventListener(Events.ONRESIZE, new EventListener() {
+        resizeElement.addEventListener(Events.RESIZE, new EventListener() {
             @Override
             public void handleEvent(Event evt) {
                 GWT.log("RESIZE!!!!");
             }
         });
-        resizeElement.addEventListener(Events.ONDRAG, new EventListener() {
+        resizeElement.addEventListener(Events.DRAG, new EventListener() {
             @Override
             public void handleEvent(Event evt) {
                 GWT.log("DRAG!!!!");

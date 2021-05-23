@@ -69,17 +69,17 @@ public class Radio extends Control<RadioProps> {
     @Override
     protected void addEventListeners() {
         HTMLInputElement $input = Js.cast(input.getElement());
-        $input.addEventListener(Events.ONCHANGE, onChangeListener = new EventListener() {
+        $input.addEventListener(Events.CHANGE, onChangeListener = new EventListener() {
             @Override
             public void handleEvent(Event evt) {
             }
         });
-        $input.addEventListener(Events.ONFOCUS, onFocusListener = new EventListener() {
+        $input.addEventListener(Events.FOCUS, onFocusListener = new EventListener() {
             @Override
             public void handleEvent(Event evt) {
             }
         });
-        $input.addEventListener(Events.ONBLUR, onBlurListener = new EventListener() {
+        $input.addEventListener(Events.BLUR, onBlurListener = new EventListener() {
             @Override
             public void handleEvent(Event evt) {
             }
@@ -91,9 +91,9 @@ public class Radio extends Control<RadioProps> {
     @Override
     public void removeEventListeners() {
         HTMLInputElement $input = Js.cast(input.getElement());
-        $input.removeEventListener(Events.ONCHANGE, onChangeListener);
-        $input.removeEventListener(Events.ONFOCUS, onFocusListener);
-        $input.removeEventListener(Events.ONBLUR, onBlurListener);
+        $input.removeEventListener(Events.CHANGE, onChangeListener);
+        $input.removeEventListener(Events.FOCUS, onFocusListener);
+        $input.removeEventListener(Events.BLUR, onBlurListener);
         super.removeEventListeners();
     }
 

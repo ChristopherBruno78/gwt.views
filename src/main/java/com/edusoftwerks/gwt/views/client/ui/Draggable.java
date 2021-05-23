@@ -33,7 +33,7 @@ public class Draggable {
     }
 
     private void addEventListeners() {
-        dragHandle.addEventListener(Events.ONMOUSEDOWN, new MouseEventListener() {
+        dragHandle.addEventListener(Events.MOUSEDOWN, new MouseEventListener() {
             @Override
             public void handleMouseEvent(MouseEvent event) {
                 event.preventDefault();
@@ -45,21 +45,21 @@ public class Draggable {
 
             }
         });
-        dragHandle.addEventListener(Events.ONMOUSEUP, new MouseEventListener() {
+        dragHandle.addEventListener(Events.MOUSEUP, new MouseEventListener() {
             @Override
             public void handleMouseEvent(MouseEvent event) {
                 mouseDown = false;
                 if (dragHandle != null) {
                     DOM.releaseCapture(dragHandle.getElement());
-                    if(dragCount >= DRAG_START_THRESHOLD) {
-                        Events.fireEvent(Events.ONDRAGFINISH, dragView.getElement());
+                    if (dragCount >= DRAG_START_THRESHOLD) {
+                        Events.fireEvent(Events.DRAG_FINISH, dragView);
                     }
                     dragCount = 0;
                     dragStarted = false;
                 }
             }
         });
-        dragHandle.addEventListener(Events.ONMOUSEMOVE, new MouseEventListener() {
+        dragHandle.addEventListener(Events.MOUSEMOVE, new MouseEventListener() {
             @Override
             public void handleMouseEvent(MouseEvent event) {
                 if (mouseDown && dragView != null) {
@@ -76,9 +76,9 @@ public class Draggable {
                     dragCount++;
                     if (dragCount > DRAG_START_THRESHOLD && !dragStarted) {
                         dragStarted = true;
-                        Events.fireEvent(Events.ONDRAGSTART, $el);
+                        Events.fireEvent(Events.DRAG_START, dragView);
                     } else if (dragStarted) {
-                        Events.fireEvent(Events.ONDRAG, $el);
+                        Events.fireEvent(Events.DRAG, dragView);
                     }
                 }
             }
@@ -92,5 +92,4 @@ public class Draggable {
     public static Draggable makeDraggable(final UIObject view, UIObject handle, boolean constrain) {
         return new Draggable(view, handle, constrain);
     }
-
 }
