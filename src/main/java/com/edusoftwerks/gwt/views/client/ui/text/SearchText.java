@@ -14,11 +14,11 @@ import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.div;
 
 public final class SearchText extends Text {
 
-    private Button cancelBtn;
-
     static {
         Theme.get().TextCss().ensureInjected();
     }
+
+    private Button cancelBtn;
 
     public SearchText(TextProps props) {
         super(props);
@@ -34,19 +34,17 @@ public final class SearchText extends Text {
 
     @Override
     protected DOMElement render() {
-        return div(new DOMProps()
+        return div(
+                new DOMProps()
                         .className("v-SearchText v-Text")
                         .attr("role", "search")
                         .attr("aria-disabled", isDisabled()),
                 create("i", new DOMProps().className("font-icon icon-search")),
                 input = renderControl(),
-                cancelBtn = new Button(
-                        new ButtonProps()
-                                .className("v-SearchText-reset")
-                                .icon("icon-cancel-circle")
-                                .iconOnly(true)
-                )
-        );
+                cancelBtn = new Button(new ButtonProps()
+                        .className("v-SearchText-reset")
+                        .icon("icon-cancel-circle")
+                        .iconOnly(true)));
     }
 
     @Override
@@ -63,7 +61,6 @@ public final class SearchText extends Text {
             }
         });
         super.addEventListeners();
-
     }
 
     @Override
@@ -71,5 +68,4 @@ public final class SearchText extends Text {
         cancelBtn.setHidden(true);
         super.didEnterDocument();
     }
-
 }

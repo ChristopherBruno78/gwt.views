@@ -19,16 +19,17 @@ import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.label;
 
 public abstract class Dialog extends View<DialogProps> {
 
-    private DOMElement titleBar;
-    private DOMElement titleLabel;
-    private DOMElement modalMask;
-    private Button closeBtn;
-    private HTMLElement lastFocus;
     private static Dialog TOP_DIALOG = null;
 
     static {
         Theme.get().DialogCss().ensureInjected();
     }
+
+    private DOMElement titleBar;
+    private DOMElement titleLabel;
+    private DOMElement modalMask;
+    private Button closeBtn;
+    private HTMLElement lastFocus;
 
     public Dialog(DialogProps props) {
         super(props);
@@ -37,33 +38,32 @@ public abstract class Dialog extends View<DialogProps> {
     public abstract DOMElement renderContent();
 
     public DOMElement renderTools() {
-        return div(new DOMProps().className("v-Dialog-tools"),
-                this.props.closable() ?
-                        closeBtn = new Button(new ButtonProps()
+        return div(
+                new DOMProps().className("v-Dialog-tools"),
+                this.props.closable()
+                        ? closeBtn = new Button(new ButtonProps()
                                 .className("v-Dialog-toolBtn v-Dialog-close")
                                 .iconOnly(true)
-                                .icon("icon-times-solid")
-                        ) : null
-        );
+                                .icon("icon-times-solid"))
+                        : null);
     }
 
     @Override
     protected DOMElement render() {
-        return div(new DOMProps()
+        return div(
+                new DOMProps()
                         .className("v-Dialog")
                         .attr("role", "dialog")
                         .style("width", this.props.width() + "px")
                         .style("height", this.props.height() + "px"),
-                titleBar = div(new DOMProps()
-                                .className(ClassNames
-                                        .start("v-Dialog-titlebar")
+                titleBar = div(
+                        new DOMProps()
+                                .className(ClassNames.start("v-Dialog-titlebar")
                                         .add("v-draggable", this.props.draggable())
                                         .build()),
                         this.renderTools(),
-                        titleLabel = label(new DOMProps().className("v-Dialog-title"), this.props.title())
-                ),
-                div(new DOMProps().className("v-Dialog-content"), this.renderContent())
-        );
+                        titleLabel = label(new DOMProps().className("v-Dialog-title"), this.props.title())),
+                div(new DOMProps().className("v-Dialog-content"), this.renderContent()));
     }
 
     @Override
@@ -78,7 +78,6 @@ public abstract class Dialog extends View<DialogProps> {
                 moveToFront();
             }
         });
-
     }
 
     public void center() {
@@ -110,8 +109,7 @@ public abstract class Dialog extends View<DialogProps> {
         setHidden(false);
         moveToFront();
 
-        int y = (int) Math.min(100,
-                Math.max(0, (RootView.get().getHeight() - getHeight()) / 3.0));
+        int y = (int) Math.min(100, Math.max(0, (RootView.get().getHeight() - getHeight()) / 3.0));
 
         this.props.y(y);
         setStyleAttribute("top", y + "px");
@@ -136,7 +134,7 @@ public abstract class Dialog extends View<DialogProps> {
     }
 
     public void moveToFront() {
-        if(TOP_DIALOG != null) {
+        if (TOP_DIALOG != null) {
             TOP_DIALOG.setStyleAttribute("z-index", "1000");
         }
         TOP_DIALOG = this;
@@ -146,18 +144,15 @@ public abstract class Dialog extends View<DialogProps> {
     public void setPosition(int x, int y) {
         this.props.x(x);
         this.props.y(y);
-        if(isRendered()) {
+        if (isRendered()) {
             setStyleAttribute("left", x + "px");
             setStyleAttribute("top", y + "px");
-         }
+        }
     }
 
     private void initModal() {
         if (this.props.modal()) {
-            modalMask = div(new DOMProps().
-                    className("v-Dialog-modalMask")
-                    .attr("tabIndex", 0)
-            );
+            modalMask = div(new DOMProps().className("v-Dialog-modalMask").attr("tabIndex", 0));
             lastFocus = DOM.getFocus();
             modalMask.append(this);
             RootView.get().insert(0, modalMask);
@@ -204,5 +199,4 @@ public abstract class Dialog extends View<DialogProps> {
             });
         }
     }
-
 }

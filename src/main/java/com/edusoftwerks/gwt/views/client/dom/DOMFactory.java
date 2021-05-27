@@ -5,9 +5,7 @@ import elemental2.dom.HTMLElement;
 
 public class DOMFactory {
 
-    /**
-     * STATIC METHODS
-     */
+    /** STATIC METHODS */
     static DOMElement create(HTMLElement el, DOMProps props) {
         return new DOMElement(el, props);
     }
@@ -23,12 +21,11 @@ public class DOMFactory {
     }
 
     public static DOMElement create(String tagName, DOMProps props, UIObject... children) {
-        int len = children.length,
-                i = 0;
+        int len = children.length, i = 0;
         DOMElement domElement = new DOMElement(tagName, props);
         for (; i < len; i++) {
-            UIObject child = children[ i ];
-            //add UIObject to the root dom element
+            UIObject child = children[i];
+            // add UIObject to the root dom element
             if (child != null) {
                 domElement.append(child);
             }
@@ -85,5 +82,4 @@ public class DOMFactory {
         e.setInnerHtml(innerHtml);
         return e;
     }
-
 }

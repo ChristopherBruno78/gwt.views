@@ -10,11 +10,6 @@ public class SwitchTest extends GwtViewsTest {
 
     @Override
     UIObject render() {
-        return div(new DOMProps()
-                        .margin(15)
-                , new Switch(
-                        new CheckBoxProps()
-                                .text("Switch Me")));
+        return div(new DOMProps().margin(15), new Switch(new CheckBoxProps().text("Switch Me")));
     }
-
 }

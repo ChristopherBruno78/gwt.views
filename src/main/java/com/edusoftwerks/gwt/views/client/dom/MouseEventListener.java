@@ -13,5 +13,4 @@ public abstract class MouseEventListener implements EventListener {
     }
 
     public abstract void handleMouseEvent(MouseEvent event);
-
 }

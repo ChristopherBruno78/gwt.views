@@ -17,19 +17,16 @@ import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.div;
 
 public class PopOverTest extends GwtViewsTest {
 
+    private final PopOver popOver;
     private Button btn;
     private Button closeBtn;
-    private PopOver popOver;
 
     public PopOverTest() {
-        popOver = new PopOver(new PopOverProps()
-                .edge(PopOverEdge.MIDDLE)
-                .position(PopOverPosition.RIGHT)) {
+        popOver = new PopOver(new PopOverProps().edge(PopOverEdge.MIDDLE).position(PopOverPosition.RIGHT)) {
             @Override
             protected DOMElement renderView() {
-                return div(new DOMProps()
-                                .width(200)
-                                .style("padding", "15px"),
+                return div(
+                        new DOMProps().width(200).style("padding", "15px"),
                         closeBtn = new Button("Click", ButtonType.PRIMARY));
             }
         };
@@ -41,8 +38,7 @@ public class PopOverTest extends GwtViewsTest {
                 .style("position", "absolute")
                 .style("left", "50px")
                 .style("top", "50px")
-                .text("PopOver Test")
-        );
+                .text("PopOver Test"));
     }
 
     @Override

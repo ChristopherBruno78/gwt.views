@@ -9,10 +9,9 @@ import com.google.gwt.user.client.Timer;
 import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.div;
 
 /**
- * Toast is a UI component for displaying information in an area
- * of the application
- * <p>
- * Custom Events: CLOSE, ACTION
+ * Toast is a UI component for displaying information in an area of the application
+ *
+ * <p>Custom Events: CLOSE, ACTION
  */
 public abstract class Toast extends View<ToastProps> {
 
@@ -27,43 +26,38 @@ public abstract class Toast extends View<ToastProps> {
 
     private Button renderAction() {
         if (this.props.actionText() != null) {
-            return new Button(
-                    new ButtonProps()
-                            .text(this.props.actionText())
-            );
+            return new Button(new ButtonProps().text(this.props.actionText()));
         }
         return null;
     }
 
     @Override
     protected DOMElement render() {
-        return div(new DOMProps().className(
-                ClassNames.start("v-Toast")
-                        .add("intent", this.props.intent() != ToastIntent.DEFAULT)
-                        .add(this.props.intent().toString())
-                        .add("v-Toast--hasIcon", this.props.icon() != null)
-                        .build()
-                ).attr("role", "dialog"),
-                this.props.icon() != null ? DOMFactory.create("i", new DOMProps()
-                        .className(ClassNames.start("icon font-icon")
-                                .add(this.props.icon())
-                                .build()
-                        )) : null,
-                div(new DOMProps().className("v-Toast-content"),
-                        div(new DOMProps().className("message"),
-                                this.renderContent()
-                        ),
-                        div(new DOMProps().className("action"),
-                                actionBtn = this.renderAction()
-                        )
-                ),
+        return div(
+                new DOMProps()
+                        .className(ClassNames.start("v-Toast")
+                                .add("intent", this.props.intent() != ToastIntent.DEFAULT)
+                                .add(this.props.intent().toString())
+                                .add("v-Toast--hasIcon", this.props.icon() != null)
+                                .build())
+                        .attr("role", "dialog"),
+                this.props.icon() != null
+                        ? DOMFactory.create(
+                                "i",
+                                new DOMProps()
+                                        .className(ClassNames.start("icon font-icon")
+                                                .add(this.props.icon())
+                                                .build()))
+                        : null,
+                div(
+                        new DOMProps().className("v-Toast-content"),
+                        div(new DOMProps().className("message"), this.renderContent()),
+                        div(new DOMProps().className("action"), actionBtn = this.renderAction())),
                 div(new DOMProps().className("v-divider")),
                 closeBtn = new Button(new ButtonProps()
                         .className("close")
                         .icon("icon-times-solid")
-                        .iconOnly(true)
-                )
-        );
+                        .iconOnly(true)));
     }
 
     @Override
@@ -104,5 +98,4 @@ public abstract class Toast extends View<ToastProps> {
             lifeSpanTimer.cancel();
         }
     }
-
 }

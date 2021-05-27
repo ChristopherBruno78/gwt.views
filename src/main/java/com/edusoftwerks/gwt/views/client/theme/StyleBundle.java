@@ -57,5 +57,4 @@ public interface StyleBundle extends ClientBundle {
 
     @Source("images/ResizeIndicator.png")
     ImageResource resizeIndicatorImage();
-
 }

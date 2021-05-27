@@ -3,16 +3,14 @@ package com.edusoftwerks.gwt.views.client.ui;
 import com.edusoftwerks.gwt.views.client.dom.Events;
 
 /**
- * Control is a base class for UI Components dealing
- * with data input that can be enabled/disabled, focused and blurred,
- * contain text and are in the browser tab order.
- * <p>
- * Custom Events: ACTION
+ * Control is a base class for UI Components dealing with data input that can be enabled/disabled,
+ * focused and blurred, contain text and are in the browser tab order.
+ *
+ * <p>Custom Events: ACTION
  *
  * @param <T> ControlProps type
  */
-public abstract class Control<T extends ControlProps<T>>
-        extends View<T> {
+public abstract class Control<T extends ControlProps<T>> extends View<T> {
 
     private boolean isFocused = false;
 

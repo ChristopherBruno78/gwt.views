@@ -73,7 +73,6 @@ public final class MaskedText extends Text {
         addEventListener(Events.FOCUS, this::handleFocus);
         addEventListener(Events.BLUR, this::handleBlur);
         super.addEventListeners();
-
     }
 
     private void handleKeyDown(KeyboardEvent event, int keyCode) {
@@ -86,8 +85,8 @@ public final class MaskedText extends Text {
             case KeyCodes.KEY_BACKSPACE:
             case KeyCodes.KEY_DELETE:
                 pos = caret(-1, -1);
-                begin = pos[ 0 ];
-                end = pos[ 1 ];
+                begin = pos[0];
+                end = pos[1];
                 if (end - begin == 0) {
                     begin = (keyCode != KeyCodes.KEY_DELETE) ? seekPrev(begin) : (end = seekNext(begin - 1));
                     end = (keyCode == KeyCodes.KEY_DELETE) ? seekNext(end) : end;
@@ -111,9 +110,9 @@ public final class MaskedText extends Text {
         int p, next = -1;
         String c;
         Integer[] pos = caret(-1, -1);
-        int begin = pos[ 0 ];
-        int end = pos[ 1 ];
-        if (event.ctrlKey || event.altKey || event.metaKey || keyCode < 32) { //ignore
+        int begin = pos[0];
+        int end = pos[1];
+        if (event.ctrlKey || event.altKey || event.metaKey || keyCode < 32) { // ignore
             return;
         } else {
             if (end - begin != 0) {
@@ -169,7 +168,7 @@ public final class MaskedText extends Text {
     private Integer[] caret(int begin, int end) {
         HTMLInputElement $input = Js.cast(input.getElement());
         if (getText().length() == 0 || isHidden() || !DOM.hasFocus($input)) {
-            return new Integer[]{0, 0};
+            return new Integer[] {0, 0};
         }
         if (begin > -1) {
             end = (end > -1) ? end : begin;
@@ -179,7 +178,7 @@ public final class MaskedText extends Text {
             begin = range.start;
             end = range.end;
         }
-        return new Integer[]{begin, end};
+        return new Integer[] {begin, end};
     }
 
     private void parseMask() {
@@ -211,16 +210,17 @@ public final class MaskedText extends Text {
         }
         defaultBuffer = bufferAsString();
         focusText = getRawValue();
-
     }
 
     private int seekNext(int pos) {
-        while (++pos < len && tests.get(pos) == null) ;
+        while (++pos < len && tests.get(pos) == null)
+            ;
         return pos;
     }
 
     private int seekPrev(int pos) {
-        while (--pos >= 0 && tests.get(pos) == null) ;
+        while (--pos >= 0 && tests.get(pos) == null)
+            ;
         return pos;
     }
 
@@ -249,7 +249,6 @@ public final class MaskedText extends Text {
         }
         writeBuffer();
         caret(Math.max(firstNonMaskPos, begin), -1);
-
     }
 
     private void shiftR(int pos) {
@@ -337,5 +336,4 @@ public final class MaskedText extends Text {
         }
         return bufferStr.toString();
     }
-
 }

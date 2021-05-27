@@ -6,9 +6,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-/**
- * A Class representing RGBA color
- */
+/** A Class representing RGBA color */
 public class Color implements Serializable {
 
     private int red;
@@ -72,7 +70,7 @@ public class Color implements Serializable {
     }
 
     public static Color colorWithHSBA(int hue, int saturation, int brightness, int alpha) {
-        //clamp values
+        // clamp values
         hue = Math.max(Math.min(hue, 360), 0);
         saturation = Math.max(Math.min(saturation, 100), 0);
         brightness = Math.max(Math.min(brightness, 100), 0);
@@ -177,10 +175,8 @@ public class Color implements Serializable {
                 hue++;
             }
         }
-        return new int[]{
-                (int) Math.round(hue * 360),
-                (int) Math.round(saturation * 100),
-                (int) Math.round(brightness * 100)
+        return new int[] {
+            (int) Math.round(hue * 360), (int) Math.round(saturation * 100), (int) Math.round(brightness * 100)
         };
     }
 
@@ -197,15 +193,11 @@ public class Color implements Serializable {
     }
 
     public String toHexString() {
-        String sb = '#' +
-                toBrowserHexValue(red) +
-                toBrowserHexValue(green) +
-                toBrowserHexValue(blue);
+        String sb = '#' + toBrowserHexValue(red) + toBrowserHexValue(green) + toBrowserHexValue(blue);
         return sb;
     }
 
     public boolean equals(Color c) {
-        return c.getRed() == red && c.getGreen() == green && c.getBlue() == blue &&
-                c.getAlpha() == alpha;
+        return c.getRed() == red && c.getGreen() == green && c.getBlue() == blue && c.getAlpha() == alpha;
     }
 }

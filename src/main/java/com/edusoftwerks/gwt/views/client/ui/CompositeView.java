@@ -81,5 +81,4 @@ public abstract class CompositeView<T extends UIProps> extends UIObject {
         view.fireDidLeaveDocument();
         didLeaveDocument();
     }
-
 }

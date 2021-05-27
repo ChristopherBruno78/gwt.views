@@ -16,5 +16,4 @@ public class RadioProps extends ControlProps<RadioProps> {
     public RadioProps selected(boolean flag) {
         return set("selected", flag);
     }
-
 }

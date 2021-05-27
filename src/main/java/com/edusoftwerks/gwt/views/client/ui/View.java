@@ -9,17 +9,15 @@ import elemental2.dom.HTMLElement;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class View<T extends UIProps<T>> extends UIObject
-        implements RequiresResize {
+public abstract class View<T extends UIProps<T>> extends UIObject implements RequiresResize {
 
+    private final List<UIObject> subViews = new ArrayList<>();
     protected DOMElement domElement;
     protected UIObject parent;
     protected T props;
-    private final List<UIObject> subViews = new ArrayList<>();
     private boolean isRendered = false;
 
-    public View() {
-    }
+    public View() {}
 
     public View(T props) {
         this.props = props;
@@ -55,8 +53,7 @@ public abstract class View<T extends UIProps<T>> extends UIObject
 
     protected abstract DOMElement render();
 
-    protected void addEventListeners() {
-    }
+    protected void addEventListeners() {}
 
     @Override
     public void performRender() {
@@ -94,6 +91,10 @@ public abstract class View<T extends UIProps<T>> extends UIObject
         return isRendered;
     }
 
+    public boolean isHidden() {
+        return this.props.hidden();
+    }
+
     public void setHidden(boolean flag) {
         this.props.hidden(flag);
         if (isRendered()) {
@@ -107,10 +108,6 @@ public abstract class View<T extends UIProps<T>> extends UIObject
         }
     }
 
-    public boolean isHidden() {
-        return this.props.hidden();
-    }
-
     public int getWidth() {
         return getElement().offsetWidth;
     }
@@ -118,5 +115,4 @@ public abstract class View<T extends UIProps<T>> extends UIObject
     public int getHeight() {
         return getElement().offsetHeight;
     }
-
 }

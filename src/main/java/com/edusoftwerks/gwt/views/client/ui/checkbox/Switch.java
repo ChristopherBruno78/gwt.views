@@ -38,20 +38,17 @@ public class Switch extends Control<CheckBoxProps> {
 
     @Override
     protected DOMElement render() {
-        return div(new DOMProps()
-                        .className(
-                                ClassNames
-                                        .start("v-Switch")
-                                        .add("v-no-select")
-                                        .add("is-disabled", isDisabled())
-                                        .add("is-checked", this.props.checked())
-                                        .build()
-                        )
+        return div(
+                new DOMProps()
+                        .className(ClassNames.start("v-Switch")
+                                .add("v-no-select")
+                                .add("is-disabled", isDisabled())
+                                .add("is-checked", this.props.checked())
+                                .build())
                         .attr("tabIndex", this.isDisabled() ? -1 : 0)
                         .attr("role", "checkbox"),
                 div(new DOMProps().className("indicator")),
-                label(this.props.text())
-        );
+                label(this.props.text()));
     }
 
     @Override
@@ -78,15 +75,12 @@ public class Switch extends Control<CheckBoxProps> {
                 if (isDisabled()) {
                     return;
                 }
-                if (keyCode == KeyCodes.KEY_SPACE ||
-                        keyCode == KeyCodes.KEY_ENTER) {
+                if (keyCode == KeyCodes.KEY_SPACE || keyCode == KeyCodes.KEY_ENTER) {
                     setValue(!getValue());
                     fireActions();
                 }
             }
         });
         super.addEventListeners();
-
     }
-
 }

@@ -17,18 +17,17 @@ public class SplitViewTest extends GwtViewsTest {
 
     @Override
     UIObject render() {
-        return new SplitView(new SplitViewProps()
-                .flex(SplitViewFlex.TOP_LEFT)
-                .orientation(SplitViewOrientation.VERTICAL)) {
+        return new SplitView(
+                new SplitViewProps().flex(SplitViewFlex.TOP_LEFT).orientation(SplitViewOrientation.VERTICAL)) {
             @Override
             protected View<?> renderTopLeft() {
                 return new View<DOMProps>() {
                     @Override
                     protected DOMElement render() {
-                        return div(new DOMProps()
-                                        .style("background", "#eee")
-                                        .style("border-right", "1px solid #bbb"),
-                                div(new DOMProps()
+                        return div(
+                                new DOMProps().style("background", "#eee").style("border-right", "1px solid #bbb"),
+                                div(
+                                        new DOMProps()
                                                 .style("display", "flex")
                                                 .style("flex-direction", "column")
                                                 .style("width", "100%")
@@ -36,10 +35,7 @@ public class SplitViewTest extends GwtViewsTest {
                                         new Button(new ButtonProps()
                                                 .text("Test")
                                                 .style("margin", "15px")
-                                                .type(ButtonType.PRIMARY)
-                                        )
-                                )
-                        );
+                                                .type(ButtonType.PRIMARY))));
                     }
                 };
             }
@@ -49,16 +45,13 @@ public class SplitViewTest extends GwtViewsTest {
                 return new View<DOMProps>() {
                     @Override
                     protected DOMElement render() {
-                        return div(new DOMProps()
-                                .style("background", "#fff"));
+                        return div(new DOMProps().style("background", "#fff"));
                     }
                 };
             }
 
             @Override
-            protected void addEventListeners() {
-            }
+            protected void addEventListeners() {}
         };
     }
-
 }

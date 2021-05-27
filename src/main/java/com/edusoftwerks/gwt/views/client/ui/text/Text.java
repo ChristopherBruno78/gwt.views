@@ -13,13 +13,17 @@ import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.div;
 
 public class Text extends Control<TextProps> {
 
-    protected DOMElement input = null;
-    private String lastValue = null;
-    private boolean isError = false;
-
     static {
         Theme.get().TextCss().ensureInjected();
     }
+
+    private final String lastValue = null;
+    protected DOMElement input = null;
+    private boolean isError = false;
+    private EventListener onKeyPressListener;
+    private EventListener onFocusListener;
+    private EventListener onBlurListener;
+    private EventListener onInputListener;
 
     public Text(TextProps props) {
         super(props);
@@ -42,6 +46,10 @@ public class Text extends Control<TextProps> {
         }
     }
 
+    public boolean isSecure() {
+        return this.props.secure();
+    }
+
     public void setSecure(boolean flag) {
         this.props.secure(flag);
         if (isRendered()) {
@@ -51,10 +59,6 @@ public class Text extends Control<TextProps> {
                 input.setAttribute("type", "text");
             }
         }
-    }
-
-    public boolean isSecure() {
-        return this.props.secure();
     }
 
     public boolean isReadOnly() {
@@ -74,15 +78,15 @@ public class Text extends Control<TextProps> {
         }
     }
 
+    public String getPlaceholder() {
+        return this.props.placeholder();
+    }
+
     public void setPlaceholder(String placeholder) {
         this.props.placeholder(placeholder);
         if (isRendered()) {
             input.setAttribute("placeholder", placeholder);
         }
-    }
-
-    public String getPlaceholder() {
-        return this.props.placeholder();
     }
 
     public void clear() {
@@ -102,71 +106,70 @@ public class Text extends Control<TextProps> {
 
     @Override
     protected DOMElement render() {
-        return div(new DOMProps()
-                        .className(
-                                ClassNames.start("v-Text")
-                                        .add("multiline", this.props.multiline())
-                                        .add("is-error", isError)
-                                        .build()
-                        )
+        return div(
+                new DOMProps()
+                        .className(ClassNames.start("v-Text")
+                                .add("multiline", this.props.multiline())
+                                .add("is-error", isError)
+                                .build())
                         .attr("tabIndex", -1)
                         .attr("role", "textbox")
                         .attr("aria-disabled", isDisabled()),
-                input = this.renderControl()
-        );
+                input = this.renderControl());
     }
 
     protected DOMElement renderControl() {
         if (this.props.multiline()) {
-            return create("textarea",
+            return create(
+                    "textarea",
                     new DOMProps()
                             .className("v-Text-input")
                             .attr("rows", "1")
                             .attr("tabIndex", isDisabled() ? -1 : 0)
                             .attr("name", this.props.name())
-                            .attr("placeholder", this.props.placeholder())
-            );
+                            .attr("placeholder", this.props.placeholder()));
         } else {
-            return create("input", new DOMProps()
-                    .className("v-Text-input")
-                    .attr("type", this.props.secure() ? "password" : "text")
-                    .attr("tabIndex", isDisabled() ? -1 : 0)
-                    .attr("name", this.props.name())
-                    .attr("placeholder", this.props.placeholder())
-            );
-
+            return create(
+                    "input",
+                    new DOMProps()
+                            .className("v-Text-input")
+                            .attr("type", this.props.secure() ? "password" : "text")
+                            .attr("tabIndex", isDisabled() ? -1 : 0)
+                            .attr("name", this.props.name())
+                            .attr("placeholder", this.props.placeholder()));
         }
     }
-
-    private EventListener onKeyPressListener;
-    private EventListener onFocusListener;
-    private EventListener onBlurListener;
-    private EventListener onInputListener;
 
     @Override
     protected void addEventListeners() {
         HTMLElement $input = input.getElement();
-        $input.addEventListener(Events.FOCUS, onFocusListener = evt -> {
-            addClassName("is-focused");
-            //forward event to main component
-            Events.fireEvent(Events.FOCUS, this);
-        });
-        $input.addEventListener(Events.BLUR, onBlurListener = evt -> {
-            removeClassName("is-focused");
-            //forward event to main component
-            Events.fireEvent(Events.BLUR, this);
-        });
-        $input.addEventListener(Events.KEYPRESS, onKeyPressListener = new KeyboardEventListener() {
-            @Override
-            public void handleKeyboardEvent(KeyboardEvent keyboardEvent, int keyCode) {
-                if (!props.multiline()) {
-                    if (keyCode == KeyCodes.KEY_ENTER) {
-                        keyboardEvent.preventDefault();
-                        fireActions();
+        $input.addEventListener(
+                Events.FOCUS,
+                onFocusListener = evt -> {
+                    addClassName("is-focused");
+                    // forward event to main component
+                    Events.fireEvent(Events.FOCUS, this);
+                });
+        $input.addEventListener(
+                Events.BLUR,
+                onBlurListener = evt -> {
+                    removeClassName("is-focused");
+                    // forward event to main component
+                    Events.fireEvent(Events.BLUR, this);
+                });
+        $input.addEventListener(
+                Events.KEYPRESS,
+                onKeyPressListener = new KeyboardEventListener() {
+                    @Override
+                    public void handleKeyboardEvent(KeyboardEvent keyboardEvent, int keyCode) {
+                        if (!props.multiline()) {
+                            if (keyCode == KeyCodes.KEY_ENTER) {
+                                keyboardEvent.preventDefault();
+                                fireActions();
+                            }
+                        }
                     }
-                }
-            }
-        });
+                });
         $input.addEventListener(Events.INPUT, onInputListener = this::handleChange);
         super.addEventListeners();
     }
@@ -222,5 +225,4 @@ public class Text extends Control<TextProps> {
         HTMLInputElement $input = Js.cast(input.getElement());
         return new Range($input.selectionStart, $input.selectionEnd);
     }
-
 }

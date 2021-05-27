@@ -13,17 +13,16 @@ public class DraggableTest extends GwtViewsTest {
 
     @Override
     UIObject render() {
-        return dragElement = div(new DOMProps()
+        return dragElement = div(
+                new DOMProps()
                         .style("background", "#d0d0d0")
                         .style("width", "100px")
                         .style("height", "100px"),
-                label("Drag Me")
-        );
+                label("Drag Me"));
     }
 
     @Override
     protected void addEventListeners() {
         Draggable.makeDraggable(dragElement, true);
     }
-
 }

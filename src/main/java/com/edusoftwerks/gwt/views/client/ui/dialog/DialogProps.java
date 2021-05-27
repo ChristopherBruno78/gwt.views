@@ -96,5 +96,4 @@ public class DialogProps extends UIProps<DialogProps> {
     public DialogProps y(int y) {
         return set("y", y);
     }
-
 }

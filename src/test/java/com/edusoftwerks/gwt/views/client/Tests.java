@@ -6,7 +6,6 @@ public class Tests implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
-        new ToasterTest().run();
+        new MenuTest().run();
     }
-
 }

@@ -6,10 +6,7 @@ import com.edusoftwerks.gwt.views.client.dom.DOMProps;
 class Option extends DOMElement {
 
     public Option(String text, Integer id) {
-        super("option", new DOMProps()
-                .attr("id", id)
-                .attr("value", text)
-        );
+        super("option", new DOMProps().attr("id", id).attr("value", text));
         setText(text);
     }
 
@@ -20,5 +17,4 @@ class Option extends DOMElement {
     public void setText(String text) {
         setInnerHtml(text);
     }
-
 }

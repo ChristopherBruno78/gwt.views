@@ -18,12 +18,12 @@ public class ResizableTest extends GwtViewsTest {
 
     @Override
     UIObject render() {
-        return resizeElement = div(new DOMProps()
+        return resizeElement = div(
+                new DOMProps()
                         .style("background", "#ddd")
                         .style("width", "200px")
                         .style("height", "200px"),
-                label("Resize Me")
-        );
+                label("Resize Me"));
     }
 
     @Override
@@ -43,5 +43,4 @@ public class ResizableTest extends GwtViewsTest {
             }
         });
     }
-
 }

@@ -18,8 +18,8 @@ public class TextTest extends GwtViewsTest {
 
     @Override
     UIObject render() {
-        return div(new DOMProps()
-                        .margin(15),
+        return div(
+                new DOMProps().margin(15),
                 text = new Text(new TextProps()
                         .height(32)
                         .secure(false)
@@ -27,15 +27,12 @@ public class TextTest extends GwtViewsTest {
                         .text("Test")
                         .multiline(false)),
                 searchText = new SearchText(new TextProps()),
-                maskedText = new MaskedText(new TextProps().mask("999-99-9999"))
-        );
+                maskedText = new MaskedText(new TextProps().mask("999-99-9999")));
     }
 
     @Override
     public void addEventListeners() {
         text.addEventListener(Events.ACTION, evt -> GWT.log("submit"));
         searchText.addEventListener(Events.CANCEL, evt -> searchText.setSecure(true));
-
     }
-
 }

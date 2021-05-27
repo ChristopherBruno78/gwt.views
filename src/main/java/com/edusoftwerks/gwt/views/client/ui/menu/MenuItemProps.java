@@ -23,5 +23,4 @@ public class MenuItemProps extends ControlProps<MenuItemProps> {
     public MenuItemProps submenu(Menu menu) {
         return set("submenu", menu);
     }
-
 }

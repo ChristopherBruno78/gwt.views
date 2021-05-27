@@ -15,6 +15,10 @@ import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.*;
 
 public class Button extends Control<ButtonProps> {
 
+    static {
+        Theme.get().ButtonCss().ensureInjected();
+    }
+
     private DOMElement $iconEl;
     private DOMElement $iconElParent;
     private DOMElement $labelEl;
@@ -23,26 +27,22 @@ public class Button extends Control<ButtonProps> {
     private Timer clearToolTipTimer;
     private Timer showToolTipTimer;
 
-    static {
-        Theme.get().ButtonCss().ensureInjected();
-    }
-
     public Button(ButtonProps props) {
         super(props);
         if (this.props.tooltip() != null) {
-            toolTip = new PopOver(new PopOverProps()
-                    .className("v-Tooltip")
-                    .backgroundColor(Color.colorFromHex("#fafafa"))
-                    .borderColor(Color.colorFromHex("#bbbbbb"))
-                    .position(PopOverPosition.TOP)
-                    .isCallout(true)
-                    .edge(PopOverEdge.CENTER)
-            ) {
-                @Override
-                protected DOMElement renderView() {
-                    return label(Button.this.props.tooltip());
-                }
-            };
+            toolTip =
+                    new PopOver(new PopOverProps()
+                            .className("v-Tooltip")
+                            .backgroundColor(Color.colorFromHex("#fafafa"))
+                            .borderColor(Color.colorFromHex("#bbbbbb"))
+                            .position(PopOverPosition.TOP)
+                            .isCallout(true)
+                            .edge(PopOverEdge.CENTER)) {
+                        @Override
+                        protected DOMElement renderView() {
+                            return label(Button.this.props.tooltip());
+                        }
+                    };
         }
     }
 
@@ -61,22 +61,16 @@ public class Button extends Control<ButtonProps> {
                 new DOMProps()
                         .attr("aria-disabled", isDisabled())
                         .attr("tabIndex", this.isDisabled() ? -1 : 0)
-                        .className(
-                                ClassNames
-                                        .start("v-Button")
-                                        .add(this.props.type().toString())
-                                        .add("v-Button--hasIcon", this.props.icon() != null)
-                                        .add("v-Button--iconOnly", this.props.iconOnly())
-                                        .add("is-disabled", isDisabled())
-                                        .build()
-                        ),
+                        .className(ClassNames.start("v-Button")
+                                .add(this.props.type().toString())
+                                .add("v-Button--hasIcon", this.props.icon() != null)
+                                .add("v-Button--iconOnly", this.props.iconOnly())
+                                .add("is-disabled", isDisabled())
+                                .build()),
                 this.props.icon() != null
-                        ? $iconElParent =
-                        div(new DOMProps().className("icon"),
-                                $iconEl = create(
-                                        "i",
-                                        new DOMProps()
-                                                .className("font-icon " + this.props.icon())))
+                        ? $iconElParent = div(
+                                new DOMProps().className("icon"),
+                                $iconEl = create("i", new DOMProps().className("font-icon " + this.props.icon())))
                         : null,
                 !this.props.iconOnly() ? $labelEl = label(new DOMProps().className("label"), this.props.text()) : null);
     }
@@ -102,15 +96,15 @@ public class Button extends Control<ButtonProps> {
         super.addEventListeners();
     }
 
+    public String getText() {
+        return this.props.text();
+    }
+
     public void setText(String text) {
         this.props.text(text);
         if (isRendered() && $labelEl != null) {
             $labelEl.setInnerHtml(text);
         }
-    }
-
-    public String getText() {
-        return this.props.text();
     }
 
     public void setIcon(String icon) {
@@ -119,12 +113,9 @@ public class Button extends Control<ButtonProps> {
             if ($iconEl != null) {
                 $iconEl.setClassName(icon);
             } else {
-                $iconElParent =
-                        div(new DOMProps().className("icon"),
-                                $iconEl = create(
-                                        "i",
-                                        new DOMProps()
-                                                .className(this.props.icon())));
+                $iconElParent = div(
+                        new DOMProps().className("icon"),
+                        $iconEl = create("i", new DOMProps().className(this.props.icon())));
                 getElement().insertBefore($iconElParent.getElement(), $labelEl.getElement());
             }
         }
@@ -187,5 +178,4 @@ public class Button extends Control<ButtonProps> {
             showToolTipTimer.schedule(this.props.tooltipTimeout());
         }
     }
-
 }

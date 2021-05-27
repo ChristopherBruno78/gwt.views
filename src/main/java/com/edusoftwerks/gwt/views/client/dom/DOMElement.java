@@ -55,16 +55,13 @@ public class DOMElement extends UIObject {
     }
 
     @Override
-    public void didEnterDocument() {
-    }
+    public void didEnterDocument() {}
 
     @Override
-    public void didLeaveDocument() {
-    }
+    public void didLeaveDocument() {}
 
     @Override
     protected void performRender() {
         parseProps(this.props);
     }
-
 }

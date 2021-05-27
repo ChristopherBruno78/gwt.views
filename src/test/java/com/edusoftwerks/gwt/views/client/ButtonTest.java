@@ -17,7 +17,8 @@ public class ButtonTest extends GwtViewsTest {
 
     @Override
     UIObject render() {
-        return div(new DOMProps()
+        return div(
+                new DOMProps()
                         .style("display", "flex")
                         .style("flex-direction", "column")
                         .style("margin", "12px")
@@ -26,8 +27,7 @@ public class ButtonTest extends GwtViewsTest {
                 new Button(new ButtonProps()
                         .text("Primary")
                         .type(ButtonType.PRIMARY)
-                        .icon("icon-check-solid")
-                ),
+                        .icon("icon-check-solid")),
                 new Button("Success", ButtonType.SUCCESS),
                 new Button("Danger", ButtonType.DANGER),
                 new Button("Info", ButtonType.INFO),
@@ -40,9 +40,7 @@ public class ButtonTest extends GwtViewsTest {
                         .height(32)
                         .iconOnly(true)
                         .tooltip("CheckMark")
-                        .icon("icon-check-solid")
-                )
-        );
+                        .icon("icon-check-solid")));
     }
 
     @Override
@@ -54,5 +52,4 @@ public class ButtonTest extends GwtViewsTest {
             }
         });
     }
-
 }

@@ -28,10 +28,9 @@ public class ComboBoxProps extends ControlProps<ComboBoxProps> {
     }
 
     public ComboBoxProps options(Object... options) {
-        String[] strOptions = Arrays.toString(options).toUpperCase()
-                .replaceAll("^.|.$", "").split(", ");
+        String[] strOptions =
+                Arrays.toString(options).toUpperCase().replaceAll("^.|.$", "").split(", ");
         optionsList = new ArrayList<>(Arrays.asList(strOptions));
         return this;
     }
-
 }

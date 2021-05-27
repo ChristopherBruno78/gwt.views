@@ -40,5 +40,4 @@ public class ToastProps extends UIProps<ToastProps> {
     public ToastProps lifespan(Integer lifespan) {
         return set("lifespan", lifespan);
     }
-
 }

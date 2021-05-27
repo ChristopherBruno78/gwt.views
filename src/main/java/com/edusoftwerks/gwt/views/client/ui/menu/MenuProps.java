@@ -18,5 +18,4 @@ public class MenuProps extends UIProps<MenuProps> {
         menuItems = new ArrayList<>(Arrays.asList(items));
         return this;
     }
-
 }

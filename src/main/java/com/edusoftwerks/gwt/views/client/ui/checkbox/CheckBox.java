@@ -16,12 +16,15 @@ import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.*;
 
 public class CheckBox extends Control<CheckBoxProps> {
 
-    private DOMElement input;
-    private DOMElement labelEl;
-
     static {
         Theme.get().CheckBoxCss().ensureInjected();
     }
+
+    private DOMElement input;
+    private DOMElement labelEl;
+    private EventListener onChangeListener;
+    private EventListener onFocusListener;
+    private EventListener onBlurListener;
 
     public CheckBox(CheckBoxProps props) {
         super(props);
@@ -45,57 +48,55 @@ public class CheckBox extends Control<CheckBoxProps> {
     @Override
     protected DOMElement render() {
         final String id = Document.get().createUniqueId();
-        return div(new DOMProps()
+        return div(
+                new DOMProps()
                         .className(ClassNames.start("v-Checkbox")
                                 .add("is-disabled", isDisabled())
-                                .build()
-                        )
+                                .build())
                         .attr("aria-checked", this.getValue())
                         .attr("role", "checkbox"),
-                input = create("input", new DOMProps()
-                        .attr("id", id)
-                        .attr("type", "checkbox")
-                        .attr("name", this.props.name())
-                        .attr("tabIndex", isDisabled() ? -1 : 0)
-                ),
+                input = create(
+                        "input",
+                        new DOMProps()
+                                .attr("id", id)
+                                .attr("type", "checkbox")
+                                .attr("name", this.props.name())
+                                .attr("tabIndex", isDisabled() ? -1 : 0)),
                 div(new DOMProps().className("indicator")),
-                labelEl = label(new DOMProps()
-                                .className("label v-no-select")
-                                .attr("for", id),
-                        this.props.text()
-                )
-        );
+                labelEl = label(new DOMProps().className("label v-no-select").attr("for", id), this.props.text()));
     }
-
-    private EventListener onChangeListener;
-    private EventListener onFocusListener;
-    private EventListener onBlurListener;
 
     @Override
     protected void addEventListeners() {
         final HTMLInputElement $input = Js.cast(input.getElement());
-        $input.addEventListener(Events.CHANGE, onChangeListener = new EventListener() {
-            @Override
-            public void handleEvent(Event evt) {
-                if (isDisabled()) {
-                    return;
-                }
-                setValue($input.checked);
-                fireActions();
-            }
-        });
-        $input.addEventListener(Events.FOCUS, onFocusListener = new EventListener() {
-            @Override
-            public void handleEvent(Event evt) {
-                addClassName("is-focused");
-            }
-        });
-        $input.addEventListener(Events.BLUR, onBlurListener = new EventListener() {
-            @Override
-            public void handleEvent(Event evt) {
-                removeClassName("is-focused");
-            }
-        });
+        $input.addEventListener(
+                Events.CHANGE,
+                onChangeListener = new EventListener() {
+                    @Override
+                    public void handleEvent(Event evt) {
+                        if (isDisabled()) {
+                            return;
+                        }
+                        setValue($input.checked);
+                        fireActions();
+                    }
+                });
+        $input.addEventListener(
+                Events.FOCUS,
+                onFocusListener = new EventListener() {
+                    @Override
+                    public void handleEvent(Event evt) {
+                        addClassName("is-focused");
+                    }
+                });
+        $input.addEventListener(
+                Events.BLUR,
+                onBlurListener = new EventListener() {
+                    @Override
+                    public void handleEvent(Event evt) {
+                        removeClassName("is-focused");
+                    }
+                });
     }
 
     @Override
@@ -137,5 +138,4 @@ public class CheckBox extends Control<CheckBoxProps> {
             labelEl.setInnerHtml(text);
         }
     }
-
 }

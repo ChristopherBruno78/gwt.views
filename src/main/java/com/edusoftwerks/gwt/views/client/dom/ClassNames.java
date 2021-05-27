@@ -3,15 +3,12 @@ package com.edusoftwerks.gwt.views.client.dom;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Utiliy class uses to build DOM element classNames
- */
+/** Utiliy class uses to build DOM element classNames */
 public class ClassNames {
 
     private final List<String> classNames = new ArrayList<>();
 
-    private ClassNames() {
-    }
+    private ClassNames() {}
 
     /**
      * The initial classname
@@ -76,4 +73,3 @@ public class ClassNames {
         return sb.toString();
     }
 }
-

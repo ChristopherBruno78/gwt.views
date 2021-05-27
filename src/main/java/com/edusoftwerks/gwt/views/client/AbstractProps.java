@@ -14,7 +14,7 @@ public abstract class AbstractProps<T extends AbstractProps<T>> {
     /**
      * Set a property with name key a given value
      *
-     * @param key   property name
+     * @param key property name
      * @param value property value
      * @return the Props object for chain calls
      */

@@ -6,16 +6,16 @@ import java.util.Map;
 
 public class UIProps<T extends AbstractProps<T>> extends AbstractProps<T> {
 
-    private Integer pixelToInt(String px) {
-        int i = px.indexOf("px");
-        return Integer.parseInt(px.substring(0, i));
-    }
-
     final Map<String, Object> attributes = new HashMap<>();
     final Map<String, Object> styles = new HashMap<>();
 
     public UIProps() {
         hidden(false);
+    }
+
+    private Integer pixelToInt(String px) {
+        int i = px.indexOf("px");
+        return Integer.parseInt(px.substring(0, i));
     }
 
     public String className() {
@@ -57,13 +57,11 @@ public class UIProps<T extends AbstractProps<T>> extends AbstractProps<T> {
     }
 
     public Iterator<String> attributesIterator() {
-        return attributes.keySet()
-                .iterator();
+        return attributes.keySet().iterator();
     }
 
     public Iterator<String> stylesIterator() {
-        return styles.keySet()
-                .iterator();
+        return styles.keySet().iterator();
     }
 
     public Boolean hidden() {
@@ -89,5 +87,4 @@ public class UIProps<T extends AbstractProps<T>> extends AbstractProps<T> {
     public T width(Integer width) {
         return style("width", width + "px");
     }
-
 }

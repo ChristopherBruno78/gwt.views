@@ -16,13 +16,10 @@ public class ComboBoxTest extends GwtViewsTest {
 
     @Override
     UIObject render() {
-        return div(new DOMProps()
-                        .margin(15),
+        return div(
+                new DOMProps().margin(15),
                 comboBox = new ComboBox(
-                        new ComboBoxProps()
-                                .width(150)
-                                .options("Hawaii", "Uzbekistan", "Moscow", "Los Angeles")
-                ));
+                        new ComboBoxProps().width(150).options("Hawaii", "Uzbekistan", "Moscow", "Los Angeles")));
     }
 
     @Override
@@ -39,5 +36,4 @@ public class ComboBoxTest extends GwtViewsTest {
     protected void didRun() {
         comboBox.setSelectedIndex(0);
     }
-
 }

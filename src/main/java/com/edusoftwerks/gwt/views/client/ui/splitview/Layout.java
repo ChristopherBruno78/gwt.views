@@ -13,5 +13,4 @@ class Layout {
     public String toString() {
         return top + "," + bottom + "," + left + "," + right + "," + width + "," + height;
     }
-
 }

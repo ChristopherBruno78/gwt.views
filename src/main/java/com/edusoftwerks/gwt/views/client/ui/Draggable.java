@@ -10,9 +10,9 @@ import elemental2.dom.MouseEvent;
 
 public class Draggable {
 
-    private static int DRAG_START_THRESHOLD = 10;
-    private UIObject dragView;
-    private UIObject dragHandle;
+    private static final int DRAG_START_THRESHOLD = 10;
+    private final UIObject dragView;
+    private final UIObject dragHandle;
     private int startX = -1;
     private int startY = -1;
     private int dragCount = 0;
@@ -32,6 +32,14 @@ public class Draggable {
         addEventListeners();
     }
 
+    public static Draggable makeDraggable(final UIObject view, boolean constrain) {
+        return makeDraggable(view, null, constrain);
+    }
+
+    public static Draggable makeDraggable(final UIObject view, UIObject handle, boolean constrain) {
+        return new Draggable(view, handle, constrain);
+    }
+
     private void addEventListeners() {
         dragHandle.addEventListener(Events.MOUSEDOWN, new MouseEventListener() {
             @Override
@@ -42,7 +50,6 @@ public class Draggable {
                 Rectangle rect = DOM.getBoundingRectClient(dragHandle.getElement());
                 startX = (int) (event.clientX - rect.origin.x);
                 startY = (int) (event.clientY - rect.origin.y);
-
             }
         });
         dragHandle.addEventListener(Events.MOUSEUP, new MouseEventListener() {
@@ -83,13 +90,5 @@ public class Draggable {
                 }
             }
         });
-    }
-
-    public static Draggable makeDraggable(final UIObject view, boolean constrain) {
-        return makeDraggable(view, null, constrain);
-    }
-
-    public static Draggable makeDraggable(final UIObject view, UIObject handle, boolean constrain) {
-        return new Draggable(view, handle, constrain);
     }
 }

@@ -6,5 +6,5 @@ public enum PopOverEdge {
     RIGHT,
     LEFT,
     MIDDLE,
-    CENTER;
+    CENTER
 }

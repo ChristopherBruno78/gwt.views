@@ -14,12 +14,12 @@ import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.div;
 
 public abstract class PopOver extends View<PopOverProps> {
 
-    private DOMElement callout;
-    private DOMElement triangle;
-
     static {
         Theme.get().PopOverCss().ensureInjected();
     }
+
+    private DOMElement callout;
+    private DOMElement triangle;
 
     public PopOver() {
         this(new PopOverProps());
@@ -33,18 +33,13 @@ public abstract class PopOver extends View<PopOverProps> {
 
     @Override
     protected DOMElement render() {
-        return div(new DOMProps()
-                        .className("v-PopOver")
-                        .attr("role", "dialog"),
+        return div(
+                new DOMProps().className("v-PopOver").attr("role", "dialog"),
                 this.renderView(),
-                callout = create("b",
-                        new DOMProps()
-                                .className(getCalloutClassName()),
-                        triangle = create("b",
-                                new DOMProps()
-                                        .className(getCalloutTriangleClassName()))
-                )
-        );
+                callout = create(
+                        "b",
+                        new DOMProps().className(getCalloutClassName()),
+                        triangle = create("b", new DOMProps().className(getCalloutTriangleClassName()))));
     }
 
     private String getCalloutClassName() {
@@ -95,8 +90,7 @@ public abstract class PopOver extends View<PopOverProps> {
         PopOverPosition position = this.props.position();
         PopOverEdge edge = this.props.edge();
         HTMLElement atNode = alignWithView.getElement();
-        int atNodeWidth = atNode.offsetWidth + 7,
-                atNodeHeight = atNode.offsetHeight;
+        int atNodeWidth = atNode.offsetWidth + 7, atNodeHeight = atNode.offsetHeight;
         Rectangle rect = DOM.getBoundingRectClient(atNode);
         int left = rect.origin.x;
         int top = rect.origin.y;
@@ -105,18 +99,19 @@ public abstract class PopOver extends View<PopOverProps> {
             case RIGHT: {
                 left += atNodeWidth;
             }
-            case LEFT: {
-                switch (edge) {
-                    case MIDDLE: {
-                        atNodeHeight = atNodeHeight >> 1;
-                    }
-                    case BOTTOM: {
-                        top += atNodeHeight;
-                        break;
+            case LEFT:
+                {
+                    switch (edge) {
+                        case MIDDLE: {
+                            atNodeHeight = atNodeHeight >> 1;
+                        }
+                        case BOTTOM: {
+                            top += atNodeHeight;
+                            break;
+                        }
                     }
                 }
-            }
-            break;
+                break;
             case BOTTOM: {
                 top += atNodeHeight;
             }
@@ -125,10 +120,11 @@ public abstract class PopOver extends View<PopOverProps> {
                     case CENTER: {
                         atNodeWidth = atNodeWidth >> 1;
                     }
-                    case RIGHT: {
-                        left += atNodeWidth;
-                    }
-                    break;
+                    case RIGHT:
+                        {
+                            left += atNodeWidth;
+                        }
+                        break;
                 }
             }
         }
@@ -138,25 +134,28 @@ public abstract class PopOver extends View<PopOverProps> {
         $layer.style.left = left + "px";
         $layer.style.top = top + "px";
         int deltaLeft = 0, deltaTop = 0;
-        //Adjust positioning
+        // Adjust positioning
         switch (position) {
             case LEFT: {
                 deltaLeft -= $layer.offsetWidth;
                 deltaLeft -= 8;
             }
-            case RIGHT: {
-                switch (edge) {
-                    case MIDDLE: {
-                        deltaTop -= $layer.offsetHeight >> 1;
+            case RIGHT:
+                {
+                    switch (edge) {
+                        case MIDDLE:
+                            {
+                                deltaTop -= $layer.offsetHeight >> 1;
+                            }
+                            break;
+                        case BOTTOM:
+                            {
+                                deltaTop -= $layer.offsetHeight;
+                            }
+                            break;
                     }
-                    break;
-                    case BOTTOM: {
-                        deltaTop -= $layer.offsetHeight;
-                    }
-                    break;
                 }
-            }
-            break;
+                break;
             case TOP: {
                 deltaTop -= ($layer.offsetHeight);
                 deltaTop -= 18;
@@ -164,14 +163,16 @@ public abstract class PopOver extends View<PopOverProps> {
             case BOTTOM: {
                 deltaTop -= 3;
                 switch (edge) {
-                    case CENTER: {
-                        deltaLeft -= $layer.offsetWidth >> 1;
-                    }
-                    break;
-                    case RIGHT: {
-                        deltaLeft -= $layer.offsetWidth;
-                    }
-                    break;
+                    case CENTER:
+                        {
+                            deltaLeft -= $layer.offsetWidth >> 1;
+                        }
+                        break;
+                    case RIGHT:
+                        {
+                            deltaLeft -= $layer.offsetWidth;
+                        }
+                        break;
                 }
             }
         }
@@ -189,7 +190,7 @@ public abstract class PopOver extends View<PopOverProps> {
         PopOverPosition position = this.props.position();
         boolean calloutIsAtTopOrBottom = position == PopOverPosition.TOP || position == PopOverPosition.BOTTOM;
         int gap = RootView.get().getWidth() - left - deltaLeft - getWidth();
-        //check right edge
+        // check right edge
         if (gap < 0) {
             deltaLeft += gap;
             deltaLeft -= 6;
@@ -198,7 +199,7 @@ public abstract class PopOver extends View<PopOverProps> {
                 calloutDelta -= 6;
             }
         }
-        //check left edge
+        // check left edge
         gap = left + deltaLeft;
         if (gap < 0) {
             deltaLeft -= gap;
@@ -207,7 +208,7 @@ public abstract class PopOver extends View<PopOverProps> {
                 calloutDelta -= (gap + 1);
             }
         }
-        //check bottom edge
+        // check bottom edge
         gap = RootView.get().getHeight() - top - deltaTop - getHeight();
         if (gap < 0) {
             deltaTop += gap;
@@ -217,7 +218,7 @@ public abstract class PopOver extends View<PopOverProps> {
                 calloutDelta -= 5;
             }
         }
-        //check top edge
+        // check top edge
         gap = top + deltaTop;
         if (gap < 0) {
             deltaTop -= gap;
@@ -246,9 +247,7 @@ public abstract class PopOver extends View<PopOverProps> {
     protected void addEventListeners() {
         addEventListener(Events.MOUSEDOWN, Event::stopPropagation);
         if (this.props.isTransient()) {
-            RootView.get().addEventListener(
-                    Events.MOUSEDOWN, evt -> close()
-            );
+            RootView.get().addEventListener(Events.MOUSEDOWN, evt -> close());
         }
     }
 
@@ -276,5 +275,4 @@ public abstract class PopOver extends View<PopOverProps> {
             callout.setClassName(getCalloutClassName());
         }
     }
-
 }

@@ -4,9 +4,7 @@ import com.edusoftwerks.gwt.views.shared.geometry.Rectangle;
 import elemental2.dom.*;
 import jsinterop.base.Js;
 
-/**
- * DOM Utilities
- */
+/** DOM Utilities */
 public class DOM {
 
     private static HTMLElement captureElement;
@@ -44,20 +42,6 @@ public class DOM {
         init.setShiftKey(oldEvent.shiftKey);
         init.setRelatedTarget(oldEvent.relatedTarget);
         return new MouseEvent(oldEvent.type, init);
-    }
-
-    private static class MouseDispatchHandler implements EventListener {
-
-        static MouseDispatchHandler INSTANCE = new MouseDispatchHandler();
-
-        @Override
-        public void handleEvent(Event evt) {
-            evt.stopImmediatePropagation();
-            evt.preventDefault();
-            MouseEvent oldEvent = Js.cast(evt);
-            captureElement.dispatchEvent(cloneMouseEvent(oldEvent));
-        }
-
     }
 
     public static void setCapture(HTMLElement element) {
@@ -110,9 +94,7 @@ public class DOM {
 
     public static boolean isVisible(HTMLElement element) {
         if (element != null) {
-            return !(element.style.getPropertyValue("visibility")
-                    .equals("hidden") ||
-                    !isDisplayed(element));
+            return !(element.style.getPropertyValue("visibility").equals("hidden") || !isDisplayed(element));
         }
         return false;
     }
@@ -124,16 +106,17 @@ public class DOM {
                     return true;
                 }
             }
-            String tagName = element.tagName
-                    .toLowerCase();
-            return tagName.equals("button") || tagName.equals("input") || tagName.equals("select") || tagName.equals("textarea");
+            String tagName = element.tagName.toLowerCase();
+            return tagName.equals("button")
+                    || tagName.equals("input")
+                    || tagName.equals("select")
+                    || tagName.equals("textarea");
         }
         return false;
     }
 
     public static HTMLElement getLastTabbableElement(HTMLElement element) {
-        int count = element.childElementCount,
-                i = count - 1;
+        int count = element.childElementCount, i = count - 1;
         for (; i >= 0; i--) {
             HTMLElement child = (HTMLElement) element.childNodes.getAt(i);
             if (DOM.isTabbable(child)) {
@@ -148,8 +131,7 @@ public class DOM {
     }
 
     public static HTMLElement getFirstTabbableElement(HTMLElement element) {
-        int count = element.childElementCount,
-                i = 0;
+        int count = element.childElementCount, i = 0;
         for (; i < count; i++) {
             HTMLElement child = (HTMLElement) element.childNodes.getAt(i);
             if (DOM.isTabbable(child)) {
@@ -163,7 +145,7 @@ public class DOM {
         return null;
     }
 
-    public static native int getOuterHeight(HTMLElement $el)/*-{
+    public static native int getOuterHeight(HTMLElement $el) /*-{
         var style = $wnd.getComputedStyle($el),
             tm = parseInt(style.marginTop, 10),
             bm = parseInt(style.marginBottom, 10);
@@ -171,7 +153,7 @@ public class DOM {
 
     }-*/;
 
-    public static native int getOuterWidth(HTMLElement $el)/*-{
+    public static native int getOuterWidth(HTMLElement $el) /*-{
         var style = $wnd.getComputedStyle($el),
             lm = parseInt(style.marginLeft, 10),
             rm = parseInt(style.marginRight, 10);
@@ -190,15 +172,14 @@ public class DOM {
         NodeList<Element> metaElementList = DomGlobal.document.getElementsByTagName("meta");
         for (int i = 0; i < metaElementList.getLength(); i++) {
             HTMLMetaElement metaElement = (HTMLMetaElement) metaElementList.getAt(i);
-            if (metaElement.name
-                    .equals(name)) {
+            if (metaElement.name.equals(name)) {
                 return metaElement;
             }
         }
         return null;
     }
 
-    public native static int getBrowserScrollbarWidth() /*-{
+    public static native int getBrowserScrollbarWidth() /*-{
         var inner = $wnd.document.createElement('p');
         inner.style.width = "100%";
         inner.style.height = "200px";
@@ -226,4 +207,16 @@ public class DOM {
         return String.fromCharCode(keyCode);
     }-*/;
 
+    private static class MouseDispatchHandler implements EventListener {
+
+        static MouseDispatchHandler INSTANCE = new MouseDispatchHandler();
+
+        @Override
+        public void handleEvent(Event evt) {
+            evt.stopImmediatePropagation();
+            evt.preventDefault();
+            MouseEvent oldEvent = Js.cast(evt);
+            captureElement.dispatchEvent(cloneMouseEvent(oldEvent));
+        }
+    }
 }

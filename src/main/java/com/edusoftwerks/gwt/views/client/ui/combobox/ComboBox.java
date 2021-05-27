@@ -19,11 +19,11 @@ import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.div;
 
 public class ComboBox extends Control<ComboBoxProps> {
 
-    private DOMElement input;
-
     static {
         Theme.get().ComboBoxCss().ensureInjected();
     }
+
+    private DOMElement input;
 
     public ComboBox(ComboBoxProps props) {
         super(props);
@@ -31,18 +31,16 @@ public class ComboBox extends Control<ComboBoxProps> {
 
     @Override
     protected DOMElement render() {
-        return div(new DOMProps()
+        return div(
+                new DOMProps()
                         .className(ClassNames.start("v-ComboBox")
                                 .add("is-disabled", isDisabled())
                                 .build())
                         .attr("role", "listbox")
                         .attr("aria-disabled", isDisabled()),
-                this.input = create("select",
-                        new DOMProps()
-                                .attr("name", this.props.name())
-                                .className("v-Combo-input v-no-select")
-                )
-        );
+                this.input = create(
+                        "select",
+                        new DOMProps().attr("name", this.props.name()).className("v-Combo-input v-no-select")));
     }
 
     @Override
@@ -70,7 +68,6 @@ public class ComboBox extends Control<ComboBoxProps> {
                 input.insert(index, option);
             }
         }
-
     }
 
     @Override
@@ -82,7 +79,6 @@ public class ComboBox extends Control<ComboBoxProps> {
         if (isRendered()) {
             input.remove(option);
         }
-
     }
 
     @Override
@@ -114,7 +110,7 @@ public class ComboBox extends Control<ComboBoxProps> {
 
     @Override
     public void didEnterDocument() {
-        updateOptions(this.props.options().toArray(new String[ 0 ]));
+        updateOptions(this.props.options().toArray(new String[0]));
         setSelectedIndex(this.props.select());
         setDisabled(isDisabled());
     }
@@ -151,8 +147,6 @@ public class ComboBox extends Control<ComboBoxProps> {
         if (isRendered()) {
             HTMLSelectElement selectElement = Js.cast(input.getElement());
             selectElement.disabled = flag;
-
         }
     }
-
 }

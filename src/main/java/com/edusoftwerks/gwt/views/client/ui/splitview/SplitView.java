@@ -9,23 +9,23 @@ import elemental2.dom.HTMLElement;
 
 public abstract class SplitView extends View<SplitViewProps> {
 
-    View<?> leftTopView;
-    View<?> bottomRightView;
-    private final SplitViewDivider divider;
-    private int staticPaneLength;
+    private static final int ONE_HUNDRED_PERCENT = -2;
     static int splitViewID = 0;
 
     static {
         Theme.get().SplitViewCss().ensureInjected();
     }
 
+    private final SplitViewDivider divider;
+    View<?> leftTopView;
+    View<?> bottomRightView;
+    private int staticPaneLength;
+
     public SplitView(SplitViewProps props) {
         super(props);
         staticPaneLength = props.staticPaneLength();
         divider = new SplitViewDivider(this);
     }
-
-    private final static int ONE_HUNDRED_PERCENT = -2;
 
     static void setLayout(HTMLElement $el, Layout layout) {
         $el.style.position = "absolute";
@@ -93,10 +93,18 @@ public abstract class SplitView extends View<SplitViewProps> {
             Layout l = new Layout();
             l.left = 0;
             l.top = 0;
-            l.right = (orientation == SplitViewOrientation.VERTICAL && flex == SplitViewFlex.TOP_LEFT) ? staticPaneLength : -1;
-            l.bottom = (orientation == SplitViewOrientation.HORIZONTAL && flex == SplitViewFlex.TOP_LEFT) ? staticPaneLength : -1;
-            l.width = (orientation == SplitViewOrientation.HORIZONTAL) ? ONE_HUNDRED_PERCENT : (flex == SplitViewFlex.TOP_LEFT ? -1 : staticPaneLength);
-            l.height = (orientation == SplitViewOrientation.VERTICAL) ? ONE_HUNDRED_PERCENT : (flex == SplitViewFlex.TOP_LEFT ? -1 : staticPaneLength);
+            l.right = (orientation == SplitViewOrientation.VERTICAL && flex == SplitViewFlex.TOP_LEFT)
+                    ? staticPaneLength
+                    : -1;
+            l.bottom = (orientation == SplitViewOrientation.HORIZONTAL && flex == SplitViewFlex.TOP_LEFT)
+                    ? staticPaneLength
+                    : -1;
+            l.width = (orientation == SplitViewOrientation.HORIZONTAL)
+                    ? ONE_HUNDRED_PERCENT
+                    : (flex == SplitViewFlex.TOP_LEFT ? -1 : staticPaneLength);
+            l.height = (orientation == SplitViewOrientation.VERTICAL)
+                    ? ONE_HUNDRED_PERCENT
+                    : (flex == SplitViewFlex.TOP_LEFT ? -1 : staticPaneLength);
             SplitView.setLayout(leftTopView.getElement(), l);
         }
         if (divider.getParent() == null) {
@@ -108,12 +116,20 @@ public abstract class SplitView extends View<SplitViewProps> {
             }
             bottomRightView.setStyleAttribute("overflow", "auto");
             Layout l = new Layout();
-            l.left = (orientation == SplitViewOrientation.VERTICAL && flex == SplitViewFlex.BOTTOM_RIGHT) ? staticPaneLength : -1;
-            l.top = (orientation == SplitViewOrientation.HORIZONTAL && flex == SplitViewFlex.BOTTOM_RIGHT) ? staticPaneLength : -1;
+            l.left = (orientation == SplitViewOrientation.VERTICAL && flex == SplitViewFlex.BOTTOM_RIGHT)
+                    ? staticPaneLength
+                    : -1;
+            l.top = (orientation == SplitViewOrientation.HORIZONTAL && flex == SplitViewFlex.BOTTOM_RIGHT)
+                    ? staticPaneLength
+                    : -1;
             l.right = 0;
             l.bottom = 0;
-            l.width = (orientation == SplitViewOrientation.HORIZONTAL) ? ONE_HUNDRED_PERCENT : (flex == SplitViewFlex.BOTTOM_RIGHT ? -1 : staticPaneLength);
-            l.height = (orientation == SplitViewOrientation.VERTICAL) ? ONE_HUNDRED_PERCENT : (flex == SplitViewFlex.BOTTOM_RIGHT ? -1 : staticPaneLength);
+            l.width = (orientation == SplitViewOrientation.HORIZONTAL)
+                    ? ONE_HUNDRED_PERCENT
+                    : (flex == SplitViewFlex.BOTTOM_RIGHT ? -1 : staticPaneLength);
+            l.height = (orientation == SplitViewOrientation.VERTICAL)
+                    ? ONE_HUNDRED_PERCENT
+                    : (flex == SplitViewFlex.BOTTOM_RIGHT ? -1 : staticPaneLength);
             SplitView.setLayout(bottomRightView.getElement(), l);
         }
     }
@@ -146,14 +162,13 @@ public abstract class SplitView extends View<SplitViewProps> {
                 bottomRightView.performRender();
             }
         }
-
     }
 
     @Override
     public void append(UIObject... views) {
         int l = views.length, i = 0;
         for (; i < l; i++) {
-            insert(i, views[ i ]);
+            insert(i, views[i]);
         }
     }
 
@@ -163,7 +178,5 @@ public abstract class SplitView extends View<SplitViewProps> {
     }
 
     @Override
-    public void onResize() {
-    }
-
+    public void onResize() {}
 }

@@ -9,11 +9,12 @@ public class ViewTest extends GwtViewsTest {
 
     @Override
     public DOMElement render() {
-        return div(new DOMProps()
-                .className("red")
-                .style("height", "150px")
-                .style("width", "150px")
-                .style("background", "orange"), div("HELLO, WORLD")
-        );
+        return div(
+                new DOMProps()
+                        .className("red")
+                        .style("height", "150px")
+                        .style("width", "150px")
+                        .style("background", "orange"),
+                div("HELLO, WORLD"));
     }
 }

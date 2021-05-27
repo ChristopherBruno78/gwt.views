@@ -11,11 +11,6 @@ public class ImageTest extends GwtViewsTest {
 
     @Override
     UIObject render() {
-        return div(new DOMProps()
-                .height(24)
-                .width(24)
-                .attr("alt", "tick")
-                .backgroundImage(INSTANCE.tick())
-        );
+        return div(new DOMProps().height(24).width(24).attr("alt", "tick").backgroundImage(INSTANCE.tick()));
     }
 }

@@ -61,5 +61,4 @@ public class TextProps extends ControlProps<TextProps> {
     public TextProps maskPlaceholder(String value) {
         return set("maskPlaceholder", value);
     }
-
 }

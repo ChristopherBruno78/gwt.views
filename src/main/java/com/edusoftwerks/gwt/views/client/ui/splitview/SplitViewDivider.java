@@ -13,11 +13,11 @@ import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.div;
 
 class SplitViewDivider extends View<SplitViewProps> {
 
+    private final Layout layout = new Layout();
+    private final SplitView splitView;
     private boolean mouseDown = false;
     private int offset;
     private Point start;
-    private final Layout layout = new Layout();
-    private final SplitView splitView;
 
     public SplitViewDivider(SplitView splitView) {
         super(splitView.getProps());
@@ -26,13 +26,12 @@ class SplitViewDivider extends View<SplitViewProps> {
 
     @Override
     protected DOMElement render() {
-        return div(new DOMProps().className(
-                ClassNames.start("v-SplitDivider")
+        return div(new DOMProps()
+                .className(ClassNames.start("v-SplitDivider")
                         .add("static", this.props.maxStaticPaneLength().equals(this.props.minStaticPaneLength()))
                         .add("vertical", this.props.orientation() == SplitViewOrientation.VERTICAL)
                         .add("horizontal", this.props.orientation() == SplitViewOrientation.HORIZONTAL)
-                        .build()
-        ));
+                        .build()));
     }
 
     @Override
@@ -45,7 +44,12 @@ class SplitViewDivider extends View<SplitViewProps> {
                 mouseDown = true;
                 offset = getDividerOffset();
                 start = new Point((int) event.clientX, (int) event.clientY);
-                RootView.get().setStyleAttribute("cursor", (SplitViewDivider.this.props.orientation() == SplitViewOrientation.VERTICAL) ? "ew-resize" : "ns-resize");
+                RootView.get()
+                        .setStyleAttribute(
+                                "cursor",
+                                (SplitViewDivider.this.props.orientation() == SplitViewOrientation.VERTICAL)
+                                        ? "ew-resize"
+                                        : "ns-resize");
                 DOM.setCapture(getElement());
             }
         });
@@ -64,14 +68,16 @@ class SplitViewDivider extends View<SplitViewProps> {
                     HTMLElement $parent = getParent().getElement();
                     int sign = props.flex() == SplitViewFlex.TOP_LEFT ? -1 : 1;
                     SplitViewOrientation orientation = props.orientation();
-                    int delta = (orientation == SplitViewOrientation.VERTICAL) ? (int) (event.clientX - start.x) : (int) (event.clientY - start.y);
-                    int newOffset = Math.max(props.minStaticPaneLength(),
-                            Math.min(props.maxStaticPaneLength(), offset + sign * delta));
-                    newOffset = Math.min(Math.max(newOffset, 0),
-                            (orientation == SplitViewOrientation.VERTICAL) ?
-                                    $parent.clientWidth :
-                                    $parent.clientHeight
-                    );
+                    int delta = (orientation == SplitViewOrientation.VERTICAL)
+                            ? (int) (event.clientX - start.x)
+                            : (int) (event.clientY - start.y);
+                    int newOffset = Math.max(
+                            props.minStaticPaneLength(), Math.min(props.maxStaticPaneLength(), offset + sign * delta));
+                    newOffset = Math.min(
+                            Math.max(newOffset, 0),
+                            (orientation == SplitViewOrientation.VERTICAL)
+                                    ? $parent.clientWidth
+                                    : $parent.clientHeight);
                     setDividerOffset(newOffset);
                     splitView.setStaticPaneLength(newOffset);
                     splitView.layoutViews();
@@ -118,5 +124,4 @@ class SplitViewDivider extends View<SplitViewProps> {
         }
         SplitView.setLayout(getElement(), layout);
     }
-
 }

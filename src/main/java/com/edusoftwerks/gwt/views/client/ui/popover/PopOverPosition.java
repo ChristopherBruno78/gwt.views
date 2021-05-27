@@ -4,5 +4,5 @@ public enum PopOverPosition {
     TOP,
     BOTTOM,
     RIGHT,
-    LEFT;
+    LEFT
 }

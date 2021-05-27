@@ -60,5 +60,4 @@ public class SplitViewProps extends UIProps<SplitViewProps> {
     public SplitViewProps flex(SplitViewFlex flex) {
         return set("flex", flex);
     }
-
 }

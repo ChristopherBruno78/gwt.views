@@ -17,5 +17,4 @@ public class CheckBoxProps extends ControlProps<CheckBoxProps> {
     public CheckBoxProps checked(boolean flag) {
         return set("checked", flag);
     }
-
 }

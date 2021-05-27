@@ -6,16 +6,13 @@ public abstract class GwtViewsTest {
 
     abstract UIObject render();
 
-    protected void addEventListeners() {
-    }
+    protected void addEventListeners() {}
 
-    protected void didRun() {
-    }
+    protected void didRun() {}
 
     public void run() {
         RootView.get().append(render());
         addEventListeners();
         didRun();
     }
-
 }

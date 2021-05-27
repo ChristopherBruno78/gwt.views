@@ -1,24 +1,22 @@
 package com.edusoftwerks.gwt.views.client.ui.menu;
 
-import com.edusoftwerks.gwt.views.client.dom.ClassNames;
-import com.edusoftwerks.gwt.views.client.dom.DOMElement;
-import com.edusoftwerks.gwt.views.client.dom.DOMProps;
-import com.edusoftwerks.gwt.views.client.dom.Events;
+import com.edusoftwerks.gwt.views.client.dom.*;
 import com.edusoftwerks.gwt.views.client.theme.Theme;
 import com.edusoftwerks.gwt.views.client.ui.Control;
 import elemental2.dom.HTMLElement;
+import elemental2.dom.MouseEvent;
 
 import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.create;
 import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.div;
 
 public class MenuItem extends Control<MenuItemProps> {
 
-    Menu menu;
-    boolean canBeActive = true;
-
     static {
         Theme.get().MenuCss().ensureInjected();
     }
+
+    Menu menu;
+    boolean canBeActive = true;
 
     public MenuItem(MenuItemProps props) {
         super(props);
@@ -31,10 +29,7 @@ public class MenuItem extends Control<MenuItemProps> {
                 menu.setActiveIndex(getIndex());
                 if (hasSubmenu()) {
                     HTMLElement $el = getElement();
-                    this.props.submenu().show(
-                            $el.offsetLeft + $el.offsetWidth,
-                            $el.offsetTop - 7
-                    );
+                    this.props.submenu().show($el.offsetLeft + $el.offsetWidth, $el.offsetTop - 7);
                 }
             } else {
                 if (hasSubmenu()) {
@@ -67,49 +62,62 @@ public class MenuItem extends Control<MenuItemProps> {
     @Override
     protected DOMElement render() {
         if (this.props.submenu() != null) {
-            return create("li",
+            return create(
+                    "li",
                     new DOMProps()
-                            .className(
-                                    ClassNames.start("v-MenuItem")
-                                            .add("v-no-select")
-                                            .add("v-MenuItem--hasIcon", this.props.icon() != null)
-                                            .add("is-disabled", isDisabled())
-                                            .build()
-                            )
+                            .className(ClassNames.start("v-MenuItem")
+                                    .add("v-no-select")
+                                    .add("v-MenuItem--hasIcon", this.props.icon() != null)
+                                    .add("is-disabled", isDisabled())
+                                    .build())
                             .attr("aria-disabled", isDisabled())
                             .attr("role", "menuitem"),
-                    (this.props.icon() != null ? create("i", new DOMProps()
-                            .className("icon " + this.props.icon())) : null),
-                    div(new DOMProps().className("label v-no-select")
-                                    .attr("unselectable", "on"),
-                            this.props.text()
-                    ),
-                    create("i", new DOMProps().className("chevron-right font-icon icon-chevron-right"))
-            );
+                    (this.props.icon() != null
+                            ? create("i", new DOMProps().className("icon " + this.props.icon()))
+                            : null),
+                    div(new DOMProps().className("label v-no-select").attr("unselectable", "on"), this.props.text()),
+                    create("i", new DOMProps().className("chevron-right font-icon icon-chevron-right")));
         } else {
-            return create("li",
+            return create(
+                    "li",
                     new DOMProps()
-                            .className(
-                                    ClassNames.start("v-MenuItem")
-                                            .add("v-no-select")
-                                            .add("v-MenuItem--hasIcon", this.props.icon() != null)
-                                            .add("is-disabled", isDisabled())
-                                            .build()
-                            )
+                            .className(ClassNames.start("v-MenuItem")
+                                    .add("v-no-select")
+                                    .add("v-MenuItem--hasIcon", this.props.icon() != null)
+                                    .add("is-disabled", isDisabled())
+                                    .build())
                             .attr("aria-disabled", isDisabled())
                             .attr("role", "menuitem"),
-                    (this.props.icon() != null ? create("i", new DOMProps()
-                            .className("icon " + this.props.icon())) : null),
-                    div(new DOMProps().className("label v-no-select")
-                                    .attr("unselectable", "on"),
-                            this.props.text()
-                    )
-            );
+                    (this.props.icon() != null
+                            ? create("i", new DOMProps().className("font-icon " + this.props.icon()))
+                            : null),
+                    div(new DOMProps().className("label v-no-select").attr("unselectable", "on"), this.props.text()));
         }
     }
 
     @Override
     protected void addEventListeners() {
+
+        addEventListener(Events.MOUSEOVER, evt -> {
+            setActive(true);
+        });
+
+        addEventListener(Events.MOUSEOUT, new MouseEventListener() {
+            @Override
+            public void handleMouseEvent(MouseEvent event) {
+                if (hasSubmenu()) {
+                    HTMLElement $el = menu.getElement();
+                    double x = event.clientX;
+                    setActive(x >= $el.offsetLeft + $el.offsetWidth);
+                } else {
+                    setActive(false);
+                }
+            }
+        });
+
+        addEventListener(Events.CLICK, evt -> performAction());
+
+        super.addEventListeners();
     }
 
     void performAction() {
@@ -124,5 +132,4 @@ public class MenuItem extends Control<MenuItemProps> {
             supermenu = supermenu.supermenu;
         }
     }
-
 }

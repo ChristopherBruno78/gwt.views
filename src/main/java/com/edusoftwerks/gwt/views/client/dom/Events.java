@@ -5,10 +5,9 @@ import elemental2.dom.Event;
 
 public class Events {
 
-    /**
-     * Standard
-     **/
+    /** Standard */
     public static final String MOUSEDOWN = "mousedown";
+
     public static final String MOUSEUP = "mouseup";
     public static final String MOUSEMOVE = "mousemove";
     public static final String MOUSEOVER = "mouseover";
@@ -24,10 +23,9 @@ public class Events {
     public static final String CHANGE = "change";
     public static final String INPUT = "input";
 
-    /**
-     * Custom Events - not all views respond
-     **/
+    /** Custom Events - not all views respond */
     public static final String ACTION = "action";
+
     public static final String CLOSE = "close";
     public static final String CANCEL = "cancel";
     public static final String RESIZE = "resize";

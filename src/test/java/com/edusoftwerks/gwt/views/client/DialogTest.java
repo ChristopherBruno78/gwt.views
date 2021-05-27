@@ -29,17 +29,15 @@ public class DialogTest extends GwtViewsTest {
         Dialog d = new Dialog(new DialogProps().title("My Dialog Window")) {
             @Override
             public DOMElement renderContent() {
-                return div(new DOMProps()
+                return div(
+                        new DOMProps()
                                 .style("position", "absolute")
                                 .style("right", "20px")
-                                .style("bottom", "12px")
-                        ,
-                       cancelBtn = new Button(new ButtonProps()
-                        .type(ButtonType.PRIMARY)
-                        .text("Cancel")
-                        .style("width", "100px")
-
-                ));
+                                .style("bottom", "12px"),
+                        cancelBtn = new Button(new ButtonProps()
+                                .type(ButtonType.PRIMARY)
+                                .text("Cancel")
+                                .style("width", "100px")));
             }
 
             @Override
@@ -56,18 +54,11 @@ public class DialogTest extends GwtViewsTest {
         };
         d.open();
 
-        d2 = new Dialog(new DialogProps()
-                .x(200)
-                .y(50)
-                .resizable(false)
-                .title("Dialog 2")) {
+        d2 = new Dialog(new DialogProps().x(200).y(50).resizable(false).title("Dialog 2")) {
             @Override
             public DOMElement renderContent() {
                 return null;
             }
         };
-
-
     }
-
 }

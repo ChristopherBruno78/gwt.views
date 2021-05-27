@@ -15,12 +15,15 @@ import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.*;
 
 public class Radio extends Control<RadioProps> {
 
-    private DOMElement input;
-    private DOMElement labelEl;
-
     static {
         Theme.get().RadioCss().ensureInjected();
     }
+
+    private DOMElement input;
+    private DOMElement labelEl;
+    private EventListener onChangeListener;
+    private EventListener onFocusListener;
+    private EventListener onBlurListener;
 
     public Radio(RadioProps props) {
         super(props);
@@ -44,48 +47,44 @@ public class Radio extends Control<RadioProps> {
     @Override
     protected DOMElement render() {
         final String id = Document.get().createUniqueId();
-        return div(new DOMProps().className("v-Radio")
+        return div(
+                new DOMProps()
+                        .className("v-Radio")
                         .attr("aria-disabled", isDisabled())
                         .attr("role", "radio"),
-                input = create("input", new DOMProps()
-                        .attr("id", id)
-                        .attr("type", "radio")
-                        .attr("name", this.props.name())
-                        .attr("tabIndex", isDisabled() ? -1 : 0)
-                ),
+                input = create(
+                        "input",
+                        new DOMProps()
+                                .attr("id", id)
+                                .attr("type", "radio")
+                                .attr("name", this.props.name())
+                                .attr("tabIndex", isDisabled() ? -1 : 0)),
                 div(new DOMProps().className("indicator")),
-                labelEl = label(new DOMProps()
-                                .className("label v-no-select")
-                                .attr("for", id),
-                        this.props.text()
-                )
-        );
+                labelEl = label(new DOMProps().className("label v-no-select").attr("for", id), this.props.text()));
     }
-
-    private EventListener onChangeListener;
-    private EventListener onFocusListener;
-    private EventListener onBlurListener;
 
     @Override
     protected void addEventListeners() {
         HTMLInputElement $input = Js.cast(input.getElement());
-        $input.addEventListener(Events.CHANGE, onChangeListener = new EventListener() {
-            @Override
-            public void handleEvent(Event evt) {
-            }
-        });
-        $input.addEventListener(Events.FOCUS, onFocusListener = new EventListener() {
-            @Override
-            public void handleEvent(Event evt) {
-            }
-        });
-        $input.addEventListener(Events.BLUR, onBlurListener = new EventListener() {
-            @Override
-            public void handleEvent(Event evt) {
-            }
-        });
+        $input.addEventListener(
+                Events.CHANGE,
+                onChangeListener = new EventListener() {
+                    @Override
+                    public void handleEvent(Event evt) {}
+                });
+        $input.addEventListener(
+                Events.FOCUS,
+                onFocusListener = new EventListener() {
+                    @Override
+                    public void handleEvent(Event evt) {}
+                });
+        $input.addEventListener(
+                Events.BLUR,
+                onBlurListener = new EventListener() {
+                    @Override
+                    public void handleEvent(Event evt) {}
+                });
         super.addEventListeners();
-
     }
 
     @Override
@@ -127,5 +126,4 @@ public class Radio extends Control<RadioProps> {
             labelEl.setInnerHtml(text);
         }
     }
-
 }

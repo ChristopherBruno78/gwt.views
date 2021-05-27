@@ -5,11 +5,9 @@ public class Theme {
     static {
         get().IconsCss().ensureInjected();
         get().UiCss().ensureInjected();
-
     }
 
     public static StyleBundle get() {
         return StyleBundle.INSTANCE;
     }
-
 }

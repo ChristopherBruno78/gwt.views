@@ -10,11 +10,6 @@ public class CheckBoxTest extends GwtViewsTest {
 
     @Override
     UIObject render() {
-        return div(new DOMProps()
-                        .margin(15)
-                , new CheckBox(
-                        new CheckBoxProps()
-                                .text("Check Me")));
+        return div(new DOMProps().margin(15), new CheckBox(new CheckBoxProps().text("Check Me")));
     }
-
 }

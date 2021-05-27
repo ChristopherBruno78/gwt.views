@@ -25,8 +25,8 @@ ul.v-Menu {
     overflow: hidden;
     display: block;
     outline: none;
-    padding: 0 15px 0 0;
-    min-height: 32px;
+    padding: 0;
+    min-height: 26px;
     border-top: 1px solid transparent;
     border-bottom: 1px solid transparent;
     color: #182026;
@@ -35,7 +35,7 @@ ul.v-Menu {
 }
 
 .v-MenuItem.is-active {
-    background-color: #137cbd;
+    background-color: #1a82c6;
     z-index: 1;
     color: #fff;
     border-top: 1px solid #1369a4;
@@ -63,27 +63,27 @@ ul.v-Menu {
     background-color: transparent;
 }
 
-.v-MenuItem > .icon {
+.v-MenuItem > .font-icon {
 
     position: absolute;
-    font-size: 19px;
-    top: 6px;
+    font-size: 14px;
+    top: 5px;
     left: 8px;
     color: #5c7080;
     min-width: 21px;
 }
 
-.v-MenuItem.is-active > .icon {
+.v-MenuItem.is-active > .font-icon {
     color: #fff;
 }
 
-.v-MenuItem.is-disabled.is-active > .icon {
+.v-MenuItem.is-disabled.is-active > .font-icon {
     color: #5c7080 !important;
 }
 
 .v-MenuItem > .label {
-    padding-left: 36px;
-    margin-top: 9px;
+    padding-left: 30px;
+    margin-top: 5px;
     box-sizing: border-box;
     display: inline-block;
     cursor: default;

@@ -9,7 +9,7 @@ import elemental2.dom.DomGlobal;
 public final class RootView extends View<DOMProps> {
 
     private static final RootView INSTANCE = new RootView();
-    //private static Timer resizeTimer = null;
+    // private static Timer resizeTimer = null;
 
     static {
         Theme.get().RootViewCss().ensureInjected();
@@ -35,5 +35,4 @@ public final class RootView extends View<DOMProps> {
         DomGlobal.document.body.appendChild($el.getElement());
         return $el;
     }
-
 }
