@@ -44,6 +44,12 @@ public class DOMFactory {
         return new DOMElement("div", props);
     }
 
+    public static DOMElement div(DOMProps props, String innerHtml) {
+        DOMElement el = div(props);
+        el.setInnerHtml(innerHtml);
+        return el;
+    }
+
     public static DOMElement div(String innerHtml) {
         DOMElement el = div();
         el.setInnerHtml(innerHtml);

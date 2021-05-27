@@ -3,7 +3,6 @@ package com.edusoftwerks.gwt.views.client.ui;
 import com.edusoftwerks.gwt.views.client.UIObject;
 import com.edusoftwerks.gwt.views.client.UIProps;
 import com.edusoftwerks.gwt.views.client.dom.DOMElement;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.RequiresResize;
 import elemental2.dom.HTMLElement;
 
@@ -76,6 +75,11 @@ public abstract class View<T extends UIProps<T>> extends UIObject
     protected void fireDidLeaveDocument() {
         isRendered = false;
         super.fireDidLeaveDocument();
+    }
+
+    @Override
+    protected void fireDidEnterDocument() {
+        super.didEnterDocument();
     }
 
     public void onResize() {

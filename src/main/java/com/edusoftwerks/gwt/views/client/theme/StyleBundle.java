@@ -31,6 +31,9 @@ public interface StyleBundle extends ClientBundle {
     @Source({"PopOver.css"})
     CssResource PopOverCss();
 
+    @Source({"Menu.css"})
+    CssResource MenuCss();
+
     @Source({"SplitView.css"})
     CssResource SplitViewCss();
 
@@ -43,7 +46,7 @@ public interface StyleBundle extends ClientBundle {
     @Source({"Toast.css"})
     CssResource ToastCss();
 
-    @Source({"icons.css"})
+    @Source({"Icons.css"})
     @CssResource.NotStrict
     CssResource IconsCss();
 

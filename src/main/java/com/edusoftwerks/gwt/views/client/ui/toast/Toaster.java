@@ -14,7 +14,6 @@ import java.util.List;
 import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.div;
 import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.span;
 
-
 public class Toaster extends View<ToasterProps> {
 
     static {
@@ -47,7 +46,6 @@ public class Toaster extends View<ToasterProps> {
     }
 
     public void toast(Toast view) {
-
         ToasterPosition p = this.props.position();
         View<DOMProps> sp = new View<DOMProps>() {
             @Override
@@ -55,15 +53,12 @@ public class Toaster extends View<ToasterProps> {
                 return span("");
             }
         };
-
         if (p == ToasterPosition.TOP_LEFT || p == ToasterPosition.TOP_CENTER || p == ToasterPosition.TOP_RIGHT) {
             insert(0, sp);
         } else {
             append(sp);
         }
-
         sp.append(view);
-
         setAnimationState(ToasterAnimationState.ENTER);
         final Timer t = new Timer() {
             @Override
@@ -95,7 +90,6 @@ public class Toaster extends View<ToasterProps> {
     void setAnimationState(ToasterAnimationState animationState) {
         List<UIObject> children = getChildren();
         for (UIObject child : children) {
-
             List<UIObject> toasts = child.getChildren();
             if (toasts.size() > 0) {
                 UIObject first = child.getChildren().get(0);

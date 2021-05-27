@@ -14,7 +14,6 @@ import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.div;
  * <p>
  * Custom Events: CLOSE, ACTION
  */
-
 public abstract class Toast extends View<ToastProps> {
 
     private Button actionBtn = null, closeBtn = null;
@@ -46,7 +45,7 @@ public abstract class Toast extends View<ToastProps> {
                         .build()
                 ).attr("role", "dialog"),
                 this.props.icon() != null ? DOMFactory.create("i", new DOMProps()
-                        .className(ClassNames.start("icon")
+                        .className(ClassNames.start("icon font-icon")
                                 .add(this.props.icon())
                                 .build()
                         )) : null,
@@ -64,17 +63,14 @@ public abstract class Toast extends View<ToastProps> {
                         .icon("icon-times-solid")
                         .iconOnly(true)
                 )
-
         );
     }
 
     @Override
     protected void addEventListeners() {
-
         if (actionBtn != null) {
             actionBtn.addEventListener(Events.ACTION, evt -> Events.fireEvent(Events.ACTION, this));
         }
-
         if (closeBtn != null) {
             closeBtn.addEventListener(Events.ACTION, evt -> close());
         }
@@ -93,10 +89,8 @@ public abstract class Toast extends View<ToastProps> {
     }
 
     public void close() {
-
         removeClassName(ToasterAnimationState.APPEAR.toString());
         addClassName(ToasterAnimationState.EXIT.toString());
-
         Timer t = new Timer() {
             @Override
             public void run() {
@@ -105,11 +99,10 @@ public abstract class Toast extends View<ToastProps> {
                 Events.fireEvent(Events.CLOSE, Toast.this);
             }
         };
-
         t.schedule(400);
-
         if (lifeSpanTimer != null) {
             lifeSpanTimer.cancel();
         }
     }
+
 }

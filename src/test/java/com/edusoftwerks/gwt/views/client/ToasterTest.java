@@ -19,7 +19,6 @@ public class ToasterTest extends GwtViewsTest {
     private ComboBox positionCtrl;
     private ComboBox intentCtrl;
 
-
     @Override
     UIObject render() {
         return div(new DOMProps()
@@ -46,24 +45,23 @@ public class ToasterTest extends GwtViewsTest {
 
     @Override
     public void addEventListeners() {
-
         Toaster toaster = new Toaster(new ToasterProps()
                 .position(ToasterPosition.valueOf(positionCtrl.getSelectedValue()))
         );
-
         positionCtrl.addEventListener(Events.CHANGE, evt -> {
             toaster.setPosition(ToasterPosition.valueOf(positionCtrl.getSelectedValue()));
         });
-
         toastBtn.addEventListener(Events.ACTION, evt -> {
             toaster.toast(new Toast(new ToastProps()
                     .intent(ToastIntent.valueOf(intentCtrl.getSelectedValue()))
+                    .icon("icon-search")
             ) {
                 @Override
                 protected DOMElement renderContent() {
-                    return label("Hello, World");
+                    return label("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
                 }
             });
         });
     }
+
 }
