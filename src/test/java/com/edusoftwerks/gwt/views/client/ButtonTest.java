@@ -1,6 +1,7 @@
 package com.edusoftwerks.gwt.views.client;
 
 import com.edusoftwerks.gwt.views.client.dom.DOMProps;
+import com.edusoftwerks.gwt.views.client.dom.Events;
 import com.edusoftwerks.gwt.views.client.ui.button.Button;
 import com.edusoftwerks.gwt.views.client.ui.button.ButtonProps;
 import com.edusoftwerks.gwt.views.client.ui.button.ButtonType;
@@ -46,7 +47,7 @@ public class ButtonTest extends GwtViewsTest {
 
     @Override
     protected void addEventListeners() {
-        btn.addActionListener(new EventListener() {
+        btn.addEventListener(Events.ACTION, new EventListener() {
             @Override
             public void handleEvent(Event evt) {
                 Window.alert("CLICK!");

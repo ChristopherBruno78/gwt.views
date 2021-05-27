@@ -1,6 +1,7 @@
 package com.edusoftwerks.gwt.views.client;
 
 import com.edusoftwerks.gwt.views.client.dom.DOMProps;
+import com.edusoftwerks.gwt.views.client.dom.Events;
 import com.edusoftwerks.gwt.views.client.ui.combobox.ComboBox;
 import com.edusoftwerks.gwt.views.client.ui.combobox.ComboBoxProps;
 import com.google.gwt.user.client.Window;
@@ -26,7 +27,7 @@ public class ComboBoxTest extends GwtViewsTest {
 
     @Override
     protected void addEventListeners() {
-        comboBox.addActionListener(new EventListener() {
+        comboBox.addEventListener(Events.ACTION, new EventListener() {
             @Override
             public void handleEvent(Event evt) {
                 Window.alert(comboBox.getSelectedValue());
