@@ -76,7 +76,7 @@ public abstract class View<T extends UIProps<T>> extends UIObject implements Req
 
     @Override
     protected void fireDidEnterDocument() {
-        super.didEnterDocument();
+        super.fireDidEnterDocument();
     }
 
     public void onResize() {

@@ -25,9 +25,9 @@ public class SplitViewTest extends GwtViewsTest {
                     @Override
                     protected DOMElement render() {
                         return div(
-                                new DOMProps().style("background", "#eee").style("border-right", "1px solid #bbb"),
-                                div(
-                                        new DOMProps()
+                                new DOMProps()
+                                        .style("background", "#eee").style("border-right", "1px solid #bbb"),
+                                div(new DOMProps()
                                                 .style("display", "flex")
                                                 .style("flex-direction", "column")
                                                 .style("width", "100%")

@@ -5,6 +5,7 @@ import com.edusoftwerks.gwt.views.client.dom.DOM;
 import com.edusoftwerks.gwt.views.client.dom.DOMElement;
 import com.edusoftwerks.gwt.views.client.theme.Theme;
 import com.edusoftwerks.gwt.views.client.ui.View;
+import com.google.gwt.core.client.GWT;
 import elemental2.dom.HTMLElement;
 
 public abstract class SplitView extends View<SplitViewProps> {

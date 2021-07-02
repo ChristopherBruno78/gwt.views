@@ -94,7 +94,6 @@ public abstract class PopOver extends View<PopOverProps> {
         Rectangle rect = DOM.getBoundingRectClient(atNode);
         int left = rect.origin.x;
         int top = rect.origin.y;
-        GWT.log("TOP=" + top);
         switch (position) {
             case RIGHT: {
                 left += atNodeWidth;

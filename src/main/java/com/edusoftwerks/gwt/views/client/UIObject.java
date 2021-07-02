@@ -3,6 +3,7 @@ package com.edusoftwerks.gwt.views.client;
 import com.edusoftwerks.gwt.views.client.dom.ClassNames;
 import com.edusoftwerks.gwt.views.client.dom.DOM;
 import com.edusoftwerks.gwt.views.shared.geometry.Rectangle;
+import com.google.gwt.core.client.GWT;
 import elemental2.dom.EventListener;
 import elemental2.dom.HTMLElement;
 
