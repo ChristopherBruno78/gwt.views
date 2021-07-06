@@ -6,16 +6,22 @@ import elemental2.dom.HTMLElement;
 
 import java.util.List;
 
-public abstract class CompositeView<T extends UIProps> extends UIObject {
+/**
+ * A composite view is a view that wraps another view, which usually consists
+ * of several subviews. The CompositeView serves as a way to treat this view
+ * as a component
+ * @param <T>
+ */
+public abstract class CompositeView<T extends UIProps<?>> extends UIObject {
 
     protected T props;
-    private View view;
+    private View<?> view;
 
     public CompositeView(T props) {
         this.props = props;
     }
 
-    protected void init(View view) {
+    protected void init(View<?> view) {
         this.view = view;
     }
 

@@ -177,7 +177,4 @@ public abstract class SplitView extends View<SplitViewProps> {
     protected DOMElement render() {
         return null;
     }
-
-    @Override
-    public void onResize() {}
 }

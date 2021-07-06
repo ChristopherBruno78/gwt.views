@@ -15,14 +15,14 @@ import com.edusoftwerks.gwt.views.client.ui.menu.MenuItemProps;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.Timer;
-import elemental2.dom.Event;
+import com.google.gwt.user.client.ui.RequiresResize;
 import elemental2.dom.EventListener;
 
 import java.util.List;
 
 import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.div;
 
-public class Toolbar extends View<ToolbarProps> {
+public class Toolbar extends View<ToolbarProps> implements RequiresResize {
 
     static {
         Theme.get().ToolbarCss().ensureInjected();
@@ -30,8 +30,8 @@ public class Toolbar extends View<ToolbarProps> {
 
     private DOMElement leftSection;
     private DOMElement rightSection;
-    private MenuButton overflowBtn;
-    private Timer measureTimer;
+    private final MenuButton overflowBtn;
+    private EventListener windowResizeListener;
 
     public Toolbar(ToolbarProps props) {
         super(props);
@@ -133,7 +133,6 @@ public class Toolbar extends View<ToolbarProps> {
                         MenuItem item = new MenuItem(menuItemProps);
                         overflowBtn.getMenu().append(item);
                         item.addEventListener(Events.ACTION, evt -> Events.fireEvent(Events.ACTION, b));
-
                     }
                     showToolItem(v, false);
                 }
@@ -159,9 +158,7 @@ public class Toolbar extends View<ToolbarProps> {
     private void doMeasure() {
 
         showToolItem(overflowBtn, false);
-
         int m = preMeasure();
-
         if (m < 0) {
             GWT.log("overflow");
             postMeasure(m);
@@ -184,10 +181,10 @@ public class Toolbar extends View<ToolbarProps> {
         leftSection.append(overflowBtn);
     }
 
-    @Override
+    //@Override
     public void onResize() {
         if (this.props.preventOverflow()) {
-            measureTimer = new Timer() {
+            Timer measureTimer = new Timer() {
                 @Override
                 public void run() {
                     doMeasure();
@@ -196,4 +193,5 @@ public class Toolbar extends View<ToolbarProps> {
             measureTimer.schedule(100);
         }
     }
+
 }

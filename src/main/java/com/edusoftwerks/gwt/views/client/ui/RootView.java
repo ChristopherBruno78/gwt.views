@@ -5,6 +5,10 @@ import com.edusoftwerks.gwt.views.client.dom.DOMProps;
 import com.edusoftwerks.gwt.views.client.theme.Theme;
 import com.google.gwt.user.client.Window;
 import elemental2.dom.DomGlobal;
+import elemental2.dom.EventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class RootView extends View<DOMProps> {
 
@@ -24,9 +28,12 @@ public final class RootView extends View<DOMProps> {
         return INSTANCE;
     }
 
-    @Override
-    protected void addEventListeners() {
-        Window.addResizeHandler(resizeEvent -> RootView.this.onResize());
+    public void addResizeListener(EventListener listener) {
+        DomGlobal.window.addEventListener("resize", listener);
+    }
+
+    public void removeResizeListener(EventListener listener) {
+        DomGlobal.window.removeEventListener("resize", listener);
     }
 
     @Override

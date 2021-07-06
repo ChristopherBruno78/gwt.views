@@ -81,8 +81,6 @@ class SplitViewDivider extends View<SplitViewProps> {
                     setDividerOffset(newOffset);
                     splitView.setStaticPaneLength(newOffset);
                     splitView.layoutViews();
-                    splitView.leftTopView.onResize();
-                    splitView.bottomRightView.onResize();
                 }
             }
         });

@@ -6,6 +6,7 @@ public class ButtonProps extends ControlProps<ButtonProps> {
 
     public ButtonProps() {
         super();
+        text("");
         iconOnly(false);
         isToggle(false);
         type(ButtonType.DEFAULT);

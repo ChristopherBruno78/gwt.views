@@ -4,6 +4,9 @@ import com.edusoftwerks.gwt.views.client.dom.ClassNames;
 import com.edusoftwerks.gwt.views.client.dom.DOM;
 import com.edusoftwerks.gwt.views.shared.geometry.Rectangle;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.ui.RequiresResize;
+import elemental2.dom.DomGlobal;
+import elemental2.dom.Event;
 import elemental2.dom.EventListener;
 import elemental2.dom.HTMLElement;
 
@@ -26,6 +29,7 @@ import java.util.*;
  */
 public abstract class UIObject {
 
+    private EventListener windowEventListener;
     private final Map<String, ArrayList<EventListener>> eventListenerMap = new HashMap<>();
 
     /**
@@ -78,15 +82,30 @@ public abstract class UIObject {
         for (UIObject uiObject : children) {
             uiObject.fireDidEnterDocument();
         }
+
+        if(this instanceof RequiresResize) {
+            //add the window resize listener
+            DomGlobal.window.addEventListener("resize", windowEventListener = new EventListener() {
+                @Override
+                public void handleEvent(Event evt) {
+                    ((RequiresResize) UIObject.this).onResize();
+                }
+            });
+        }
     }
 
     protected void fireDidLeaveDocument() {
+        if(windowEventListener != null) {
+            //remove resize listener
+            DomGlobal.window.removeEventListener("resize", windowEventListener);
+        }
         removeEventListeners();
         didLeaveDocument();
         List<UIObject> children = getChildren();
         for (UIObject uiObject : children) {
             uiObject.fireDidLeaveDocument();
         }
+
     }
 
     public void addEventListener(String event, EventListener listener) {
@@ -109,8 +128,8 @@ public abstract class UIObject {
 
     public void removeEventListeners() {
         String[] eventListeners = eventListenerMap.keySet().toArray(new String[0]);
-        for (int i = 0; i < eventListeners.length; i++) {
-            removeEventListener(eventListeners[i]);
+        for (String eventListener : eventListeners) {
+            removeEventListener(eventListener);
         }
     }
 

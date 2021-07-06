@@ -9,7 +9,7 @@ import elemental2.dom.HTMLElement;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class View<T extends UIProps<T>> extends UIObject implements RequiresResize {
+public abstract class View<T extends UIProps<T>> extends UIObject  {
 
     private final List<UIObject> subViews = new ArrayList<>();
     protected DOMElement domElement;
@@ -77,14 +77,6 @@ public abstract class View<T extends UIProps<T>> extends UIObject implements Req
     @Override
     protected void fireDidEnterDocument() {
         super.fireDidEnterDocument();
-    }
-
-    public void onResize() {
-        for (UIObject o : getChildren()) {
-            if (o instanceof RequiresResize) {
-                ((RequiresResize) o).onResize();
-            }
-        }
     }
 
     public boolean isRendered() {

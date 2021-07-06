@@ -8,6 +8,7 @@ import com.edusoftwerks.gwt.views.client.ui.popover.PopOver;
 import com.edusoftwerks.gwt.views.client.ui.popover.PopOverProps;
 import com.edusoftwerks.gwt.views.shared.Color;
 import com.google.gwt.event.dom.client.KeyCodes;
+import elemental2.dom.EventListener;
 import elemental2.dom.HTMLElement;
 import elemental2.dom.KeyboardEvent;
 
@@ -22,6 +23,8 @@ public class Menu extends CompositeView<MenuProps> {
     }
 
     private final MenuPopOver popover;
+    private EventListener windowResizeListener;
+
     Menu supermenu;
     private DOMElement menuEl;
     private HTMLElement lastFocusEl;

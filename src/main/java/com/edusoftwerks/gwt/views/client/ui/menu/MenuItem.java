@@ -116,11 +116,11 @@ public class MenuItem extends Control<MenuItemProps> {
         });
 
         addEventListener(Events.CLICK, evt -> performAction());
-
         super.addEventListeners();
     }
 
     void performAction() {
+
         if (isDisabled() || hasSubmenu()) {
             return;
         }
