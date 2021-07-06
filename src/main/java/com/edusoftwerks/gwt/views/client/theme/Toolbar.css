@@ -1,0 +1,138 @@
+@external *;
+
+.v-Toolbar {
+    height: 45px;
+    background-color: #1a5e94;
+    border-bottom: 1px solid #103859;
+    color: #f5f8fa;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
+.v-Toolbar-section {
+    position: absolute;
+    height: 45px;
+    line-height: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.v-Toolbar-section.v-Toolbar-section--left {
+    left: 6px;
+}
+
+.v-Toolbar-section.v-Toolbar-section--right {
+    right: 6px;
+}
+
+.v-Toolbar-section > * {
+    display: inline-block;
+    position: relative !important;
+    margin: 0 2px 0 2px;
+}
+
+.v-Toolbar-section > .v-Button.default {
+    border: 1px solid #00365c;
+    border-radius: 3px;
+    height: 32px;
+    min-width: 32px;
+    background-color: #2b7eae;
+    color: #fff;
+    box-shadow: 0 2px 1px -1px rgb(0 0 0 / 10%);
+    text-shadow: none;
+    line-height: 16px;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.v-Toolbar-section > .v-Button.default.is-hover {
+    background-color: #1f6aa5;
+}
+
+.v-Toolbar-section > .v-Button.default.is-active {
+    background-color: #1c5287;
+    color: #f5f8fa;
+    box-shadow: none;
+}
+
+.v-Toolbar-section > .hidden {
+    display: none !important;
+}
+
+.v-Toolbar-section .is-disabled {
+    opacity: 0.35;
+}
+
+.v-Toolbar-section .v-Button.is-disabled.is-hover {
+    background: transparent;
+}
+
+
+.v-Toolbar-section > .v-MenuButton i.chevron {
+    color: #fff;
+    top: 5px;
+}
+
+.v-Toolbar-section > .v-Text {
+    margin: 0 3px 0 3px;
+    height: 32px;
+    border-color: #0d3b5f;
+    border-radius: 2px;
+    display: inline-block;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+.v-Toolbar-section > .v-Label {
+    color: #fff;
+    margin: 0 3px 0 3px;
+}
+
+.v-Toolbar-section > .v-Text .v-Text-input {
+    background-color: #e7f0f5;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.v-Toolbar-section > .v-Text.is-focused {
+    border-color: #004669;
+}
+
+.v-Toolbar-section > .v-Text.is-focused .v-Text-input {
+    background-color: #fff;
+    border-color: transparent;
+}
+
+.v-Toolbar-section > .v-Slider {
+    margin: 12px 2px 0 3px;
+    position: relative;
+    background-color: #fafafa;
+}
+
+.v-Toolbar-section > .v-Slider .v-Slider-range {
+    background-color: #feffcf;
+}
+
+
+.v-Toolbar-divider {
+    display: inline !important;
+    height: 32px;
+    width: 1px;
+    padding: 3px 0 6px 0;
+    margin: 0 8px 0 6px;
+    border-left: 1px solid #00365c;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.v-Toolbar .v-MenuButton.v-Button.default.v-overflow-btn {
+    display: none;
+}

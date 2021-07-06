@@ -49,11 +49,6 @@ public class PopOverTest extends GwtViewsTest {
                 popOver.show(btn, 0, 0);
             }
         });
-        closeBtn.addEventListener(Events.ACTION, new EventListener() {
-            @Override
-            public void handleEvent(Event evt) {
-                popOver.close();
-            }
-        });
+
     }
 }

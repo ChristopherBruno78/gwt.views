@@ -46,6 +46,9 @@ public interface StyleBundle extends ClientBundle {
     @Source({"Toast.css"})
     CssResource ToastCss();
 
+    @Source({"Toolbar.css"})
+    CssResource ToolbarCss();
+
     @Source({"Icons.css"})
     @CssResource.NotStrict
     CssResource IconsCss();

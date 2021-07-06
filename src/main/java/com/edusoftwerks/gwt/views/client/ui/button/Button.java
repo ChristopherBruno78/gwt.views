@@ -10,6 +10,7 @@ import com.edusoftwerks.gwt.views.client.ui.popover.PopOverProps;
 import com.edusoftwerks.gwt.views.shared.Color;
 import com.edusoftwerks.gwt.views.shared.geometry.Rectangle;
 import com.google.gwt.user.client.Timer;
+import elemental2.dom.Event;
 
 import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.*;
 
@@ -75,17 +76,23 @@ public class Button extends Control<ButtonProps> {
                 !this.props.iconOnly() ? $labelEl = label(new DOMProps().className("label"), this.props.text()) : null);
     }
 
+    protected void onMouseDown(Event evt) {
+        evt.preventDefault();
+        addClassName("is-active");
+        DOM.setCapture(getElement());
+    }
+
+    protected void onMouseUp(Event evt) {
+        removeClassName("is-active");
+        DOM.releaseCapture(getElement());
+    }
+
     @Override
     protected void addEventListeners() {
-        addEventListener(Events.MOUSEDOWN, evt -> {
-            evt.preventDefault();
-            addClassName("is-active");
-            DOM.setCapture(getElement());
-        });
-        addEventListener(Events.MOUSEUP, evt -> {
-            removeClassName("is-active");
-            DOM.releaseCapture(getElement());
-        });
+
+        addEventListener(Events.MOUSEDOWN, this::onMouseDown);
+        addEventListener(Events.MOUSEUP, this::onMouseUp);
+
         addEventListener(Events.MOUSEOVER, evt -> {
             showTooltip();
         });
@@ -99,6 +106,8 @@ public class Button extends Control<ButtonProps> {
     public String getText() {
         return this.props.text();
     }
+
+    public String getIcon() {return this.props.icon();}
 
     public void setText(String text) {
         this.props.text(text);

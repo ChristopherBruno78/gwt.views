@@ -35,8 +35,7 @@ public class Menu extends CompositeView<MenuProps> {
             item.setMenu(this);
         }
 
-        init(
-                popover = new MenuPopOver(new PopOverProps()
+        init(popover = new MenuPopOver(new PopOverProps()
                         .isCallout(false)
                         .className("v-Menu-popover")
                         .attr("tabIndex", 0)
@@ -91,6 +90,14 @@ public class Menu extends CompositeView<MenuProps> {
         }
     }
 
+    public void removeAll() {
+        List<MenuItem> items = getItems();
+        while(items.size() > 0) {
+            remove(items.get(0));
+            items = getItems();
+        }
+    }
+
     public void close() {
         if (isRendered()) {
             popover.close();
@@ -111,6 +118,8 @@ public class Menu extends CompositeView<MenuProps> {
         }
         getElement().focus();
     }
+
+
 
     void setActiveIndex(int index) {
 
@@ -145,15 +154,15 @@ public class Menu extends CompositeView<MenuProps> {
     }
 
     private native void clearSelection() /*-{
-    var sel = $wnd.getSelection ? $wnd.getSelection() : $doc.selection;
-    if (sel) {
-      if (sel.removeAllRanges) {
-        sel.removeAllRanges();
-      } else if (sel.empty) {
-        sel.empty();
-      }
-    }
-  }-*/;
+        var sel = $wnd.getSelection ? $wnd.getSelection() : $doc.selection;
+        if (sel) {
+            if (sel.removeAllRanges) {
+                sel.removeAllRanges();
+            } else if (sel.empty) {
+                sel.empty();
+            }
+        }
+    }-*/;
 
     class MenuPopOver extends PopOver {
 

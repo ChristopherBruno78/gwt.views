@@ -2,18 +2,20 @@ package com.edusoftwerks.gwt.views.client;
 
 import com.edusoftwerks.gwt.views.client.dom.DOMProps;
 import com.edusoftwerks.gwt.views.client.dom.Events;
-import com.edusoftwerks.gwt.views.client.ui.button.Button;
-import com.edusoftwerks.gwt.views.client.ui.button.ButtonProps;
-import com.edusoftwerks.gwt.views.client.ui.button.ButtonType;
+import com.edusoftwerks.gwt.views.client.ui.button.*;
+import com.edusoftwerks.gwt.views.client.ui.menu.MenuItem;
+import com.edusoftwerks.gwt.views.client.ui.menu.MenuItemProps;
 import com.google.gwt.user.client.Window;
 import elemental2.dom.Event;
 import elemental2.dom.EventListener;
+import jsinterop.base.Js;
 
 import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.div;
 
 public class ButtonTest extends GwtViewsTest {
 
     private Button btn;
+    private MenuItem newMenuItem;
 
     @Override
     UIObject render() {
@@ -40,7 +42,19 @@ public class ButtonTest extends GwtViewsTest {
                         .height(32)
                         .iconOnly(true)
                         .tooltip("CheckMark")
-                        .icon("icon-check-solid")));
+                        .icon("icon-check-solid")),
+                new MenuButton(
+                        (MenuButtonProps)  new MenuButtonProps()
+                            .menuItems(
+                                    newMenuItem = new MenuItem(new MenuItemProps()
+                                            .text("New File...")
+                                            .icon("icon-search")
+                                    ),
+                                    new MenuItem(new MenuItemProps().text("Item 2"))
+                            )
+                            .text("Hello")
+
+                ));
     }
 
     @Override
@@ -49,6 +63,13 @@ public class ButtonTest extends GwtViewsTest {
             @Override
             public void handleEvent(Event evt) {
                 Window.alert("CLICK!");
+            }
+        });
+
+        newMenuItem.addEventListener(Events.ACTION, new EventListener() {
+            @Override
+            public void handleEvent(Event evt) {
+                Window.alert("New File...");
             }
         });
     }

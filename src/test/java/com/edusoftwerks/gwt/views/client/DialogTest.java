@@ -26,6 +26,20 @@ public class DialogTest extends GwtViewsTest {
 
     public void run() {
         super.run();
+
+        d2 = new Dialog(new DialogProps()
+                .x(200)
+                .y(50)
+                .modal(false)
+                .resizable(false)
+                .title("Dialog 2"))
+        {
+            @Override
+            public DOMElement renderContent() {
+                return null;
+            }
+        };
+
         Dialog d = new Dialog(new DialogProps().title("My Dialog Window")) {
             @Override
             public DOMElement renderContent() {
@@ -54,11 +68,8 @@ public class DialogTest extends GwtViewsTest {
         };
         d.open();
 
-        d2 = new Dialog(new DialogProps().x(200).y(50).resizable(false).title("Dialog 2")) {
-            @Override
-            public DOMElement renderContent() {
-                return null;
-            }
-        };
+
+
+
     }
 }
