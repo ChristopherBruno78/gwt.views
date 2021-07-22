@@ -37,4 +37,12 @@ public class Rectangle {
     public int hashCode() {
         return toString().hashCode();
     }
+
+    public static int getRightPoint(Rectangle rect) {
+        return rect.origin.x+rect.size.width;
+    }
+
+    public static int getBottomPoint(Rectangle rect) {
+        return rect.origin.y+rect.size.height;
+    }
 }

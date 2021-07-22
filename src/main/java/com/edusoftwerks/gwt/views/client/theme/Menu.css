@@ -83,7 +83,7 @@ ul.v-Menu {
 
 .v-MenuItem > .label {
     padding-left: 30px;
-    margin-top: 5px;
+    margin-top: 6px;
     box-sizing: border-box;
     display: inline-block;
     cursor: default;
@@ -130,10 +130,11 @@ ul.v-Menu {
     margin: 0 3px 3px 3px;
 }
 
-.v-Menu-popover {
+.v-PopOver.v-Menu-popover {
     overflow-y: auto;
     overflow-x: hidden;
     outline: none;
+    border-radius: 0;
 }
 
 .v-Menu-Separator {

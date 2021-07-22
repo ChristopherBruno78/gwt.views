@@ -3,11 +3,13 @@ package com.edusoftwerks.gwt.views.client.ui.menu;
 import com.edusoftwerks.gwt.views.client.dom.*;
 import com.edusoftwerks.gwt.views.client.theme.Theme;
 import com.edusoftwerks.gwt.views.client.ui.Control;
+import com.edusoftwerks.gwt.views.shared.geometry.Rectangle;
 import elemental2.dom.HTMLElement;
 import elemental2.dom.MouseEvent;
 
 import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.create;
 import static com.edusoftwerks.gwt.views.client.dom.DOMFactory.div;
+import static com.edusoftwerks.gwt.views.shared.geometry.Rectangle.getRightPoint;
 
 public class MenuItem extends Control<MenuItemProps> {
 
@@ -29,7 +31,8 @@ public class MenuItem extends Control<MenuItemProps> {
                 menu.setActiveIndex(getIndex());
                 if (hasSubmenu()) {
                     HTMLElement $el = getElement();
-                    this.props.submenu().show($el.offsetLeft + $el.offsetWidth, $el.offsetTop - 7);
+                    Rectangle rect = DOM.getBoundingRectClient($el);
+                    this.props.submenu().show(getRightPoint(rect), rect.origin.y-10);
                 }
             } else {
                 if (hasSubmenu()) {
@@ -38,6 +41,7 @@ public class MenuItem extends Control<MenuItemProps> {
                 removeClassName("is-active");
             }
         }
+
     }
 
     boolean hasSubmenu() {

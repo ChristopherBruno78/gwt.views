@@ -7,6 +7,7 @@ import com.edusoftwerks.gwt.views.client.ui.CompositeView;
 import com.edusoftwerks.gwt.views.client.ui.popover.PopOver;
 import com.edusoftwerks.gwt.views.client.ui.popover.PopOverProps;
 import com.edusoftwerks.gwt.views.shared.Color;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
 import elemental2.dom.EventListener;
 import elemental2.dom.HTMLElement;
@@ -101,18 +102,19 @@ public class Menu extends CompositeView<MenuProps> {
         }
     }
 
-    public void close() {
-        if (isRendered()) {
-            popover.close();
-            List<MenuItem> items = getItems();
-            for (MenuItem item : items) {
-                item.setActive(false);
-            }
-            activeIndex = -1;
-            if (lastFocusEl != null) {
-                lastFocusEl.focus();
-            }
+    private void doClose() {
+        List<MenuItem> items = getItems();
+        for (MenuItem item : items) {
+            item.setActive(false);
         }
+        activeIndex = -1;
+        if (lastFocusEl != null) {
+            lastFocusEl.focus();
+        }
+    }
+
+    public void close() {
+        popover.close();
     }
 
     void focus() {
@@ -233,6 +235,10 @@ public class Menu extends CompositeView<MenuProps> {
                         }
                     }
                 }
+            });
+
+            addEventListener(Events.CLOSE, evt -> {
+                doClose();
             });
 
             super.addEventListeners();

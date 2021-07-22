@@ -32,7 +32,13 @@ public class ToolbarTest extends GwtViewsTest {
                     new MenuButton((MenuButtonProps) new MenuButtonProps()
                         .menuItems(
                                 new MenuItem(new MenuItemProps().text("Item 1")),
-                                new MenuItem(new MenuItemProps().text("Item 2"))
+                                new MenuItem(new MenuItemProps().text("Item 2")),
+                                new MenuItem(new MenuItemProps().text("Item 3")),
+                                new MenuItem(new MenuItemProps().text("Item 4")),
+                                new MenuItem(new MenuItemProps().text("Item 5")),
+                                new MenuItem(new MenuItemProps().text("Item 6")),
+                                new MenuItem(new MenuItemProps().text("Item 7")),
+                                new MenuItem(new MenuItemProps().text("Item 8"))
                         ).text("Menu Btn")
                     ),
                     btn4 = new Button("My Button 4")
